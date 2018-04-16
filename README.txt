@@ -1,7 +1,6 @@
 esctest
 Automatic unit tests for terminal emulation
 George Nachman
-georgen@google.com
 
 esctest is a suite of unit tests that test a terminal emulator's similarity to a
 theoretical ideal. That ideal is defined as "xterm, but without bugs in George's 
