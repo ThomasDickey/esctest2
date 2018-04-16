@@ -169,7 +169,7 @@ AssertScreenCharsInRectEqual(rect, strings)
 Test methods may be decorated with the following decorators, defined in escutil:
 
 @vtLevel(minimum)
-  The test will be run only in the --max-vt-level is at least "minimum".
+  The test will be run only when the --max-vt-level is at least "minimum".
 
 @intentionalDeviationFromSpec(terminal, reason)
   This is for documentation purposes only. The given terminal has some quirk but
