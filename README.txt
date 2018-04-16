@@ -25,6 +25,21 @@ You should build xterm yourself and configure it with --enable-dec-locator. Some
 tests will fail unless it is provided. Most other configuration settings are not
 tested and may or may not cause problems.
 
+Notes on iTerm2
+---------------
+To configure iTerm2 to be tested, first exit it. Then using Terminal, delete its
+settings with:
+
+defaults delete com.googlecode.iterm2
+
+Next, launch iTerm2 and perform the following steps:
+* Enable Prefs>Profiles>Terminal>Terminal may report window title
+* Disable Prefs>Profiles>Terminal>Disable session-initiated window resizing
+* Disable Prefs>Appearance>Show current job name
+* Disable Prefs>Advanced>Enable support for REP
+
+All tests should pass with these settings.
+
 Usage
 -----
 The most basic usage is:
