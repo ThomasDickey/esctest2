@@ -36,7 +36,7 @@ class SUTests(object):
                        "pqrst",
                        "uvwxy",
                        NUL * 5 ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_SU_ExplicitParam(self):
@@ -48,7 +48,7 @@ class SUTests(object):
                        "uvwxy",
                        NUL * 5,
                        NUL * 5 ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_SU_CanClearScreen(self):
@@ -66,7 +66,7 @@ class SUTests(object):
     esccmd.SU(height)
 
     # Ensure the screen is empty
-    AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines)
 
   @vtLevel(4)
   def test_SU_RespectsTopBottomScrollRegion(self):
@@ -83,7 +83,7 @@ class SUTests(object):
                        NUL * 5,
                        NUL * 5,
                        "uvwxy" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_SU_OutsideTopBottomScrollRegion(self):
@@ -100,7 +100,7 @@ class SUTests(object):
                        NUL * 5,
                        NUL * 5,
                        "uvwxy" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_SU_RespectsLeftRightScrollRegion(self):
@@ -118,7 +118,7 @@ class SUTests(object):
                        "kvwxo",
                        "p" + NUL * 3 + "t",
                        "u" + NUL * 3 + "y" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_SU_OutsideLeftRightScrollRegion(self):
@@ -137,7 +137,7 @@ class SUTests(object):
                        "kvwxo",
                        "p" + NUL * 3 + "t",
                        "u" + NUL * 3 + "y" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_SU_LeftRightAndTopBottomScrollRegion(self):
@@ -157,7 +157,7 @@ class SUTests(object):
                        "k" + NUL * 3 + "o",
                        "p" + NUL * 3 + "t",
                        "uvwxy" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_SU_BigScrollLeftRightAndTopBottomScrollRegion(self):
@@ -176,4 +176,4 @@ class SUTests(object):
                        "k" + NUL * 3 + "o",
                        "p" + NUL * 3 + "t",
                        "uvwxy" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)

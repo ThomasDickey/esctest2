@@ -1,6 +1,6 @@
-from esc import ESC, ST, NUL
+from esc import ESC, ST
 import escargs
-from esclog import LogDebug, LogInfo, LogError, Print
+from esclog import LogDebug
 import esctypes
 import os
 import select

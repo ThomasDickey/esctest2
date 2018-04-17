@@ -1,7 +1,7 @@
-from esc import blank, NUL
+from esc import NUL
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, Point, Rect, intentionalDeviationFromSpec, knownBug, optionRequired, vtLevel
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, Point, Rect, intentionalDeviationFromSpec, knownBug, vtLevel
 
 class DECFITests(object):
   """Move cursor forward or scroll data within margins right."""

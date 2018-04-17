@@ -1,5 +1,5 @@
 import esccmd
-from escutil import AssertEQ, GetCursorPosition, GetScreenSize, knownBug, vtLevel
+from escutil import AssertEQ, GetCursorPosition, GetScreenSize, vtLevel
 from esctypes import Point
 
 class CUFTests(object):

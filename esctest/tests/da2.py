@@ -2,7 +2,7 @@ import esc
 import escargs
 import esccmd
 import escio
-from escutil import AssertEQ, AssertGE, knownBug
+from escutil import AssertEQ, AssertGE
 
 class DA2Tests(object):
   def handleDA2Response(self):

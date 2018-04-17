@@ -1,10 +1,7 @@
-from esc import NUL
 import escargs
 import esccmd
 import escio
-import esclog
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetScreenSize, knownBug, optionRequired, vtLevel
-from esctypes import Point, Rect
+from escutil import AssertEQ, knownBug, optionRequired, vtLevel
 
 class DECRQMTests(object):
   """DECANM is not tested because there doesn't seem to be any way to
@@ -18,35 +15,35 @@ class DECRQMTests(object):
     return escio.ReadCSI('$y', '?')
 
   def doModifiableAnsiTest(self, mode):
-      before = self.requestAnsiMode(mode)
-      if before[1] == 2:
-        esccmd.SM(mode)
-        AssertEQ(self.requestAnsiMode(mode), [ mode, 1 ])
+    before = self.requestAnsiMode(mode)
+    if before[1] == 2:
+      esccmd.SM(mode)
+      AssertEQ(self.requestAnsiMode(mode), [ mode, 1 ])
 
-        esccmd.RM(mode)
-        AssertEQ(self.requestAnsiMode(mode), [ mode, 2 ])
-      else:
-        esccmd.RM(mode)
-        AssertEQ(self.requestAnsiMode(mode), [ mode, 2 ])
+      esccmd.RM(mode)
+      AssertEQ(self.requestAnsiMode(mode), [ mode, 2 ])
+    else:
+      esccmd.RM(mode)
+      AssertEQ(self.requestAnsiMode(mode), [ mode, 2 ])
 
-        esccmd.SM(mode)
-        AssertEQ(self.requestAnsiMode(mode), [ mode, 1 ])
+      esccmd.SM(mode)
+      AssertEQ(self.requestAnsiMode(mode), [ mode, 1 ])
 
   def doPermanentlyResetAnsiTest(self, mode):
-      AssertEQ(self.requestAnsiMode(mode), [ mode, 4 ])
+    AssertEQ(self.requestAnsiMode(mode), [ mode, 4 ])
 
   def doModifiableDecTest(self, mode):
-      before = self.requestDECMode(mode)
-      if before[1] == 2:
-        esccmd.DECSET(mode)
-        AssertEQ(self.requestDECMode(mode), [ mode, 1 ])
-        esccmd.DECRESET(mode)
-        AssertEQ(self.requestDECMode(mode), [ mode, 2 ])
-      else:
-        esccmd.DECRESET(mode)
-        AssertEQ(self.requestDECMode(mode), [ mode, 2 ])
-        esccmd.DECSET(mode)
-        AssertEQ(self.requestDECMode(mode), [ mode, 1 ])
+    before = self.requestDECMode(mode)
+    if before[1] == 2:
+      esccmd.DECSET(mode)
+      AssertEQ(self.requestDECMode(mode), [ mode, 1 ])
+      esccmd.DECRESET(mode)
+      AssertEQ(self.requestDECMode(mode), [ mode, 2 ])
+    else:
+      esccmd.DECRESET(mode)
+      AssertEQ(self.requestDECMode(mode), [ mode, 2 ])
+      esccmd.DECSET(mode)
+      AssertEQ(self.requestDECMode(mode), [ mode, 1 ])
 
   def doPermanentlyResetDecTest(self, mode):
     AssertEQ(self.requestDECMode(mode), [ mode, 4 ])

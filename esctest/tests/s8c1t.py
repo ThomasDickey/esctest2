@@ -1,8 +1,8 @@
-from esc import FF, NUL, S7C1T, S8C1T, blank
+from esc import S7C1T, S8C1T, blank
 import escargs
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, optionRequired, vtLevel
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, knownBug, optionRequired, vtLevel
 from esctypes import Point, Rect
 
 # Most C1 codes have their own tests for 8-bit controls and are not duplicated here.

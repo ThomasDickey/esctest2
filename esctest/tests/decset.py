@@ -1,11 +1,10 @@
-from esc import ESC, TAB, NUL, CR, LF, BS
+from esc import TAB, NUL, CR, LF, BS
 from esctypes import Point, Rect
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, optionRequired, vtLevel, optionRejects
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, optionRequired, vtLevel
 import escargs
 import esccmd
 import escio
-import esclog
-import time
+
 # Note: There is no test for DECRESET; that is handled here.
 
 # Can't test the following:
@@ -149,9 +148,6 @@ class DECSETTests(object):
 
   # This test is flaky so I turned off shouldTry to avoid false failures.
   @vtLevel(4)
-  @knownBug(terminal="notxterm",
-            reason="xterm produces incorrect output if ABC is written too quickly. A pause before writing the C produces correct output.",
-            shouldTry=True)
   def test_DECSET_DECAWM(self):
     """Auto-wrap mode."""
     size = GetScreenSize()
@@ -194,7 +190,6 @@ class DECSETTests(object):
 
   # Fixed in xterm #332 (didn't implement auto-wrap mode with margins when wide characters are disabled).
   @vtLevel(4)
-  @optionRejects(terminal="notxterm", option=escargs.DISABLE_WIDE_CHARS)
   def test_DECSET_DECAWM_OnRespectsLeftRightMargin(self):
     """Auto-wrap mode on respects left-right margins."""
     esccmd.DECSET(esccmd.DECLRMM)

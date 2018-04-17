@@ -1,15 +1,12 @@
 from esc import NUL, CR, LF
-import escargs
 import esccmd
 import escio
 from escutil import AssertEQ, GetCursorPosition, GetScreenSize, AssertScreenCharsInRectEqual, knownBug, vtLevel
 from esctypes import Point, Rect
-import time
 
 class DECDCTests(object):
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  @knownBug(terminal="notxterm", reason="xterm requires left-right mode for DECDC")
   def test_DECDC_DefaultParam(self):
     """Test DECDC with default parameter """
     esccmd.CUP(Point(1, 1))
@@ -25,7 +22,6 @@ class DECDCTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  @knownBug(terminal="notxterm", reason="xterm requires left-right mode for DECDC")
   def test_DECDC_ExplicitParam(self):
     """Test DECDC with explicit parameter. Also verifies lines above and below
     the cursor are affected."""
@@ -95,7 +91,6 @@ class DECDCTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  @knownBug(terminal="notxterm", reason="xterm requires left-right mode for DECDC")
   def test_DECDC_DeleteAll(self):
     """Test DECDC behavior when deleting more columns than are available."""
     width = GetScreenSize().width()

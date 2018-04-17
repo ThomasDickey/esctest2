@@ -1,9 +1,7 @@
-from esc import FF, NUL, blank
 import escargs
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, optionRequired, vtLevel
-from esctypes import Point, Rect
+from escutil import AssertEQ, knownBug, vtLevel
 
 class DECRQSSTests(object):
   @vtLevel(4)

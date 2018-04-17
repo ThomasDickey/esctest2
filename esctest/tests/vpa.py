@@ -1,7 +1,6 @@
 import esccmd
-import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, vtLevel
-from esctypes import Point, Rect
+from escutil import AssertEQ, GetCursorPosition, GetScreenSize, vtLevel
+from esctypes import Point
 
 class VPATests(object):
   def test_VPA_DefaultParams(self):

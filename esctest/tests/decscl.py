@@ -1,7 +1,6 @@
-from esc import ESC, NUL
+from esc import NUL
 import esccmd
 import escio
-import esclog
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, AssertTrue, GetCursorPosition, GetScreenSize, knownBug, vtLevel
 from esctypes import InternalError, Point, Rect
 
@@ -56,7 +55,6 @@ class DECSCLTests(object):
     AssertEQ(GetCursorPosition().x(), 8)
 
   @vtLevel(4)
-  @knownBug(terminal="notxterm", reason="xterm always turns on 8-bit controls.", shouldTry=False)
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECSCL")
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECNCSM", shouldTry=False)
   def test_DECSCL_Level4_SupportsDECSLRMDoesntSupportDECNCSM(self):

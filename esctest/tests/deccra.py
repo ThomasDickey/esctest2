@@ -1,7 +1,6 @@
-from esc import NUL, CR, LF
+from esc import CR, LF
 import esccmd
 import escio
-import esclog
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, vtLevel
 from esctypes import Point, Rect
 
@@ -65,7 +64,6 @@ class DECCRATests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  @knownBug(terminal="notxterm", reason="Crashes. Bug reported Feb 11, 2015.")
   def test_DECCRA_destinationPartiallyOffscreen(self):
     self.prepare()
     size = GetScreenSize()

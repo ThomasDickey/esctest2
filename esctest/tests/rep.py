@@ -1,8 +1,7 @@
 from esc import NUL
-import escargs
 import esccmd
 import escio
-from escutil import AssertScreenCharsInRectEqual, GetScreenSize, knownBug, optionRejects, vtLevel
+from escutil import AssertScreenCharsInRectEqual, GetScreenSize, knownBug, vtLevel
 from esctypes import Point, Rect
 
 class REPTests(object):
@@ -22,7 +21,6 @@ class REPTests(object):
 
   # Fixed in xterm #332 (didn't implement auto-wrap mode with margins when wide characters are disabled).
   @vtLevel(4)
-  @optionRejects(terminal="notxterm", option=escargs.DISABLE_WIDE_CHARS)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_REP_RespectsLeftRightMargins(self):
     esccmd.DECSET(esccmd.DECLRMM)

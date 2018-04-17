@@ -19,8 +19,8 @@ ST = ESC + "\\"
 vtLevel = 1
 
 def blank():
-    if escargs.args.expected_terminal == "xterm":
-      return ' '
-    else:
-      return NUL
+  if escargs.args.expected_terminal == "xterm":
+    return ' '
+  else:
+    return NUL
 

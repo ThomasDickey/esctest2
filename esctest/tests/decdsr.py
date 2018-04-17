@@ -1,9 +1,7 @@
-from esc import NUL
 import esccmd
 import escio
-import esclog
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, AssertTrue, GetScreenSize, knownBug, vtLevel
-from esctypes import Point, Rect
+from escutil import AssertEQ, AssertTrue, knownBug, vtLevel
+from esctypes import Point
 
 class DECDSRTests(object):
   def getVTLevel(self):

@@ -2,7 +2,7 @@ from esc import NUL
 import esccmd
 import escio
 from esctypes import Point, Rect
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, vtLevel
+from escutil import AssertScreenCharsInRectEqual, GetScreenSize, vtLevel
 
 class SDTests(object):
   def prepare(self):
@@ -36,7 +36,7 @@ class SDTests(object):
                        "fghij",
                        "klmno",
                        "pqrst" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_SD_ExplicitParam(self):
@@ -48,7 +48,7 @@ class SDTests(object):
                        "abcde",
                        "fghij",
                        "klmno" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   # fixed in xterm #332
   @vtLevel(4)
@@ -67,7 +67,7 @@ class SDTests(object):
     esccmd.SD(height)
 
     # Ensure the screen is empty
-    AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines)
 
   @vtLevel(4)
   def test_SD_RespectsTopBottomScrollRegion(self):
@@ -84,7 +84,7 @@ class SDTests(object):
                        NUL * 5,
                        "fghij",
                        "uvwxy" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_SD_OutsideTopBottomScrollRegion(self):
@@ -101,7 +101,7 @@ class SDTests(object):
                        NUL * 5,
                        "fghij",
                        "uvwxy" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_SD_RespectsLeftRightScrollRegion(self):
@@ -119,7 +119,7 @@ class SDTests(object):
                        "kbcdo",
                        "pghit",
                        "ulmny" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_SD_OutsideLeftRightScrollRegion(self):
@@ -140,7 +140,7 @@ class SDTests(object):
                        "ulmny",
                        NUL + "qrs" + NUL,
                        NUL + "vwx" + NUL ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 7), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 7), expected_lines)
 
   @vtLevel(4)
   def test_SD_LeftRightAndTopBottomScrollRegion(self):
@@ -160,7 +160,7 @@ class SDTests(object):
                        "k" + NUL * 3 + "o",
                        "pghit",
                        "uvwxy" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_SD_BigScrollLeftRightAndTopBottomScrollRegion(self):
@@ -179,4 +179,4 @@ class SDTests(object):
                        "k" + NUL * 3 + "o",
                        "p" + NUL * 3 + "t",
                        "uvwxy" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)

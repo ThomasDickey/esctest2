@@ -2,7 +2,7 @@ from esc import NUL
 import esccmd
 import escio
 from esctypes import Point, Rect
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, vtLevel
+from escutil import AssertScreenCharsInRectEqual, GetScreenSize, vtLevel
 
 class ILTests(object):
   def prepare_wide(self):
@@ -43,7 +43,7 @@ class ILTests(object):
   @vtLevel(4)
   def test_IL_DefaultParam(self):
     """Should insert a single line below the cursor."""
-    self.prepare_wide();
+    self.prepare_wide()
     esccmd.IL()
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 4),
                                  [ "abcde",
@@ -54,7 +54,7 @@ class ILTests(object):
   @vtLevel(4)
   def test_IL_ExplicitParam(self):
     """Should insert two lines below the cursor."""
-    self.prepare_wide();
+    self.prepare_wide()
     esccmd.IL(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5),
                                  [ "abcde",

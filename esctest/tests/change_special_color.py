@@ -1,9 +1,7 @@
-from esc import NUL
 import esccmd
 import escio
 from esclog import LogInfo
-from escutil import AssertEQ, AssertTrue, knownBug
-from esctypes import Rect
+from escutil import AssertTrue, knownBug
 
 class ChangeSpecialColorTests(object):
   """Color reporting isn't officially documented for special colors but works

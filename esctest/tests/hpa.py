@@ -1,7 +1,6 @@
 import esccmd
-import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, vtLevel
-from esctypes import Point, Rect
+from escutil import AssertEQ, GetCursorPosition, GetScreenSize, knownBug, vtLevel
+from esctypes import Point
 
 class HPATests(object):
   @knownBug(terminal="iTerm2", reason="Not implemented")

@@ -1,7 +1,6 @@
-from esc import BS, CR, ESC, LF, NUL
+from esc import BS, CR, LF, NUL
 import esccmd
 import escio
-import esclog
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, intentionalDeviationFromSpec, knownBug, vtLevel
 from esctypes import Point, Rect
 

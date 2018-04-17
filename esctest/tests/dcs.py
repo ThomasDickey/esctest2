@@ -1,6 +1,6 @@
 from esc import NUL
 import escio
-from escutil import AssertScreenCharsInRectEqual, knownBug, vtLevel
+from escutil import AssertScreenCharsInRectEqual, vtLevel
 from esctypes import Rect
 
 class DCSTests(object):

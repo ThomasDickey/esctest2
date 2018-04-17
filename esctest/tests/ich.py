@@ -1,8 +1,7 @@
 from esc import NUL, blank
-import escargs
 import esccmd
 import escio
-from escutil import AssertEQ, GetCursorPosition, GetScreenSize, AssertScreenCharsInRectEqual, knownBug, vtLevel
+from escutil import AssertEQ, GetCursorPosition, GetScreenSize, AssertScreenCharsInRectEqual, vtLevel
 from esctypes import Point, Rect
 
 class ICHTests(object):

@@ -1,9 +1,8 @@
 from esc import NUL, blank
-import escargs
 import esccmd
 import escio
 from esctypes import Point, Rect
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, knownBug, vtLevel
+from escutil import AssertScreenCharsInRectEqual, knownBug, vtLevel
 
 class ELTests(object):
   def prepare(self):

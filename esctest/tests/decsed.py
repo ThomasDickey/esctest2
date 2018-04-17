@@ -1,5 +1,4 @@
 from esc import NUL, blank
-import escargs
 import esccmd
 import escio
 from escutil import AssertScreenCharsInRectEqual, knownBug, vtLevel

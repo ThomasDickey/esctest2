@@ -2,7 +2,7 @@ import esc
 import escargs
 import esccmd
 import escio
-from esclog import LogDebug, LogInfo, LogError, Print
+from esclog import LogInfo
 import esctypes
 from esctypes import Point, Size, Rect
 import functools

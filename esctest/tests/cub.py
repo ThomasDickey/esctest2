@@ -1,5 +1,5 @@
 import esccmd
-from escutil import AssertEQ, GetCursorPosition, knownBug, vtLevel
+from escutil import AssertEQ, GetCursorPosition, vtLevel
 from esctypes import Point
 
 class CUBTests(object):

@@ -1,6 +1,6 @@
 import esccmd
 from esctypes import Point
-from escutil import AssertEQ, GetCursorPosition, knownBug, vtLevel
+from escutil import AssertEQ, GetCursorPosition, vtLevel
 
 class CBTTests(object):
   def test_CBT_OneTabStopByDefault(self):

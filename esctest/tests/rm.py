@@ -1,7 +1,6 @@
-from esc import NUL
 import esccmd
 import escio
-from escutil import AssertScreenCharsInRectEqual, GetScreenSize, vtLevel
+from escutil import AssertScreenCharsInRectEqual, vtLevel
 from esctypes import Point, Rect
 
 # AM, SRM, and LNM should also be supported but are not currently testable

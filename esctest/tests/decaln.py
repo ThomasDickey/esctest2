@@ -1,6 +1,5 @@
 import esccmd
-import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, Point, Rect, knownBug, optionRequired, vtLevel
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, Point, Rect, vtLevel
 
 class DECALNTests(object):
   @vtLevel(4)

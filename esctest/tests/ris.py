@@ -1,9 +1,8 @@
-from esc import ESC, NUL, TAB
+from esc import NUL, TAB
 import esccmd
 import escio
-import esclog
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, AssertTrue, GetCursorPosition, GetScreenSize, GetIconTitle, GetWindowTitle, knownBug, vtLevel
-from esctypes import InternalError, Point, Rect
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, GetIconTitle, GetWindowTitle, knownBug, vtLevel
+from esctypes import Point, Rect
 
 class RISTests(object):
   @vtLevel(4)

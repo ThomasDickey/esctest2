@@ -1,16 +1,13 @@
 from esc import NUL, CR, LF, blank
-import escargs
 import esccmd
 import escio
 from escutil import AssertEQ, GetCursorPosition, GetScreenSize, AssertScreenCharsInRectEqual, knownBug, vtLevel
 from esctypes import Point, Rect
-import time
 
 class DECICTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  @knownBug(terminal="notxterm", reason="xterm requires left-right mode for DECIC")
   def test_DECIC_DefaultParam(self):
     """ Test DECIC with default parameter """
     esccmd.CUP(Point(1, 1))
@@ -26,7 +23,6 @@ class DECICTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  @knownBug(terminal="notxterm", reason="xterm requires left-right mode for DECIC")
   def test_DECIC_ExplicitParam(self):
     """Test DECIC with explicit parameter. Also verifies lines above and below
     the cursor are affected."""
@@ -71,9 +67,6 @@ class DECICTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2",reason="Not implemented", noop=True)
-  @knownBug(terminal="notxterm",
-            reason="xterm requires left-right mode for DECIC",
-            noop=True)
   def test_DECIC_IsNoOpWhenCursorBeginsOutsideScrollRegion(self):
     """Ensure DECIC does nothing when the cursor starts out outside the scroll
     region."""
@@ -98,7 +91,6 @@ class DECICTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  @knownBug(terminal="notxterm", reason="xterm requires left-right mode for DECIC")
   def test_DECIC_ScrollOffRightEdge(self):
     """Test DECIC behavior when pushing text off the right edge. """
     width = GetScreenSize().width()
@@ -119,7 +111,6 @@ class DECICTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  @knownBug(terminal="notxterm", reason="xterm requires left-right mode for DECIC")
   def test_DECIC_ScrollEntirelyOffRightEdge(self):
     """Test DECIC behavior when pushing text off the right edge. """
     width = GetScreenSize().width()

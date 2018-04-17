@@ -2,7 +2,7 @@ from esc import NUL
 import esccmd
 import escio
 from esctypes import Point, Rect
-from escutil import AssertScreenCharsInRectEqual, GetScreenSize, knownBug, vtLevel
+from escutil import AssertScreenCharsInRectEqual, GetScreenSize, vtLevel
 
 class DLTests(object):
   def prepare(self):
@@ -56,8 +56,8 @@ class DLTests(object):
       y += 1
 
     # The last line should be blank
-    expected_lines.append(NUL * 4);
-    AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines);
+    expected_lines.append(NUL * 4)
+    AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines)
 
   @vtLevel(4)
   def test_DL_ExplicitParam(self):
@@ -78,10 +78,10 @@ class DLTests(object):
       y += 1
 
     # The last two lines should be blank
-    expected_lines.append(NUL * 4);
-    expected_lines.append(NUL * 4);
+    expected_lines.append(NUL * 4)
+    expected_lines.append(NUL * 4)
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines)
 
   @vtLevel(4)
   def test_DL_DeleteMoreThanVisible(self):
@@ -97,9 +97,9 @@ class DLTests(object):
     y = 1
     expected_lines = [ "0001" ]
     for i in xrange(height - 1):
-      expected_lines.append(NUL * 4);
+      expected_lines.append(NUL * 4)
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines)
 
   @vtLevel(4)
   def test_DL_InScrollRegion(self):
@@ -116,7 +116,7 @@ class DLTests(object):
                        "pqrst",
                        NUL * 5,
                        "uvwxy" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_DL_OutsideScrollRegion(self):
@@ -134,7 +134,7 @@ class DLTests(object):
                        "pqrst",
                        "uvwxy" ]
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_DL_InLeftRightScrollRegion(self):
@@ -152,7 +152,7 @@ class DLTests(object):
                        "pvwxt",
                        "u" + NUL * 3 + "y" ]
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_DL_OutsideLeftRightScrollRegion(self):
@@ -170,7 +170,7 @@ class DLTests(object):
                        "pqrst",
                        "uvwxy" ]
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_DL_InLeftRightAndTopBottomScrollRegion(self):
@@ -190,7 +190,7 @@ class DLTests(object):
                        "p" + NUL * 3 + "t",
                        "uvwxy" ]
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_DL_ClearOutLeftRightAndTopBottomScrollRegion(self):
@@ -210,7 +210,7 @@ class DLTests(object):
                        "p" + NUL * 3 + "t",
                        "uvwxy" ]
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_DL_OutsideLeftRightAndTopBottomScrollRegion(self):
@@ -231,4 +231,4 @@ class DLTests(object):
                        "uvwxy" ]
 
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)

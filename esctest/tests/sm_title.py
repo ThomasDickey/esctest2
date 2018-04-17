@@ -1,10 +1,7 @@
-from esc import NUL
 import escargs
 import esccmd
 from esccmd import SET_HEX, QUERY_HEX, SET_UTF8, QUERY_UTF8
-import escio
-from esctypes import Point, Rect
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetIconTitle, GetScreenSize, GetWindowTitle, knownBug, optionRequired
+from escutil import AssertEQ, GetIconTitle, GetWindowTitle, knownBug, optionRequired
 
 
 class SMTitleTests(object):
