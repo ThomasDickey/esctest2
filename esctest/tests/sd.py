@@ -50,7 +50,6 @@ class SDTests(object):
                        "klmno" ]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
-  # fixed in xterm #332
   @vtLevel(4)
   def test_SD_CanClearScreen(self):
     """An SD equal to the height of the screen clears it."""

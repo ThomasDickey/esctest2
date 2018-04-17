@@ -90,9 +90,9 @@ class SaveRestoreCursorTests(object):
     else:
       AssertEQ(GetCursorPosition(), Point(2, 3))
 
-  # This is xterm-specific, not DEC.
   def test_SaveRestoreCursor_AltVsMain(self):
-    """Separate saved cursor in alt screen vs main screen."""
+    """Separate saved cursor in alternate screen versus main screen.
+    This is xterm-specific, not DEC."""
     esccmd.CUP(Point(2, 3))
     self.saveCursor()
 

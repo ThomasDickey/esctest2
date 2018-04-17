@@ -63,7 +63,6 @@ class RISTests(object):
     esccmd.DECSET(esccmd.ALTBUF)
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "a" ])
 
-  # fixed in xterm #322
   def test_RIS_ResetDECCOLM(self):
     esccmd.DECSET(esccmd.Allow80To132)
     esccmd.DECSET(esccmd.DECCOLM)

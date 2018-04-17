@@ -7,10 +7,10 @@ class DECDSRTests(object):
   def getVTLevel(self):
     esccmd.DA2()
     params = escio.ReadCSI('c', expected_prefix='>')
-    vtLevel = params[0]
-    if vtLevel < 18:
+    myLevel = params[0]
+    if myLevel < 18:
       return 2
-    elif vtLevel <= 24:
+    elif myLevel <= 24:
       return 3
     else:
       return 4
@@ -27,13 +27,13 @@ class DECDSRTests(object):
       Pc - column
       Pr - page"""
     # First, get the VT level.
-    vtLevel = self.getVTLevel()
+    myLevel = self.getVTLevel()
 
     esccmd.CUP(Point(5, 6))
     esccmd.DECDSR(esccmd.DECXCPR)
     params = escio.ReadCSI('R', expected_prefix='?')
 
-    if vtLevel >= 4:
+    if myLevel >= 4:
       # VT400+
       # Last arg is page, which is always 1 (at least in xterm, and I think
       # that's reasonable in all modern terminals, which won't have a direct
@@ -98,13 +98,13 @@ class DECDSRTests(object):
         4 - LK450  # DEC 510
         5 - PCXAL  # DEC 510"""
     # First get the VT level with a DA2
-    vtLevel = self.getVTLevel()
+    myLevel = self.getVTLevel()
     esccmd.DECDSR(esccmd.DSRKeyboard)
     params = escio.ReadCSI('n', expected_prefix='?')
-    if vtLevel <= 2:
+    if myLevel <= 2:
       # VT240 or earlier
       AssertEQ(len(params), 2)
-    elif vtLevel == 3:
+    elif myLevel == 3:
       # VT340 or earlier
       AssertEQ(len(params), 3)
     else:

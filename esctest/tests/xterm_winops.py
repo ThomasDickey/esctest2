@@ -16,10 +16,6 @@ class XtermWinopsTests(object):
     if needsSleep:
       time.sleep(1)
 
-  def resetWindowSize(self):
-    esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_CHARS, 25, 80)
-    self.delayAfterResize()
-
   def test_XtermWinops_IconifyDeiconfiy(self):
     needsSleep = escargs.args.expected_terminal in [ "xterm" ]
     esccmd.XTERM_WINOPS(esccmd.WINOP_ICONIFY)
@@ -302,7 +298,6 @@ class XtermWinopsTests(object):
 
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_XtermWinops_MaximizeWindow_HorizontallyAndVertically(self):
-    self.resetWindowSize()
     esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_HV)
     max_error = 1
     actual_size = GetScreenSize()
@@ -315,7 +310,6 @@ class XtermWinopsTests(object):
 
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_XtermWinops_MaximizeWindow_Horizontally(self):
-    self.resetWindowSize()
     original_size = GetScreenSize()
     esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_H)
     max_error = 5
@@ -330,7 +324,6 @@ class XtermWinopsTests(object):
 
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_XtermWinops_MaximizeWindow_Vertically(self):
-    self.resetWindowSize()
     original_size = GetScreenSize()
     esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_V)
     max_error = 5

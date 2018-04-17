@@ -19,7 +19,6 @@ class REPTests(object):
     esccmd.REP(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 4, 1), [ "aaa" + NUL ])
 
-  # Fixed in xterm #332 (didn't implement auto-wrap mode with margins when wide characters are disabled).
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_REP_RespectsLeftRightMargins(self):

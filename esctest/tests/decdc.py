@@ -66,10 +66,9 @@ class DECDCTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2",reason="Not implemented", noop=True)
-  # DEC STD 070 is explicit on this; xterm passes the test.
   def test_DECDC_IsNoOpWhenCursorBeginsOutsideScrollRegion(self):
     """Ensure DECDC does nothing when the cursor starts out outside the scroll
-    region."""
+    region.  DEC STD 070 is explicit on this."""
     esccmd.CUP(Point(1, 1))
     escio.Write("abcdefg" + CR + LF + "ABCDEFG")
 

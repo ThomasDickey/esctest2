@@ -51,7 +51,6 @@ import escio
 class DECSETTests(object):
   @vtLevel(4)
   def test_DECSET_DECCOLM(self):
-
     """DECNCSM - No Clearing Screen On Column Change"""
     # Ensure this is reset from other tests.  Otherwise DECCOLM will not
     # erase the screen.
@@ -146,7 +145,6 @@ class DECSETTests(object):
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "X" ])
 
-  # This test is flaky so I turned off shouldTry to avoid false failures.
   @vtLevel(4)
   def test_DECSET_DECAWM(self):
     """Auto-wrap mode."""
@@ -188,7 +186,6 @@ class DECSETTests(object):
     escio.Write("x")
     AssertEQ(GetCursorPosition().x(), 2)
 
-  # Fixed in xterm #332 (didn't implement auto-wrap mode with margins when wide characters are disabled).
   @vtLevel(4)
   def test_DECSET_DECAWM_OnRespectsLeftRightMargin(self):
     """Auto-wrap mode on respects left-right margins."""
