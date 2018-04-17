@@ -148,8 +148,6 @@ class DLTests(object):
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
 
-  @knownBug(terminal="xterm",
-            reason="xterm erases the area inside the scroll region incorrectly")
   def test_DL_OutsideLeftRightScrollRegion(self):
     """Test that DL does nothing outside a left-right margin."""
     self.prepareForRegion()

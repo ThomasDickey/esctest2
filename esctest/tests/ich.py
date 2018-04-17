@@ -66,7 +66,6 @@ class ICHTests(object):
     # Ensure there is no wrap-around.
     AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [ NUL ])
 
-  @knownBug(terminal="xterm", reason="Asserts", shouldTry=False)
   def test_ICH_ScrollEntirelyOffRightEdge(self):
     """Test ICH behavior when pushing text off the right edge. """
     width = GetScreenSize().width()
