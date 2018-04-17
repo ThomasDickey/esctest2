@@ -6,6 +6,7 @@ from escutil import AssertEQ, AssertScreenCharsInRectEqual, AssertTrue, GetCurso
 from esctypes import InternalError, Point, Rect
 
 class RISTests(object):
+  @vtLevel(4)
   def test_RIS_ClearsScreen(self):
     escio.Write("x")
 
@@ -49,6 +50,7 @@ class RISTests(object):
     esccmd.ChangeIconTitle("a")
     AssertEQ(GetIconTitle(), "a")
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't support ALTBUF.")
   def test_RIS_ExitAltScreen(self):
     escio.Write("m")
@@ -72,6 +74,7 @@ class RISTests(object):
 
     AssertEQ(GetScreenSize().width(), 80)
 
+  @vtLevel(4)
   def test_RIS_ResetDECOM(self):
     esccmd.DECSTBM(5, 7)
     esccmd.DECSET(esccmd.DECLRMM)
@@ -86,6 +89,7 @@ class RISTests(object):
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "X" ])
 
+  @vtLevel(4)
   def test_RIS_RemoveMargins(self):
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(3, 5)

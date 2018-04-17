@@ -1,4 +1,5 @@
 from esc import ESC
+from escutil import AssertVTLevel
 import escargs
 import escio
 
@@ -389,6 +390,7 @@ def DECRQCRA(Pid, Pp=None, rect=None):
   # xterm versions 314 and earlier incorrectly expect the Pid in the second
   # argument and ignore Pp.
   # For the time being, iTerm2 is compatible with the bug.
+  AssertVTLevel(4,"DECRQCRA")
   if not escargs.args.disable_xterm_checksum_bug:
     Pid, Pp = Pp, Pid
 
@@ -406,12 +408,14 @@ def DECRQCRA(Pid, Pp=None, rect=None):
 
 def DECRQM(mode, DEC):
   """Requests if a mode is set or not."""
+  AssertVTLevel(3,"DECRQSS")
   if DEC:
     escio.WriteCSI(params=[ mode ], intermediate='$', prefix='?', final='p')
   else:
     escio.WriteCSI(params=[ mode ], intermediate='$', final='p')
 
 def DECRQSS(Pt):
+  AssertVTLevel(3,"DECRQSS")
   escio.WriteDCS("$q", Pt)
 
 def DECRESET(Pm):
@@ -473,6 +477,7 @@ def DECSEL(Ps=None):
 
 def DECSERA(Pt, Pl, Pb, Pr):
   """Selective erase rectangle."""
+  AssertVTLevel(4,"DECSERA")
   escio.WriteCSI(params=[ Pt, Pl, Pb, Pr ], intermediate="$", final="{")
 
 def DECSET(Pm):
@@ -481,6 +486,7 @@ def DECSET(Pm):
 
 def DECSLRM(Pl, Pr):
   """Set the left and right margins."""
+  AssertVTLevel(4,"DECSLRM")
   escio.WriteCSI(params=[ Pl, Pr ], final='s')
 
 def DECSTBM(top=None, bottom=None):

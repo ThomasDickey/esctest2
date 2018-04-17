@@ -98,9 +98,20 @@ def GetDisplaySize():
   params = escio.ReadCSI("t")
   return Size(params[2], params[1])
 
+# decorators are more elegant, but several of the tests would hang as written
+# without a direct check.  Use this to point out problems in the tests versus
+# problems in the terminal.
+def AssertVTLevel(minimum,reason):
+  if esc.vtLevel < minimum:
+    if reason is not None:
+      LogInfo("BUG: " + reason + " feature is not supported at this level")
+    raise esctypes.InsufficientVTLevel(esc.vtLevel, minimum)
+
 def AssertScreenCharsInRectEqual(rect, expected_lines):
   global gHaveAsserted
   gHaveAsserted = True
+
+  AssertVTLevel(4,"checksum")
 
   if rect.height() != len(expected_lines):
     raise esctypes.InternalError(

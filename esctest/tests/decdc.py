@@ -70,9 +70,7 @@ class DECDCTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2",reason="Not implemented", noop=True)
-  @knownBug(terminal="xterm",
-            reason="xterm requires left-right mode for DECDC",
-            noop=True)
+  # DEC STD 070 is explicit on this; xterm passes the test.
   def test_DECDC_IsNoOpWhenCursorBeginsOutsideScrollRegion(self):
     """Ensure DECDC does nothing when the cursor starts out outside the scroll
     region."""

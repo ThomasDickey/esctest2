@@ -40,7 +40,7 @@ class DECSCLTests(object):
     esccmd.CUP(Point(2, 2))
     AssertEQ(GetCursorPosition(), Point(2, 2))
 
-  @vtLevel(3)
+  @vtLevel(4)
   @knownBug(terminal="notxterm", reason="xterm always turns on 8-bit controls.", shouldTry=False)
   @knownBug(terminal="iTerm2", reason="Not implemented", shouldTry=False)
   def test_DSCSCL_Level3_SupportsDECRQMDoesntSupportDECSLRM(self):
@@ -99,7 +99,7 @@ class DECSCLTests(object):
     esccmd.DECSET(esccmd.DECCOLM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "1" ])
 
-  @vtLevel(3)
+  @vtLevel(4)
   @knownBug(terminal="xterm", reason="xterm always turns on 8-bit controls.", shouldTry=False)
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECSCL")
   def test_DECSCL_RISOnChange(self):
