@@ -263,10 +263,10 @@ class DECRQMTests(object):
   def test_DECRQM_DEC_DECKBUM(self):
     self.doModifiableDecTest(esccmd.DECKBUM)
 
-  @vtLevel(3)
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECRQM not supported.", shouldTry=False)
-  def test_DECRQM_DEC_DECVSSM(self):
-    self.doModifiableDecTest(esccmd.DECVSSM)
+  def test_DECRQM_DEC_DECLRMM(self):
+    self.doModifiableDecTest(esccmd.DECLRMM)
 
   @vtLevel(4)
   @knownBug(terminal="xterm", reason="Not supported")

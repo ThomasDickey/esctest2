@@ -17,10 +17,10 @@ def Raise(e):
   if not escargs.args.force:
     raise e
 
-def AssertGE(actual, minimum):
+def AssertGE(actual, expected):
   global gHaveAsserted
   gHaveAsserted = True
-  if actual < minimum:
+  if actual < expected:
     Raise(esctypes.TestFailure(actual, expected))
 
 def AssertEQ(actual, expected):

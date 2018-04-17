@@ -42,7 +42,6 @@ DECSCLM = 4
 DECSCNM = 5
 DECTCEM = 25
 DECVCCM = 61
-DECVSSM = 69
 DECXRLM = 73
 MoreFix = 41  # Work around bug in more(1) (see details in test_DECSET_MoreFix)
 OPT_ALTBUF = 1047  # Switch to alt buf. DECRESET first clears the alt buf.
@@ -408,14 +407,14 @@ def DECRQCRA(Pid, Pp=None, rect=None):
 
 def DECRQM(mode, DEC):
   """Requests if a mode is set or not."""
-  AssertVTLevel(3,"DECRQSS")
+  AssertVTLevel(3,"DECRQM")
   if DEC:
     escio.WriteCSI(params=[ mode ], intermediate='$', prefix='?', final='p')
   else:
     escio.WriteCSI(params=[ mode ], intermediate='$', final='p')
 
 def DECRQSS(Pt):
-  AssertVTLevel(3,"DECRQSS")
+  AssertVTLevel(4,"DECRQSS")
   escio.WriteDCS("$q", Pt)
 
 def DECRESET(Pm):

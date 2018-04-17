@@ -6,6 +6,7 @@ from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, G
 from esctypes import Point, Rect
 
 class DECRQSSTests(object):
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECRQSS_DECSCA(self):
     esccmd.DECSCA(1)
@@ -13,7 +14,7 @@ class DECRQSSTests(object):
     result = escio.ReadDCS()
     AssertEQ(result, '1$r1"q')
 
-  @vtLevel(2)
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECRQSS_DECSCL(self):
     esccmd.DECSCL(65, 1)
@@ -21,6 +22,7 @@ class DECRQSSTests(object):
     result = escio.ReadDCS()
     AssertEQ(result, '1$r6' + str(escargs.args.max_vt_level) + ';1"p')
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECRQSS_DECSTBM(self):
     esccmd.DECSTBM(5, 6)
@@ -28,6 +30,7 @@ class DECRQSSTests(object):
     result = escio.ReadDCS()
     AssertEQ(result, "1$r5;6r")
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECRQSS_SGR(self):
     esccmd.SGR(1)
@@ -35,6 +38,7 @@ class DECRQSSTests(object):
     result = escio.ReadDCS()
     AssertEQ(result, "1$r0;1m")
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECRQSS_DECSCUSR(self):
     esccmd.DECSCUSR(4)
@@ -42,8 +46,8 @@ class DECRQSSTests(object):
     result = escio.ReadDCS()
     AssertEQ(result, "1$r4 q")
 
-  @knownBug(terminal="iTerm2", reason="Not implemented.")
   @vtLevel(4)
+  @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECRQSS_DECSLRM(self):
     """Note: not in xcode docs, but supported."""
     esccmd.DECSET(esccmd.DECLRMM)
