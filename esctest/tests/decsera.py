@@ -48,7 +48,7 @@ class DECSERATests(tests.fill_rectangle.FillRectangleTests):
   def test_DECSERA_invalidRectDoesNothing(self):
     self.fillRectangle_invalidRectDoesNothing()
 
-  @knownBug(terminal="xterm",
+  @knownBug(terminal="notxterm",
             reason="xterm doesn't accept all default params for DECSERA, although it does work if there is a single semicolon")
   def test_DECSERA_defaultArgs(self):
     try:

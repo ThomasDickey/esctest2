@@ -117,7 +117,7 @@ class XtermWinopsTests(object):
                             original_size.height(),
                             original_size.width())
 
-  @knownBug(terminal="xterm",
+  @knownBug(terminal="notxterm",
       reason="GetDisplaySize reports an incorrect value")
   def test_XtermWinops_ResizePixels_ZeroWidth(self):
     """Resize the window to a pixel size, setting one parameter to 0. The
@@ -147,7 +147,7 @@ class XtermWinopsTests(object):
                             original_size.height(),
                             original_size.width())
 
-  @knownBug(terminal="xterm",
+  @knownBug(terminal="notxterm",
       reason="GetDisplaySize reports an incorrect value")
   def test_XtermWinops_ResizePixels_ZeroHeight(self):
     """Resize the window to a pixel size, setting one parameter to 0. The

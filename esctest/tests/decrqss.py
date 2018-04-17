@@ -14,7 +14,7 @@ class DECRQSSTests(object):
     AssertEQ(result, '1$r1"q')
 
   @vtLevel(2)
-  @knownBug(terminal="xterm", reason="DECSCL incorrectly always sets 8 bit controls")
+  @knownBug(terminal="notxterm", reason="DECSCL incorrectly always sets 8 bit controls")
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECRQSS_DECSCL(self):
     esccmd.DECSCL(65, 1)
@@ -37,7 +37,7 @@ class DECRQSSTests(object):
     AssertEQ(result, "1$r0;1m")
 
   @knownBug(terminal="iTerm2", reason="Not implemented.")
-  @knownBug(terminal="xterm", reason="DECRQSS always misreports DECSCUSR")
+  @knownBug(terminal="notxterm", reason="DECRQSS always misreports DECSCUSR")
   def test_DECRQSS_DECSCUSR(self):
     esccmd.DECSCUSR(4)
     esccmd.DECRQSS(" q")
