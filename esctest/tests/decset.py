@@ -138,9 +138,9 @@ class DECSETTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "X" ])
 
   # This test is flaky so I turned off shouldTry to avoid false failures.
-  @knownBug(terminal="xterm",
+  @knownBug(terminal="notxterm",
             reason="xterm produces incorrect output if ABC is written too quickly. A pause before writing the C produces correct output.",
-            shouldTry=False)
+            shouldTry=True)
   def test_DECSET_DECAWM(self):
     """Auto-wrap mode."""
     size = GetScreenSize()
@@ -181,8 +181,8 @@ class DECSETTests(object):
     escio.Write("x")
     AssertEQ(GetCursorPosition().x(), 2)
 
-  # xterm doesn't implement auto-wrap mode when wide characters are disabled.
-  @optionRejects(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
+  # Fixed in xterm #332 (didn't implement auto-wrap mode with margins when wide characters are disabled).
+  @optionRejects(terminal="notxterm", option=escargs.DISABLE_WIDE_CHARS)
   def test_DECSET_DECAWM_OnRespectsLeftRightMargin(self):
     """Auto-wrap mode on respects left-right margins."""
     esccmd.DECSET(esccmd.DECLRMM)
@@ -436,7 +436,7 @@ class DECSETTests(object):
     self.doAltBuftest(esccmd.OPT_ALTBUF_CURSOR, True, True, True)
 
   # xterm doesn't implement auto-wrap mode when wide characters are disabled.
-  @optionRejects(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
+  @optionRejects(terminal="notxterm", option=escargs.DISABLE_WIDE_CHARS)
   def test_DECSET_DECLRMM(self):
     """Left-right margin. This is tested extensively in many other places as well."""
     # Turn on margins and write.
