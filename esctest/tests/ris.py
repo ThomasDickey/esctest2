@@ -62,8 +62,7 @@ class RISTests(object):
     esccmd.DECSET(esccmd.ALTBUF)
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "a" ])
 
-  @knownBug(terminal="xterm",
-            reason="xterm seems to check initflags rather than flags in ReallyReset() (bug reported)")
+  # fixed in xterm #322
   def test_RIS_ResetDECCOLM(self):
     esccmd.DECSET(esccmd.Allow80To132)
     esccmd.DECSET(esccmd.DECCOLM)

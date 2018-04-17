@@ -53,6 +53,22 @@ def GetWindowSizePixels():
   AssertTrue(len(params) >= 3)
   return Size(params[2], params[1])
 
+def GetScreenSizePixels():
+  """Returns a Size giving the screen's size in pixels."""
+  esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_SCREEN_SIZE_PIXELS)
+  params = escio.ReadCSI("t")
+  AssertTrue(params[0] == 5)
+  AssertTrue(len(params) >= 3)
+  return Size(params[2], params[1])
+
+def GetCharSizePixels():
+  """Returns a Size giving the font's character-size in pixels."""
+  esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_CHAR_SIZE_PIXELS)
+  params = escio.ReadCSI("t")
+  AssertTrue(params[0] == 6)
+  AssertTrue(len(params) >= 3)
+  return Size(params[2], params[1])
+
 def GetWindowPosition():
   """Returns a Point giving the window's origin in screen pixels."""
   esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_WINDOW_POSITION)
@@ -161,6 +177,7 @@ def GetChecksumOfRect(rect):
   i += 2
 
   hex_checksum = params[i:]
+  # LogInfo("GetChecksum " + str_pid + " = " + hex_checksum)
   return int(hex_checksum, 16)
 
 def vtLevel(minimum):

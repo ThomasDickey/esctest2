@@ -51,6 +51,12 @@ import time
 # TODO: test DECANM. It sets the font to USASCII and sets VT100 mode
 class DECSETTests(object):
   def test_DECSET_DECCOLM(self):
+
+    """DECNCSM - No Clearing Screen On Column Change"""
+    # Ensure this is reset from other tests.  Otherwise DECCOLM will not
+    # erase the screen.
+    esccmd.DECRESET(esccmd.DECNCSM)
+
     """Set 132 column mode."""
     # From the docs:
     # When the terminal receives the sequence, the screen is erased and the
@@ -62,7 +68,7 @@ class DECSETTests(object):
 
     # Write something to verify that it gets erased
     esccmd.CUP(Point(5, 5))
-    escio.Write("x")
+    escio.Write("xyz")
 
     # Set left-right and top-bottom margins to ensure they're removed.
     esccmd.DECSTBM(1, 2)

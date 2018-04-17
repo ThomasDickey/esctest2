@@ -21,6 +21,7 @@
 #     XTerm extension, same as ESC 7 but can be disabled by a resource.
 import esc
 import esccmd
+import escargs
 import escio
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, Rect, knownBug
 from esctypes import Point
@@ -133,7 +134,11 @@ class SaveRestoreCursorTests(object):
     # See if we're wrapping.
     esccmd.CUP(Point(GetScreenSize().width() - 1, 1))
     escio.Write("abcd")
-    AssertEQ(GetCursorPosition().y(), 2)
+    if escargs.args.expected_terminal == "xterm":
+      # see bug-fix in xterm #328
+      AssertEQ(GetCursorPosition().y(), 1)
+    else:
+      AssertEQ(GetCursorPosition().y(), 2)
 
   def test_SaveRestoreCursor_ReverseWrapNotAffected(self):
     # Turn on reverse wrap and save
