@@ -1,6 +1,6 @@
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, vtLevel
 from esctypes import Point, Rect
 
 class CHATests(object):
@@ -37,6 +37,7 @@ class CHATests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 3)
 
+  @vtLevel(4)
   def test_CHA_IgnoresScrollRegion(self):
     """CHA ignores scroll regions."""
     # Set a scroll region.
@@ -48,6 +49,7 @@ class CHATests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 3)
 
+  @vtLevel(4)
   def test_CHA_RespectsOriginMode(self):
     """CHA is relative to left margin in origin mode."""
     # Set a scroll region.
@@ -85,5 +87,5 @@ class CHATests(object):
 
     # Make sure there's an X at 5,6
     AssertScreenCharsInRectEqual(Rect(5, 6, 5, 6),
-                                 [ "X" ])
+                                 ["X"])
 

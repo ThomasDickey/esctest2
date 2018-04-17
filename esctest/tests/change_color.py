@@ -1,8 +1,6 @@
-from esc import NUL
 import esccmd
 import escio
 from escutil import AssertEQ, knownBug
-from esctypes import Rect
 
 class ChangeColorTests(object):
   """The color numbers correspond to the ANSI colors 0-7, their bright versions

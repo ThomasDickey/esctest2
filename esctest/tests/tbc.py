@@ -1,4 +1,4 @@
-from esc import ESC, TAB
+from esc import TAB
 import esccmd
 import escio
 from escutil import AssertEQ, GetCursorPosition

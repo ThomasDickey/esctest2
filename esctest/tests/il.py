@@ -2,7 +2,7 @@ from esc import NUL
 import esccmd
 import escio
 from esctypes import Point, Rect
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize
+from escutil import AssertScreenCharsInRectEqual, GetScreenSize, vtLevel
 
 class ILTests(object):
   def prepare_wide(self):
@@ -24,11 +24,11 @@ class ILTests(object):
 
   def prepare_region(self):
     # The capital letters are in the scroll region
-    lines = [ "abcde",
-              "fGHIj",
-              "kLMNo",
-              "pQRSt",
-              "uvwxy" ]
+    lines = ["abcde",
+             "fGHIj",
+             "kLMNo",
+             "pQRSt",
+             "uvwxy"]
     for i in xrange(len(lines)):
       esccmd.CUP(Point(1, i + 1))
       escio.Write(lines[i])
@@ -40,27 +40,30 @@ class ILTests(object):
     # Place cursor on the 'H'
     esccmd.CUP(Point(3, 2))
 
+  @vtLevel(4)
   def test_IL_DefaultParam(self):
     """Should insert a single line below the cursor."""
-    self.prepare_wide();
+    self.prepare_wide()
     esccmd.IL()
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 4),
-                                 [ "abcde",
-                                   "fghij",
-                                   NUL * 5,
-                                   "klmno" ])
+                                 ["abcde",
+                                  "fghij",
+                                  NUL * 5,
+                                  "klmno"])
 
+  @vtLevel(4)
   def test_IL_ExplicitParam(self):
     """Should insert two lines below the cursor."""
-    self.prepare_wide();
+    self.prepare_wide()
     esccmd.IL(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5),
-                                 [ "abcde",
-                                   "fghij",
-                                   NUL * 5,
-                                   NUL * 5,
-                                   "klmno" ])
+                                 ["abcde",
+                                  "fghij",
+                                  NUL * 5,
+                                  NUL * 5,
+                                  "klmno"])
 
+  @vtLevel(4)
   def test_IL_ScrollsOffBottom(self):
     """Lines should be scrolled off the bottom of the screen."""
     height = GetScreenSize().height()
@@ -74,11 +77,12 @@ class ILTests(object):
     for i in xrange(height):
       y = i + 1
       if y == 2:
-        AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [ NUL * 4 ])
+        AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [NUL * 4])
       else:
-        AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [ "%04d" % expected ])
+        AssertScreenCharsInRectEqual(Rect(1, y, 4, y), ["%04d" % expected])
         expected += 1
 
+  @vtLevel(4)
   def test_IL_RespectsScrollRegion(self):
     """When IL is invoked while the cursor is within the scroll region, lines
     within the scroll regions hould be scrolled down; lines within should
@@ -90,12 +94,13 @@ class ILTests(object):
     esccmd.DECSTBM()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5),
-                                 [ "abcde",
-                                   "f" + NUL * 3 + "j",
-                                   "kGHIo",
-                                   "pLMNt",
-                                   "uvwxy" ])
+                                 ["abcde",
+                                  "f" + NUL * 3 + "j",
+                                  "kGHIo",
+                                  "pLMNt",
+                                  "uvwxy"])
 
+  @vtLevel(4)
   def test_IL_RespectsScrollRegion_Over(self):
     """Scroll by more than the available space in a region."""
     self.prepare_region()
@@ -105,12 +110,13 @@ class ILTests(object):
     esccmd.DECSTBM()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5),
-                                 [ "abcde",
-                                   "f" + NUL * 3 + "j",
-                                   "k" + NUL * 3 + "o",
-                                   "p" + NUL * 3 + "t",
-                                   "uvwxy" ])
+                                 ["abcde",
+                                  "f" + NUL * 3 + "j",
+                                  "k" + NUL * 3 + "o",
+                                  "p" + NUL * 3 + "t",
+                                  "uvwxy"])
 
+  @vtLevel(4)
   def test_IL_AboveScrollRegion(self):
     """IL is a no-op outside the scroll region."""
     self.prepare_region()
@@ -121,8 +127,8 @@ class ILTests(object):
     esccmd.DECSTBM()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5),
-                                 [ "abcde",
-                                   "fGHIj",
-                                   "kLMNo",
-                                   "pQRSt",
-                                   "uvwxy" ])
+                                 ["abcde",
+                                  "fGHIj",
+                                  "kLMNo",
+                                  "pQRSt",
+                                  "uvwxy"])

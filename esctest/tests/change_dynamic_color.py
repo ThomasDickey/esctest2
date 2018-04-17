@@ -1,8 +1,6 @@
-from esc import NUL
 import esccmd
 import escio
 from escutil import AssertEQ, knownBug
-from esctypes import Rect
 
 class ChangeDynamicColorTests(object):
   @knownBug(terminal="iTerm2", reason="Color reporting not implemented.", shouldTry=False)

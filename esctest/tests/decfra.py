@@ -1,5 +1,4 @@
 import tests.fill_rectangle
-import esc
 import esccmd
 
 CHARACTER = "%"

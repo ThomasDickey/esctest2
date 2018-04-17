@@ -1,4 +1,4 @@
-from esc import NUL, ST, S8C1T, S7C1T
+from esc import S8C1T, S7C1T
 import escargs
 import esccmd
 import escio

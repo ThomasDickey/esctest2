@@ -1,10 +1,6 @@
-import base64
-from esc import NUL
-import escargs
 import esccmd
 import escio
-from escutil import AssertEQ, knownBug, optionRequired
-from esctypes import Rect
+from escutil import AssertEQ, knownBug
 
 class ResetColorTests(object):
   @knownBug(terminal="iTerm2", reason="Query not implemented.")

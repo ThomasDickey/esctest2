@@ -1,7 +1,7 @@
 from esc import blank
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, Point, Rect, intentionalDeviationFromSpec, knownBug, optionRequired, vtLevel
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, Point, Rect, knownBug, vtLevel
 
 class DECBITests(object):
   """Move cursor back or scroll data within margins right."""
@@ -22,11 +22,11 @@ class DECBITests(object):
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   @vtLevel(4)
   def test_DECBI_Scrolls(self):
-    strings = [ "abcde",
-                "fghij",
-                "klmno",
-                "pqrst",
-                "uvwxy" ]
+    strings = ["abcde",
+               "fghij",
+               "klmno",
+               "pqrst",
+               "uvwxy"]
     y = 3
     for s in strings:
       esccmd.CUP(Point(2, y))
@@ -41,17 +41,18 @@ class DECBITests(object):
     esccmd.DECBI()
 
     AssertScreenCharsInRectEqual(Rect(2, 3, 6, 7),
-                                 [ "abcde",
-                                   "f" + blank() + "ghj",
-                                   "k" + blank() + "lmo",
-                                   "p" + blank() + "qrt",
-                                   "uvwxy" ])
+                                 ["abcde",
+                                  "f" + blank() + "ghj",
+                                  "k" + blank() + "lmo",
+                                  "p" + blank() + "qrt",
+                                  "uvwxy"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
-  @knownBug(terminal="xterm",
-            reason="While the docs for DECBI are self-contradictory, I believe the cursor should move in this case. xterm does not move it.")
   def test_DECBI_LeftOfMargin(self):
+    """Test DECBI (back-index) when the cursor is before the left-margin.
+
+    DEC STD 070 says DECBI can move when outside the margins."""
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(3, 5)
     esccmd.CUP(Point(2, 1))
@@ -60,16 +61,15 @@ class DECBITests(object):
 
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   @vtLevel(4)
-  @intentionalDeviationFromSpec(terminal="xterm",
-                                reason="The spec says 'If the cursor is at the left border of the page when the terminal receives DECBI, then the terminal ignores DECBI', but that only makes sense when the left margin is not 0.")
   def test_DECBI_WholeScreenScrolls(self):
-    """The spec is confusing and contradictory. It first says "If the cursor is
-    at the left margin, then all screen data within the margin moves one column
-    to the right" and then says "DECBI is not affected by the margins." I don't
-    know what they could mean by the second part."""
+    """Test DECBI (back-index) when the cursor is before the left-margin, but at the left edge of the screen.
+
+    Refer to DEC STD 070, which says if the cursor is outside the margins,
+    at the left edge of the page (which xterm equates with its screen),
+    the command is ignored."""
     escio.Write("x")
     esccmd.CUP(Point(1, 1))
     esccmd.DECBI()
-    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [ blank() + "x" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [blank() + "x"])
 
 

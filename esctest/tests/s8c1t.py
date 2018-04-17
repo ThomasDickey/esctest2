@@ -1,13 +1,14 @@
-from esc import FF, NUL, S7C1T, S8C1T, blank
+from esc import S7C1T, S8C1T, blank
 import escargs
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, optionRequired
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, knownBug, optionRequired, vtLevel
 from esctypes import Point, Rect
 
 # Most C1 codes have their own tests for 8-bit controls and are not duplicated here.
 
 class S8C1TTests(object):
+  @vtLevel(2)
   @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   def test_S8C1T_CSI(self):
@@ -18,6 +19,7 @@ class S8C1TTests(object):
     escio.use8BitControls = False
     AssertEQ(GetCursorPosition(), Point(1, 2))
 
+  @vtLevel(3)
   @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   def test_S8C1T_DCS(self):
@@ -30,6 +32,7 @@ class S8C1TTests(object):
     escio.use8BitControls = False
     AssertEQ(result, "1$r5;6r")
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2",
             reason="Protection not implemented.")
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
@@ -51,6 +54,6 @@ class S8C1TTests(object):
     esccmd.CUP(Point(1, 1))
     esccmd.ECH(3)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
-                                 [ blank() * 2 + "c" ])
+                                 [blank() * 2 + "c"])
 
 

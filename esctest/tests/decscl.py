@@ -1,7 +1,6 @@
-from esc import ESC, NUL
+from esc import NUL
 import esccmd
 import escio
-import esclog
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, AssertTrue, GetCursorPosition, GetScreenSize, knownBug, vtLevel
 from esctypes import InternalError, Point, Rect
 
@@ -13,8 +12,7 @@ RIS on change
 class DECSCLTests(object):
   """VT Level 1 doesn't have any distinguishing features that are testable that
   aren't also in level 2."""
-  @vtLevel(2)
-  @knownBug(terminal="xterm", reason="xterm always turns on 8-bit controls.", shouldTry=False)
+  @vtLevel(3)
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECSCL")
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECRQM", shouldTry=False)
   def test_DECSCL_Level2DoesntSupportDECRQM(self):
@@ -34,14 +32,12 @@ class DECSCLTests(object):
       AssertTrue(True)
 
   @vtLevel(2)
-  @knownBug(terminal="xterm", reason="xterm always turns on 8-bit controls.", shouldTry=False)
   def test_DSCSCL_Level2Supports7BitControls(self):
     esccmd.DECSCL(62, 1)
     esccmd.CUP(Point(2, 2))
     AssertEQ(GetCursorPosition(), Point(2, 2))
 
   @vtLevel(3)
-  @knownBug(terminal="xterm", reason="xterm always turns on 8-bit controls.", shouldTry=False)
   @knownBug(terminal="iTerm2", reason="Not implemented", shouldTry=False)
   def test_DSCSCL_Level3_SupportsDECRQMDoesntSupportDECSLRM(self):
     # Set level 3 conformance
@@ -59,7 +55,6 @@ class DECSCLTests(object):
     AssertEQ(GetCursorPosition().x(), 8)
 
   @vtLevel(4)
-  @knownBug(terminal="xterm", reason="xterm always turns on 8-bit controls.", shouldTry=False)
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECSCL")
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECNCSM", shouldTry=False)
   def test_DECSCL_Level4_SupportsDECSLRMDoesntSupportDECNCSM(self):
@@ -75,7 +70,7 @@ class DECSCLTests(object):
     esccmd.CUP(Point(1, 1))
     escio.Write("1")
     esccmd.DECSET(esccmd.DECCOLM)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
 
     # Make sure DECSLRM succeeds.
     esccmd.DECSET(esccmd.DECLRMM)
@@ -85,7 +80,6 @@ class DECSCLTests(object):
     AssertEQ(GetCursorPosition().x(), 6)
 
   @vtLevel(5)
-  @knownBug(terminal="xterm", reason="xterm always turns on 8-bit controls.", shouldTry=False)
   @knownBug(terminal="iTerm2", reason="Not implemented", shouldTry=False)
   def test_DECSCL_Level5_SupportsDECNCSM(self):
     # Set level 5 conformance
@@ -97,9 +91,9 @@ class DECSCLTests(object):
     esccmd.CUP(Point(1, 1))
     escio.Write("1")
     esccmd.DECSET(esccmd.DECCOLM)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "1" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["1"])
 
-  @vtLevel(3)
+  @vtLevel(4)
   @knownBug(terminal="xterm", reason="xterm always turns on 8-bit controls.", shouldTry=False)
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECSCL")
   def test_DECSCL_RISOnChange(self):
@@ -122,7 +116,7 @@ class DECSCLTests(object):
     esccmd.SM(esccmd.IRM)
 
     esccmd.DECSCL(61)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
 
     # Ensure saved cursor position is the origin
     esccmd.DECRC()
@@ -133,4 +127,4 @@ class DECSCLTests(object):
     escio.Write("a")
     esccmd.CUP(Point(1, 1))
     escio.Write("b")
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "b" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["b"])

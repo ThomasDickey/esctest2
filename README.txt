@@ -9,8 +9,19 @@ opinion."
 The tested set of control sequences are documented somewhat tersely at this URL:
 http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
 
-The official documentation for DEC-supported escape sequences is here:
-http://www.vt100.net/docs/vt510-rm/.
+In its references section, the xterm control sequences summary lists several
+more extensive documents, with which developers are expected to be familiar.
+
+Among those are manuals for VT100 through VT420 and VT510, for example:
+http://www.vt100.net/docs/vt510-rm/
+
+DEC's standard for video terminals is here:
+http://www.bitsavers.org/pdf/dec/standards/EL-SM070-00_DEC_STD_070_Video_Systems_Reference_Manual_Dec91.pdf
+
+Some of the later programmer reference manuals do not agree with the standard in
+what appears to be an editorial blunder, as noted in the xterm control sequences 
+document. In cases where programmer manuals differ from with the video standards
+document, the latter is used.
 
 All tests are automatic; no user interaction is required. As a consequence, some
 control sequences cannot be tested. For example, it is impossible to examine the
@@ -20,9 +31,29 @@ cursor position; these form the bulk of the tests.
 
 Notes on xterm
 --------------
-You should build xterm yourself and configure it with --enable-dec-locator. Some
-tests will fail unless it is provided. Most other configuration settings are not
-tested and may or may not cause problems.
+These tests are sensitive to whether xterm was compiled with Unicode support and
+if it supports more than 16 colors. As of xterm patch 332, there are two sets of
+configuration options:
+
+Use these options when testing without Unicode:
+
+	--enable-dec-locator
+	--disable-256-color
+	--disable-direct-color
+	--disable-88-color
+	--disable-luit
+	--disable-wide-chars
+	--disable-mini-luit
+
+Use these options when testing with Unicode:
+
+	--enable-dec-locator
+	--disable-256-color
+	--disable-direct-color
+	--disable-88-color
+
+Most other configuration settings are not tested and may or may not cause
+problems.
 
 Notes on iTerm2
 ---------------
@@ -54,11 +85,6 @@ Selects the action that the test framework performs.
   Do not run any tests; instead, print the list of matching tests (per --include
   and --expected-terminal) that have known bugs. This is useful when looking for
   looking for bugs to fix in your terminal.
-
---disable-xterm-checksum-bug
-xterm's implementation of DECRQCRA (as of patch 314) contains a bug. DECRQCRA is
-essential to these tests. By default, a workaround for the bug is used. If it is
-fixed in the future, this flag should be given until the workaround is dropped.
 
 --include=regex
 Only tests whose name matches "regex" will be run.

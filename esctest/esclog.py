@@ -1,5 +1,4 @@
 #!/usr/bin/python2.7
-import argparse
 import escargs
 
 LOG_ERROR = 1
