@@ -5,6 +5,13 @@ from esctypes import Point, Rect
 from escutil import AssertScreenCharsInRectEqual, GetScreenSize, vtLevel
 
 class SDTests(object):
+  """Test SD (scroll down), referred to as PAN UP in DEC STD 070.
+
+  The DEC programmer reference manuals do not mention this, but ECMA-48
+  and DEC STD 070 both state that the "Active Position" (the cursor)
+  does not move along with the data.
+  """
+
   def prepare(self):
     """Sets the screen up as
     abcde
@@ -14,11 +21,11 @@ class SDTests(object):
     uvwxy
 
     With the cursor on the 'h'."""
-    lines = [ "abcde",
-              "fghij",
-              "klmno",
-              "pqrst",
-              "uvwxy" ]
+    lines = ["abcde",
+             "fghij",
+             "klmno",
+             "pqrst",
+             "uvwxy"]
     for i in xrange(len(lines)):
       y = i + 1
       line = lines[i]
@@ -31,11 +38,11 @@ class SDTests(object):
     """SD with no parameter should scroll the screen contents down one line."""
     self.prepare()
     esccmd.SD()
-    expected_lines = [ NUL * 5,
-                       "abcde",
-                       "fghij",
-                       "klmno",
-                       "pqrst" ]
+    expected_lines = [NUL * 5,
+                      "abcde",
+                      "fghij",
+                      "klmno",
+                      "pqrst"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -43,16 +50,20 @@ class SDTests(object):
     """SD should scroll the screen down by the number of lines given in the parameter."""
     self.prepare()
     esccmd.SD(2)
-    expected_lines = [ NUL * 5,
-                       NUL * 5,
-                       "abcde",
-                       "fghij",
-                       "klmno" ]
+    expected_lines = [NUL * 5,
+                      NUL * 5,
+                      "abcde",
+                      "fghij",
+                      "klmno"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
   def test_SD_CanClearScreen(self):
-    """An SD equal to the height of the screen clears it."""
+    """An SD equal to the height of the screen clears it.
+
+    Some older versions of xterm failed this test, due to an incorrect fix
+    for debugging-assertions in patch #318.  That was corrected in #332.
+    """
     # Fill the screen with 0001, 0002, ..., height. Fill expected_lines with empty rows.
     height = GetScreenSize().height()
     expected_lines = []
@@ -78,11 +89,11 @@ class SDTests(object):
     esccmd.SD(2)
     esccmd.DECSTBM()
 
-    expected_lines = [ "abcde",
-                       NUL * 5,
-                       NUL * 5,
-                       "fghij",
-                       "uvwxy" ]
+    expected_lines = ["abcde",
+                      NUL * 5,
+                      NUL * 5,
+                      "fghij",
+                      "uvwxy"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -95,11 +106,11 @@ class SDTests(object):
     esccmd.SD(2)
     esccmd.DECSTBM()
 
-    expected_lines = [ "abcde",
-                       NUL * 5,
-                       NUL * 5,
-                       "fghij",
-                       "uvwxy" ]
+    expected_lines = ["abcde",
+                      NUL * 5,
+                      NUL * 5,
+                      "fghij",
+                      "uvwxy"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -113,11 +124,11 @@ class SDTests(object):
     esccmd.SD(2)
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    expected_lines = [ "a" + NUL * 3 + "e",
-                       "f" + NUL * 3 + "j",
-                       "kbcdo",
-                       "pghit",
-                       "ulmny" ]
+    expected_lines = ["a" + NUL * 3 + "e",
+                      "f" + NUL * 3 + "j",
+                      "kbcdo",
+                      "pghit",
+                      "ulmny"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -132,13 +143,13 @@ class SDTests(object):
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    expected_lines = [ "a" + NUL * 3 + "e",
-                       "f" + NUL * 3 + "j",
-                       "kbcdo",
-                       "pghit",
-                       "ulmny",
-                       NUL + "qrs" + NUL,
-                       NUL + "vwx" + NUL ]
+    expected_lines = ["a" + NUL * 3 + "e",
+                      "f" + NUL * 3 + "j",
+                      "kbcdo",
+                      "pghit",
+                      "ulmny",
+                      NUL + "qrs" + NUL,
+                      NUL + "vwx" + NUL]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 7), expected_lines)
 
   @vtLevel(4)
@@ -154,11 +165,11 @@ class SDTests(object):
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    expected_lines = [ "abcde",
-                       "f" + NUL * 3 + "j",
-                       "k" + NUL * 3 + "o",
-                       "pghit",
-                       "uvwxy" ]
+    expected_lines = ["abcde",
+                      "f" + NUL * 3 + "j",
+                      "k" + NUL * 3 + "o",
+                      "pghit",
+                      "uvwxy"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -173,9 +184,9 @@ class SDTests(object):
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    expected_lines = [ "abcde",
-                       "f" + NUL * 3 + "j",
-                       "k" + NUL * 3 + "o",
-                       "p" + NUL * 3 + "t",
-                       "uvwxy" ]
+    expected_lines = ["abcde",
+                      "f" + NUL * 3 + "j",
+                      "k" + NUL * 3 + "o",
+                      "p" + NUL * 3 + "t",
+                      "uvwxy"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)

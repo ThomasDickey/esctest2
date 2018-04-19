@@ -70,7 +70,7 @@ class SaveRestoreCursorTests(object):
     esccmd.DECRESET(esccmd.DECOM)
 
     # Ensure the X was placed at the true origin
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "X" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["X"])
 
   @vtLevel(4)
   def test_SaveRestoreCursor_WorksInLRM(self, shouldWork=True):
@@ -92,7 +92,12 @@ class SaveRestoreCursorTests(object):
 
   def test_SaveRestoreCursor_AltVsMain(self):
     """Separate saved cursor in alternate screen versus main screen.
-    This is xterm-specific, not DEC."""
+
+    This is xterm-specific, not DEC, because DEC terminals did not implement
+    an alternate screen.  xterm maintains separate saved-cursor state for
+    the normal (main) and alternate screens so that it can restore the
+    position of the cursor in the normal screen when switching back from
+    the alternate screen."""
     esccmd.CUP(Point(2, 3))
     self.saveCursor()
 
@@ -124,9 +129,19 @@ class SaveRestoreCursorTests(object):
     # Write a protected character and try to erase it, which should fail.
     escio.Write("a")
     esccmd.DECSERA(1, 1, 1, 1)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "a" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["a"])
 
   def test_SaveRestoreCursor_Wrap(self):
+    """Test the position of the cursor after turning auto-wrap mode on and off.
+
+    According to DEC STD 070 (see description on page 5-139 as well as
+    pseudo-code on following pages), resetting auto-wrap mode resets the
+    terminal's last-column flag, which tells the terminal if it is in the
+    special wrap/last-column state.  Older versions of xterm did not
+    save/restore the last-column flag in DECRC, causing the cursor to be the
+    second column rather than the first when text is written "past" the
+    wrapping point.
+    """
     # Turn on wrap and save
     esccmd.DECSET(esccmd.DECAWM)
     self.saveCursor()
@@ -139,7 +154,6 @@ class SaveRestoreCursorTests(object):
     esccmd.CUP(Point(GetScreenSize().width() - 1, 1))
     escio.Write("abcd")
     if escargs.args.expected_terminal == "xterm":
-      # see bug-fix in xterm #328
       AssertEQ(GetCursorPosition().y(), 1)
     else:
       AssertEQ(GetCursorPosition().y(), 2)
@@ -173,4 +187,4 @@ class SaveRestoreCursorTests(object):
     escio.Write("a")
     esccmd.CUP(Point(1, 1))
     escio.Write("b")
-    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [ "b" + esc.NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), ["b" + esc.NUL])

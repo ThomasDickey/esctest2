@@ -13,12 +13,18 @@ import time
 
 class XtermWinopsTests(object):
   def delayAfterResize(self):
-    needsSleep = escargs.args.expected_terminal in [ "xterm" ]
+    needsSleep = escargs.args.expected_terminal in ["xterm"]
     if needsSleep:
       time.sleep(1)
 
+  def average_width(self, a, b):
+    return (a.width() + b.width()) / 2
+
+  def average_height(self, a, b):
+    return (a.height() + b.height()) / 2
+
   def test_XtermWinops_IconifyDeiconfiy(self):
-    needsSleep = escargs.args.expected_terminal in [ "xterm" ]
+    needsSleep = escargs.args.expected_terminal in ["xterm"]
     esccmd.XTERM_WINOPS(esccmd.WINOP_ICONIFY)
     if needsSleep:
       time.sleep(1)
@@ -30,7 +36,7 @@ class XtermWinopsTests(object):
     AssertEQ(GetIsIconified(), False)
 
   def test_XtermWinops_MoveToXY(self):
-    needsSleep = escargs.args.expected_terminal in [ "xterm" ]
+    needsSleep = escargs.args.expected_terminal in ["xterm"]
     esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, 0, 0)
     if needsSleep:
       time.sleep(0.1)
@@ -42,7 +48,7 @@ class XtermWinopsTests(object):
 
   def test_XtermWinops_MoveToXY_Defaults(self):
     """Default args are interpreted as 0s."""
-    needsSleep = escargs.args.expected_terminal in [ "xterm" ]
+    needsSleep = escargs.args.expected_terminal in ["xterm"]
     esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, 1, 1)
     if needsSleep:
       time.sleep(0.1)
@@ -64,18 +70,18 @@ class XtermWinopsTests(object):
       maximum_size = GetScreenSizePixels()
       original_size = GetWindowSizePixels()
       charcell_size = GetCharSizePixels()
-      desired_size = Size((maximum_size.width() + original_size.width()) / 2,
-			  (maximum_size.height() + original_size.height()) / 2)
+      desired_size = Size(self.average_width(maximum_size, original_size),
+                          self.average_height(maximum_size, original_size))
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      desired_size.height(),
-			      desired_size.width())
+                          desired_size.height(),
+                          desired_size.width())
       self.delayAfterResize()
       actual_size = GetWindowSizePixels()
       esclog.LogInfo("actual  size " + str(actual_size.height()) + "x" + str(actual_size.width()))
       esclog.LogInfo("desired size " + str(desired_size.height()) + "x" + str(desired_size.width()))
       error = Size(abs(actual_size.width() - desired_size.width()),
-		   abs(actual_size.height() - desired_size.height()))
+                   abs(actual_size.height() - desired_size.height()))
       max_error = 3
       esclog.LogInfo("error diff " + str(error.height()) + "x" + str(error.width()))
       esclog.LogInfo("chars diff " + str(charcell_size.height()) + "x" + str(charcell_size.width()))
@@ -83,28 +89,28 @@ class XtermWinopsTests(object):
       AssertTrue(error.height() <= (charcell_size.height() * max_error))
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      original_size.height(),
-			      original_size.width())
+                          original_size.height(),
+                          original_size.width())
       self.delayAfterResize()
     else:
       original_size = GetWindowSizePixels()
       desired_size = Size(400, 200)
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      desired_size.height(),
-			      desired_size.width())
+                          desired_size.height(),
+                          desired_size.width())
       # See if we're within 20px of the desired size on each dimension. It won't
       # be exact because most terminals snap to grid.
       actual_size = GetWindowSizePixels()
       error = Size(abs(actual_size.width() - desired_size.width()),
-		   abs(actual_size.height() - desired_size.height()))
+                   abs(actual_size.height() - desired_size.height()))
       max_error = 20
       AssertTrue(error.width() <= max_error)
       AssertTrue(error.height() <= max_error)
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      original_size.height(),
-			      original_size.width())
+                          original_size.height(),
+                          original_size.width())
 
   def test_XtermWinops_ResizePixels_OmittedHeight(self):
     """Resize the window to a pixel size, omitting one parameter. The size
@@ -117,15 +123,15 @@ class XtermWinopsTests(object):
       desired_size = Size(maximum_size.width(), original_size.height())
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      None,
-			      desired_size.width())
+                          None,
+                          desired_size.width())
       self.delayAfterResize()
 
       actual_size = GetWindowSizePixels()
       esclog.LogInfo("actual size " + str(actual_size.height()) + "x" + str(actual_size.width()))
       esclog.LogInfo("desired size " + str(desired_size.height()) + "x" + str(desired_size.width()))
       error = Size(abs(actual_size.width() - desired_size.width()),
-		   abs(actual_size.height() - desired_size.height()))
+                   abs(actual_size.height() - desired_size.height()))
       max_error = 3
       esclog.LogInfo("error diff " + str(error.height()) + "x" + str(error.width()))
       esclog.LogInfo("chars diff " + str(charcell_size.height()) + "x" + str(charcell_size.width()))
@@ -133,28 +139,28 @@ class XtermWinopsTests(object):
       AssertTrue(error.height() <= (charcell_size.height() * max_error))
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      original_size.height(),
-			      original_size.width())
+                          original_size.height(),
+                          original_size.width())
       self.delayAfterResize()
     else:
       original_size = GetWindowSizePixels()
       desired_size = Size(400, original_size.height())
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      None,
-			      desired_size.width())
+                          None,
+                          desired_size.width())
       # See if we're within 20px of the desired size. It won't be exact because
       # most terminals snap to grid.
       actual_size = GetWindowSizePixels()
       error = Size(abs(actual_size.width() - desired_size.width()),
-		   abs(actual_size.height() - desired_size.height()))
+                   abs(actual_size.height() - desired_size.height()))
       max_error = 20
       AssertTrue(error.width() <= max_error)
       AssertTrue(error.height() <= max_error)
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      original_size.height(),
-			      original_size.width())
+                          original_size.height(),
+                          original_size.width())
 
   def test_XtermWinops_ResizePixels_OmittedWidth(self):
     """Resize the window to a pixel size, omitting one parameter. The size
@@ -165,10 +171,10 @@ class XtermWinopsTests(object):
       charcell_size = GetCharSizePixels()
 
       desired_size = Size(original_size.width(),
-			  (maximum_size.height() + original_size.height()) / 2)
+                          self.average_height(maximum_size, original_size))
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			  desired_size.height())
+                          desired_size.height())
       self.delayAfterResize()
 
       actual_size = GetWindowSizePixels()
@@ -176,7 +182,7 @@ class XtermWinopsTests(object):
       esclog.LogInfo("actual  size " + str(actual_size.height()) + "x" + str(actual_size.width()))
       esclog.LogInfo("desired size " + str(desired_size.height()) + "x" + str(desired_size.width()))
       error = Size(abs(actual_size.width() - desired_size.width()),
-		   abs(actual_size.height() - desired_size.height()))
+                   abs(actual_size.height() - desired_size.height()))
       max_error = 2
       esclog.LogInfo("error   diff " + str(error.height()) + "x" + str(error.width()))
       esclog.LogInfo("char    size " + str(charcell_size.height()) + "x" + str(charcell_size.width()))
@@ -184,27 +190,27 @@ class XtermWinopsTests(object):
       AssertTrue(error.height() <= (charcell_size.height() * max_error))
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      original_size.height(),
-			      original_size.width())
+                          original_size.height(),
+                          original_size.width())
       self.delayAfterResize()
     else:
       original_size = GetWindowSizePixels()
       desired_size = Size(original_size.width(), 200)
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      desired_size.height())
+                          desired_size.height())
       # See if we're within 20px of the desired size. It won't be exact because
       # most terminals snap to grid.
       actual_size = GetWindowSizePixels()
       error = Size(abs(actual_size.width() - desired_size.width()),
-		   abs(actual_size.height() - desired_size.height()))
+                   abs(actual_size.height() - desired_size.height()))
       max_error = 20
       AssertTrue(error.width() <= max_error)
       AssertTrue(error.height() <= max_error)
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      original_size.height(),
-			      original_size.width())
+                          original_size.height(),
+                          original_size.width())
 
   def test_XtermWinops_ResizePixels_ZeroWidth(self):
     """Resize the window to a pixel size, setting one parameter to 0. The
@@ -215,10 +221,10 @@ class XtermWinopsTests(object):
       charcell_size = GetCharSizePixels()
 
       # Set height and maximize width.
-      desired_height = (maximum_size.height() + original_size.height()) / 2
+      desired_height = self.average_height(maximum_size, original_size)
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      desired_height,
-			      0)
+                          desired_height,
+                          0)
       self.delayAfterResize()
 
       # Make sure the height changed as requested.
@@ -236,8 +242,8 @@ class XtermWinopsTests(object):
 
       # Restore to original size.
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      original_size.height(),
-			      original_size.width())
+                          original_size.height(),
+                          original_size.width())
       self.delayAfterResize()
     else:
       original_size = GetWindowSizePixels()
@@ -245,8 +251,8 @@ class XtermWinopsTests(object):
       # Set height and maximize width.
       desired_height = 200
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      desired_height,
-			      0)
+                          desired_height,
+                          0)
 
       # Make sure the height changed as requested.
       max_error = 20
@@ -262,8 +268,8 @@ class XtermWinopsTests(object):
 
       # Restore to original size.
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      original_size.height(),
-			      original_size.width())
+                          original_size.height(),
+                          original_size.width())
 
   def test_XtermWinops_ResizePixels_ZeroHeight(self):
     """Resize the window to a pixel size, setting one parameter to 0. The
@@ -274,10 +280,10 @@ class XtermWinopsTests(object):
       charcell_size = GetCharSizePixels()
 
       # Set height and maximize width.
-      desired_width = (maximum_size.width() + original_size.width()) / 2
+      desired_width = self.average_width(maximum_size, original_size)
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      0,
-			      desired_width)
+                          0,
+                          desired_width)
       self.delayAfterResize()
 
       # Make sure the height changed as requested.
@@ -295,8 +301,8 @@ class XtermWinopsTests(object):
 
       # Restore to original size.
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      original_size.height(),
-			      original_size.width())
+                          original_size.height(),
+                          original_size.width())
       self.delayAfterResize()
     else:
       original_size = GetWindowSizePixels()
@@ -304,8 +310,8 @@ class XtermWinopsTests(object):
       # Set height and maximize width.
       desired_width = 400
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      0,
-			      desired_width)
+                          0,
+                          desired_width)
 
       # Make sure the height changed as requested.
       max_error = 20
@@ -321,20 +327,20 @@ class XtermWinopsTests(object):
 
       # Restore to original size.
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-			      original_size.height(),
-			      original_size.width())
+                          original_size.height(),
+                          original_size.width())
 
   def test_XtermWinops_ResizeChars_BothParameters(self):
     """Resize the window to a character size, giving both parameters."""
     if escargs.args.expected_terminal == "xterm":
       maximum_size = GetDisplaySize()  # In characters
       original_size = GetScreenSize()  # In characters
-      desired_size = Size((maximum_size.width() + original_size.width()) / 2,
-			  (maximum_size.height() + original_size.height()) / 2)
+      desired_size = Size(self.average_width(maximum_size, original_size),
+                          self.average_height(maximum_size, original_size))
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_CHARS,
-			      desired_size.height(),
-			      desired_size.width())
+                          desired_size.height(),
+                          desired_size.width())
       self.delayAfterResize()
 
       actual_size = GetScreenSize()
@@ -347,8 +353,8 @@ class XtermWinopsTests(object):
       desired_size = Size(20, 21)
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_CHARS,
-			      desired_size.height(),
-			      desired_size.width())
+                          desired_size.height(),
+                          desired_size.width())
       AssertEQ(GetScreenSize(), desired_size)
 
   def test_XtermWinops_ResizeChars_ZeroWidth(self):
@@ -360,23 +366,23 @@ class XtermWinopsTests(object):
       desired_size = Size(maximum_size.width(), original_size.height())
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_CHARS,
-			      desired_size.height(),
-			      0)
+                          desired_size.height(),
+                          0)
       self.delayAfterResize()
 
       max_error = 3
       actual_size = GetScreenSize()
       esclog.LogInfo("actual  size " + str(actual_size.height()) + "x" + str(actual_size.width()))
       esclog.LogInfo("desired size " + str(desired_size.height()) + "x" + str(desired_size.width()))
-      AssertTrue(actual_size.width() >= desired_size.width() - max_error)
+      AssertTrue(abs(actual_size.width() - desired_size.width()) <= max_error)
       AssertTrue(actual_size.height() == desired_size.height())
     else:
       max_size = GetDisplaySize()
       desired_size = Size(max_size.width(), 21)
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_CHARS,
-			      desired_size.height(),
-			      0)
+                          desired_size.height(),
+                          0)
       AssertEQ(GetScreenSize(), desired_size)
 
   def test_XtermWinops_ResizeChars_ZeroHeight(self):
@@ -388,8 +394,8 @@ class XtermWinopsTests(object):
       desired_size = Size(original_size.width(), maximum_size.height())
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_CHARS,
-			      0,
-			      desired_size.width())
+                          0,
+                          desired_size.width())
       self.delayAfterResize()
 
       max_error = 3
@@ -397,14 +403,14 @@ class XtermWinopsTests(object):
       esclog.LogInfo("actual  size " + str(actual_size.height()) + "x" + str(actual_size.width()))
       esclog.LogInfo("desired size " + str(desired_size.height()) + "x" + str(desired_size.width()))
       AssertTrue(actual_size.width() == desired_size.width())
-      AssertTrue(actual_size.height() >= desired_size.height() - max_error)
+      AssertTrue(abs(actual_size.height() - desired_size.height()) <= max_error)
     else:
       max_size = GetDisplaySize()
       desired_size = Size(20, max_size.height())
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_CHARS,
-			      0,
-			      desired_size.width())
+                          0,
+                          desired_size.width())
       AssertEQ(GetScreenSize(), desired_size)
 
   def test_XtermWinops_ResizeChars_DefaultWidth(self):
@@ -413,7 +419,7 @@ class XtermWinopsTests(object):
       desired_size = original_size
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_CHARS,
-			      desired_size.height())
+                          desired_size.height())
       self.delayAfterResize()
 
       actual_size = GetScreenSize()
@@ -425,17 +431,19 @@ class XtermWinopsTests(object):
       desired_size = Size(original_size.width(), 21)
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_CHARS,
-			      desired_size.height())
+                          desired_size.height())
       AssertEQ(GetScreenSize(), desired_size)
 
   def test_XtermWinops_ResizeChars_DefaultHeight(self):
     if escargs.args.expected_terminal == "xterm":
       original_size = GetScreenSize()
-      desired_size = original_size
+      display_size = GetDisplaySize()
+      desired_size = Size(self.average_width(original_size, display_size),
+                          original_size.height())
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_CHARS,
-			      None,
-			      desired_size.width())
+                          None,
+                          desired_size.width())
       self.delayAfterResize()
 
       actual_size = GetScreenSize()
@@ -447,8 +455,8 @@ class XtermWinopsTests(object):
       desired_size = Size(20, original_size.height())
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_CHARS,
-			      None,
-			      desired_size.width())
+                          None,
+                          desired_size.width())
       AssertEQ(GetScreenSize(), desired_size)
 
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -461,8 +469,8 @@ class XtermWinopsTests(object):
       esclog.LogInfo("actual size " + str(actual_size.height()) + "x" + str(actual_size.width()))
       esclog.LogInfo("display size " + str(display_size.height()) + "x" + str(display_size.width()))
       esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_EXIT)
-      AssertTrue(actual_size.width() >= display_size.width() - max_error)
-      AssertTrue(actual_size.height() >= display_size.height() - max_error)
+      AssertTrue(abs(actual_size.width() - display_size.width()) <= max_error)
+      AssertTrue(abs(actual_size.height() - display_size.height()) <= max_error)
     else:
       esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_HV)
       AssertEQ(GetScreenSize(), GetDisplaySize())
@@ -485,7 +493,7 @@ class XtermWinopsTests(object):
       display_size = GetDisplaySize()
       original_size = GetScreenSize()
       expected_size = Size(width=display_size.width(),
-			   height=original_size.height())
+                           height=original_size.height())
       esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_H)
       AssertEQ(GetScreenSize(), expected_size)
 
@@ -507,7 +515,7 @@ class XtermWinopsTests(object):
       display_size = GetDisplaySize()
       original_size = GetScreenSize()
       expected_size = Size(width=original_size.width(),
-			   height=display_size.height())
+                           height=display_size.height())
       esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_V)
       AssertEQ(GetScreenSize(), expected_size)
 
@@ -519,7 +527,7 @@ class XtermWinopsTests(object):
 
       # Enter fullscreen
       esccmd.XTERM_WINOPS(esccmd.WINOP_FULLSCREEN,
-			      esccmd.WINOP_FULLSCREEN_ENTER)
+                          esccmd.WINOP_FULLSCREEN_ENTER)
       time.sleep(1)
       actual_size = GetScreenSize()
       esclog.LogInfo("actual size " + str(actual_size.height()) + "x" + str(actual_size.width()))
@@ -529,15 +537,15 @@ class XtermWinopsTests(object):
       # fit into a fullscreen display, so there's going to be a difference to
       # allow for.
       max_error = 5
-      AssertTrue(actual_size.width() >= display_size.width() - max_error)
-      AssertTrue(actual_size.height() >= display_size.height() - max_error)
+      AssertTrue(abs(actual_size.width() - display_size.width()) <= max_error)
+      AssertTrue(abs(actual_size.height() - display_size.height()) <= max_error)
 
       AssertTrue(actual_size.width() >= original_size.width())
       AssertTrue(actual_size.height() >= original_size.height())
 
       # Exit fullscreen
       esccmd.XTERM_WINOPS(esccmd.WINOP_FULLSCREEN,
-			      esccmd.WINOP_FULLSCREEN_EXIT)
+                          esccmd.WINOP_FULLSCREEN_EXIT)
       # It would be nice if window managers (which control this detail) kept
       # track of the unmaximized size of windows, but they don't.  And they don't
       # care much about the window-manager hints which ask for a regular give of
@@ -551,7 +559,7 @@ class XtermWinopsTests(object):
 
       # Toggle in
       esccmd.XTERM_WINOPS(esccmd.WINOP_FULLSCREEN,
-			      esccmd.WINOP_FULLSCREEN_TOGGLE)
+                          esccmd.WINOP_FULLSCREEN_TOGGLE)
       actual_size = GetScreenSize()
       esclog.LogInfo("actual size " + str(actual_size.height()) + "x" + str(actual_size.width()))
       AssertTrue(actual_size.width() >= original_size.width())
@@ -559,7 +567,7 @@ class XtermWinopsTests(object):
 
       # Toggle out
       esccmd.XTERM_WINOPS(esccmd.WINOP_FULLSCREEN,
-			      esccmd.WINOP_FULLSCREEN_TOGGLE)
+                          esccmd.WINOP_FULLSCREEN_TOGGLE)
       actual_size = GetScreenSize()
       esclog.LogInfo("actual size " + str(actual_size.height()) + "x" + str(actual_size.width()))
       AssertTrue(actual_size.width() >= original_size.width())
@@ -570,7 +578,7 @@ class XtermWinopsTests(object):
 
       # Enter fullscreen
       esccmd.XTERM_WINOPS(esccmd.WINOP_FULLSCREEN,
-			      esccmd.WINOP_FULLSCREEN_ENTER)
+                          esccmd.WINOP_FULLSCREEN_ENTER)
       time.sleep(1)
       actual_size = GetScreenSize()
       AssertTrue(actual_size.width() >= display_size.width())
@@ -581,12 +589,12 @@ class XtermWinopsTests(object):
 
       # Exit fullscreen
       esccmd.XTERM_WINOPS(esccmd.WINOP_FULLSCREEN,
-			      esccmd.WINOP_FULLSCREEN_EXIT)
+                          esccmd.WINOP_FULLSCREEN_EXIT)
       AssertEQ(GetScreenSize(), original_size)
 
       # Toggle in
       esccmd.XTERM_WINOPS(esccmd.WINOP_FULLSCREEN,
-			      esccmd.WINOP_FULLSCREEN_TOGGLE)
+                          esccmd.WINOP_FULLSCREEN_TOGGLE)
       AssertTrue(actual_size.width() >= display_size.width())
       AssertTrue(actual_size.height() >= display_size.height())
 
@@ -595,7 +603,7 @@ class XtermWinopsTests(object):
 
       # Toggle out
       esccmd.XTERM_WINOPS(esccmd.WINOP_FULLSCREEN,
-			      esccmd.WINOP_FULLSCREEN_TOGGLE)
+                          esccmd.WINOP_FULLSCREEN_TOGGLE)
       AssertEQ(GetScreenSize(), original_size)
 
   @knownBug(terminal="iTerm2",
@@ -620,7 +628,7 @@ class XtermWinopsTests(object):
     AssertEQ(GetWindowTitle(), string)
     AssertEQ(GetIconTitle(), string)
     esccmd.XTERM_WINOPS(esccmd.WINOP_PUSH_TITLE,
-                            esccmd.WINOP_PUSH_TITLE_ICON_AND_WINDOW)
+                        esccmd.WINOP_PUSH_TITLE_ICON_AND_WINDOW)
 
     # Change to x, make sure it took.
     esccmd.ChangeWindowTitle("x")
@@ -630,7 +638,7 @@ class XtermWinopsTests(object):
 
     # Pop both window and icon titles, ensure correct.
     esccmd.XTERM_WINOPS(esccmd.WINOP_POP_TITLE,
-                            esccmd.WINOP_POP_TITLE_ICON_AND_WINDOW)
+                        esccmd.WINOP_POP_TITLE_ICON_AND_WINDOW)
     AssertEQ(GetWindowTitle(), string)
     AssertEQ(GetIconTitle(), string)
 
@@ -645,7 +653,7 @@ class XtermWinopsTests(object):
     AssertEQ(GetWindowTitle(), string)
     AssertEQ(GetIconTitle(), string)
     esccmd.XTERM_WINOPS(esccmd.WINOP_PUSH_TITLE,
-                            esccmd.WINOP_PUSH_TITLE_ICON_AND_WINDOW)
+                        esccmd.WINOP_PUSH_TITLE_ICON_AND_WINDOW)
 
     # Change to x, make sure it took.
     esccmd.ChangeWindowTitle("x")
@@ -661,7 +669,7 @@ class XtermWinopsTests(object):
 
     # Try to pop the window title; should do nothing.
     esccmd.XTERM_WINOPS(esccmd.WINOP_POP_TITLE,
-                            esccmd.WINOP_POP_TITLE_WINDOW)
+                        esccmd.WINOP_POP_TITLE_WINDOW)
     AssertEQ(GetWindowTitle(), "x")
     AssertEQ(GetIconTitle(), string)
 
@@ -676,7 +684,7 @@ class XtermWinopsTests(object):
     AssertEQ(GetWindowTitle(), string)
     AssertEQ(GetIconTitle(), string)
     esccmd.XTERM_WINOPS(esccmd.WINOP_PUSH_TITLE,
-                            esccmd.WINOP_PUSH_TITLE_ICON_AND_WINDOW)
+                        esccmd.WINOP_PUSH_TITLE_ICON_AND_WINDOW)
 
     # Change to x, make sure it took.
     esccmd.ChangeWindowTitle("x")
@@ -686,13 +694,13 @@ class XtermWinopsTests(object):
 
     # Pop icon title, ensure correct.
     esccmd.XTERM_WINOPS(esccmd.WINOP_POP_TITLE,
-                            esccmd.WINOP_POP_TITLE_WINDOW)
+                        esccmd.WINOP_POP_TITLE_WINDOW)
     AssertEQ(GetWindowTitle(), string)
     AssertEQ(GetIconTitle(), "x")
 
     # Try to pop the icon title; should do nothing.
     esccmd.XTERM_WINOPS(esccmd.WINOP_POP_TITLE,
-                            esccmd.WINOP_POP_TITLE_ICON)
+                        esccmd.WINOP_POP_TITLE_ICON)
     AssertEQ(GetWindowTitle(), string)
     AssertEQ(GetIconTitle(), "x")
 
@@ -707,14 +715,14 @@ class XtermWinopsTests(object):
     esccmd.ChangeWindowTitle("x")
     esccmd.ChangeIconTitle(string)
     esccmd.XTERM_WINOPS(esccmd.WINOP_PUSH_TITLE,
-                            esccmd.WINOP_PUSH_TITLE_ICON)
+                        esccmd.WINOP_PUSH_TITLE_ICON)
 
     # Change to x.
     esccmd.ChangeIconTitle("y")
 
     # Pop icon title, ensure correct.
     esccmd.XTERM_WINOPS(esccmd.WINOP_POP_TITLE,
-                            esccmd.WINOP_POP_TITLE_ICON)
+                        esccmd.WINOP_POP_TITLE_ICON)
     AssertEQ(GetWindowTitle(), "x")
     AssertEQ(GetIconTitle(), string)
 
@@ -754,9 +762,9 @@ class XtermWinopsTests(object):
 
     # Push icon then window
     esccmd.XTERM_WINOPS(esccmd.WINOP_PUSH_TITLE,
-                            esccmd.WINOP_PUSH_TITLE_ICON)
+                        esccmd.WINOP_PUSH_TITLE_ICON)
     esccmd.XTERM_WINOPS(esccmd.WINOP_PUSH_TITLE,
-                            esccmd.WINOP_PUSH_TITLE_WINDOW)
+                        esccmd.WINOP_PUSH_TITLE_WINDOW)
 
     # Change both to known values.
     esccmd.ChangeWindowTitle("y")
@@ -764,7 +772,7 @@ class XtermWinopsTests(object):
 
     # Pop both titles.
     esccmd.XTERM_WINOPS(esccmd.WINOP_POP_TITLE,
-                            esccmd.WINOP_POP_TITLE_ICON_AND_WINDOW)
+                        esccmd.WINOP_POP_TITLE_ICON_AND_WINDOW)
     AssertEQ(GetWindowTitle(), string1)
     AssertEQ(GetIconTitle(), string2)
 
@@ -776,25 +784,25 @@ class XtermWinopsTests(object):
     string1 = "a" + str(time.time())
     string2 = "b" + str(time.time())
 
-    for title in [ string1, string2 ]:
+    for title in [string1, string2]:
       # Set title
       esccmd.ChangeIconTitle(title)
 
       # Push
       esccmd.XTERM_WINOPS(esccmd.WINOP_PUSH_TITLE,
-                              esccmd.WINOP_PUSH_TITLE_ICON)
+                          esccmd.WINOP_PUSH_TITLE_ICON)
 
     # Change to known values.
     esccmd.ChangeIconTitle("z")
 
     # Pop
     esccmd.XTERM_WINOPS(esccmd.WINOP_POP_TITLE,
-                            esccmd.WINOP_POP_TITLE_ICON)
+                        esccmd.WINOP_POP_TITLE_ICON)
     AssertEQ(GetIconTitle(), string2)
 
     # Pop
     esccmd.XTERM_WINOPS(esccmd.WINOP_POP_TITLE,
-                            esccmd.WINOP_POP_TITLE_ICON)
+                        esccmd.WINOP_POP_TITLE_ICON)
     AssertEQ(GetIconTitle(), string1)
 
   def test_XtermWinops_PushMultiplePopMultiple_Window(self):
@@ -803,33 +811,33 @@ class XtermWinopsTests(object):
     string1 = "a" + str(time.time())
     string2 = "b" + str(time.time())
 
-    for title in [ string1, string2 ]:
+    for title in [string1, string2]:
       # Set title
       esccmd.ChangeWindowTitle(title)
 
       # Push
       esccmd.XTERM_WINOPS(esccmd.WINOP_PUSH_TITLE,
-                              esccmd.WINOP_PUSH_TITLE_WINDOW)
+                          esccmd.WINOP_PUSH_TITLE_WINDOW)
 
     # Change to known values.
     esccmd.ChangeWindowTitle("z")
 
     # Pop
     esccmd.XTERM_WINOPS(esccmd.WINOP_POP_TITLE,
-                            esccmd.WINOP_POP_TITLE_WINDOW)
+                        esccmd.WINOP_POP_TITLE_WINDOW)
     AssertEQ(GetWindowTitle(), string2)
 
     # Pop
     esccmd.XTERM_WINOPS(esccmd.WINOP_POP_TITLE,
-                            esccmd.WINOP_POP_TITLE_WINDOW)
+                        esccmd.WINOP_POP_TITLE_WINDOW)
     AssertEQ(GetWindowTitle(), string1)
 
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_XtermWinops_DECSLPP(self):
     """Resize to n lines of height."""
     esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_CHARS,
-                            10,
-                            90)
+                        10,
+                        90)
     self.delayAfterResize()
 
     AssertEQ(GetScreenSize(), Size(90, 10))

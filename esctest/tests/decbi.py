@@ -50,7 +50,9 @@ class DECBITests(object):
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECBI_LeftOfMargin(self):
-    """DEC STD 070 says DECBI can move when outside the margins."""
+    """Test DECBI (back-index) when the cursor is before the left-margin.
+    
+    DEC STD 070 says DECBI can move when outside the margins."""
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(3, 5)
     esccmd.CUP(Point(2, 1))
@@ -60,8 +62,11 @@ class DECBITests(object):
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   @vtLevel(4)
   def test_DECBI_WholeScreenScrolls(self):
-    """Refer to DEC STD 070, which says if the cursor is outside the margins,
-    at the left edge of the page, the command is ignored."""
+    """Test DECBI (back-index) when the cursor is before the left-margin, but at the left edge of the screen.
+    
+    Refer to DEC STD 070, which says if the cursor is outside the margins,
+    at the left edge of the page (which xterm equates with its screen),
+    the command is ignored."""
     escio.Write("x")
     esccmd.CUP(Point(1, 1))
     esccmd.DECBI()

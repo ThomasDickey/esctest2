@@ -1,3 +1,19 @@
+"""Tests for DEC DELETE COLUMN (DECDC).
+
+Quoting DEC STD 070:
+DELETE COLUMN
+Level:   4x (Horizontal Scrolling)
+Purpose: Delete columns at the Active Position
+Format:  CSI   Pn  '    ~        default Pn: 1
+         9/11  Pn  2/7  7/14
+Description:  The DECDC control causes Pn columns to be deleted at the active
+column position.  The contents of the display are shifted to the left from
+the right margin to the active column.  Columns containing blank characters
+with normal rendition are shifted into the display from the right margin.
+Only that portion of the display between the top, bottom, left, and right
+margins is affected.  DECDC is ignored if the active position is outside the
+Scroll Area.
+"""
 from esc import NUL, CR, LF
 import esccmd
 import escio
@@ -17,8 +33,8 @@ class DECDCTests(object):
     esccmd.DECDC()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 7, 2),
-                                 [ "acdefg" + NUL,
-                                   "ACDEFG" + NUL ])
+                                 ["acdefg" + NUL,
+                                  "ACDEFG" + NUL])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -33,9 +49,9 @@ class DECDCTests(object):
     esccmd.DECDC(2)
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 7, 3),
-                                 [ "adefg" + NUL * 2,
-                                   "ADEFG" + NUL * 2,
-                                   "zwvut" + NUL * 2 ])
+                                 ["adefg" + NUL * 2,
+                                  "ADEFG" + NUL * 2,
+                                  "zwvut" + NUL * 2])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -59,16 +75,20 @@ class DECDCTests(object):
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 7, 4),
-                                 [ "abcdefg",
-                                   "ADEFG" + NUL * 2,
-                                   "zwvut" + NUL * 2,
-                                   "ZYXWVUT" ])
+                                 ["abcdefg",
+                                  "ADEFG" + NUL * 2,
+                                  "zwvut" + NUL * 2,
+                                  "ZYXWVUT"])
 
   @vtLevel(4)
-  @knownBug(terminal="iTerm2",reason="Not implemented", noop=True)
+  @knownBug(terminal="iTerm2", reason="Not implemented", noop=True)
   def test_DECDC_IsNoOpWhenCursorBeginsOutsideScrollRegion(self):
     """Ensure DECDC does nothing when the cursor starts out outside the scroll
-    region.  DEC STD 070 is explicit on this."""
+    region.
+
+    DEC STD 070 is explicit on this, saying:
+    DECDC is ignored if the active position is outside the Scroll Area.
+    """
     esccmd.CUP(Point(1, 1))
     escio.Write("abcdefg" + CR + LF + "ABCDEFG")
 
@@ -85,8 +105,8 @@ class DECDCTests(object):
     # Ensure nothing happened.
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 7, 2),
-                                 [ "abcdefg",
-                                   "ABCDEFG" ])
+                                 ["abcdefg",
+                                  "ABCDEFG"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -103,10 +123,10 @@ class DECDCTests(object):
     esccmd.DECDC(width + 10)
 
     AssertScreenCharsInRectEqual(Rect(startX, 1, width, 2),
-                                 [ "a" + NUL * 6,
-                                   "A" + NUL * 6 ])
+                                 ["a" + NUL * 6,
+                                  "A" + NUL * 6])
     # Ensure there is no wrap-around.
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [ NUL, NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [NUL, NUL])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -131,8 +151,8 @@ class DECDCTests(object):
     # Ensure the 'e' gets dropped.
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 7, 2),
-                                 [ "abde" + NUL + "fg",
-                                   "ABDE" + NUL + "FG" ])
+                                 ["abde" + NUL + "fg",
+                                  "ABDE" + NUL + "FG"])
 
 
   @vtLevel(4)
@@ -157,7 +177,7 @@ class DECDCTests(object):
 
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 7, 2),
-                                 [ "ab" + NUL * 3 + "fg",
-                                   "AB" + NUL * 3 + "FG" ])
+                                 ["ab" + NUL * 3 + "fg",
+                                  "AB" + NUL * 3 + "FG"])
 
 

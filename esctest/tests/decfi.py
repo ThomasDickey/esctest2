@@ -1,3 +1,24 @@
+"""Tests for DECFI (forward-index).
+
+Quoting from DEC STD 070 (Page 5-37 29-Jun-1990):
+
+FORWARD INDEX
+Levels:  4x (Horizontal Scrolling) DECFI
+Purpose: Move the Active Position forward one column, scrolling if necessary.
+Format:  ESC  9
+         1/11 3/9
+
+Description:  The DECFI control causes the active position to move forward one
+column.  If the active position was already at the right margin, the contents
+of the Logical Display Page within the right, left, top and bottom margins
+shifts left one column.  The column shifting beyond the left margin is deleted.
+A new column is inserted at the right margin with all attributes turned off and
+the cursor appears in this column.
+
+If the active position is outside the left or right margin when the command is
+received the active position moves forward one column.  If the active position
+was at the right edge of the page, the command is ignored.
+"""
 from esc import NUL
 import esccmd
 import escio
@@ -23,11 +44,11 @@ class DECFITests(object):
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   @vtLevel(4)
   def test_DECFI_Scrolls(self):
-    strings = [ "abcde",
-                "fghij",
-                "klmno",
-                "pqrst",
-                "uvwxy" ]
+    strings = ["abcde",
+               "fghij",
+               "klmno",
+               "pqrst",
+               "uvwxy"]
     y = 3
     for s in strings:
       esccmd.CUP(Point(2, y))
@@ -45,11 +66,11 @@ class DECFITests(object):
     # but not terribly important, and not worth marking as a bug. I mentioned
     # it to TED.
     AssertScreenCharsInRectEqual(Rect(2, 3, 6, 7),
-                                 [ "abcde",
-                                   "fhi" + NUL + "j",
-                                   "kmn" + NUL + "o",
-                                   "prs" + NUL + "t",
-                                   "uvwxy" ])
+                                 ["abcde",
+                                  "fhi" + NUL + "j",
+                                  "kmn" + NUL + "o",
+                                  "prs" + NUL + "t",
+                                  "uvwxy"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
@@ -63,15 +84,12 @@ class DECFITests(object):
 
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   @vtLevel(4)
-  @intentionalDeviationFromSpec(terminal="xterm",
-                                reason="The spec says 'If the cursor is at the right border of the page when the terminal receives DECFI, then the terminal ignores DECFI', but that only makes sense when the right margin is not at the right edge of the screen.")
   def test_DECFI_WholeScreenScrolls(self):
-    """Refer to DEC STD 070, which says that if the cursor is at the right edge
-    of the page (outside the margins) the command is ignored."""
+    """Starting with the cursor at the right edge of the page (outside the
+    margins), verify that DECFI is ignored."""
     size = GetScreenSize()
     esccmd.CUP(Point(size.width(), 1))
     escio.Write("x")
     esccmd.DECFI()
-    AssertScreenCharsInRectEqual(Rect(size.width() - 1, 1, size.width(), 1), [ "x" + NUL ])
-
-
+    AssertScreenCharsInRectEqual(Rect(size.width() - 1, 1, size.width(), 1),
+                                 ["x" + NUL])

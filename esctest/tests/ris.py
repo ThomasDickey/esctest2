@@ -11,7 +11,7 @@ class RISTests(object):
 
     esccmd.RIS()
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
 
   def test_RIS_CursorToOrigin(self):
     esccmd.CUP(Point(5, 6))
@@ -59,11 +59,18 @@ class RISTests(object):
 
     esccmd.RIS()
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
     esccmd.DECSET(esccmd.ALTBUF)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "a" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["a"])
 
   def test_RIS_ResetDECCOLM(self):
+    """Test whether RIS resets DECCOLM.
+
+    The control sequence allowing 80/132 switching is an xterm feature
+    not found in DEC terminals.  When doing a full reset, xterm checks
+    that, as well as checking if the terminal is currently in 132-column
+    mode.  Older versions of xterm would reset the 132-column mode
+    before checking if it was enabled, failing this test."""
     esccmd.DECSET(esccmd.Allow80To132)
     esccmd.DECSET(esccmd.DECCOLM)
     AssertEQ(GetScreenSize().width(), 132)
@@ -85,7 +92,7 @@ class RISTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "X" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["X"])
 
   @vtLevel(4)
   def test_RIS_RemoveMargins(self):

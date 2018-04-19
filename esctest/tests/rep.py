@@ -1,3 +1,11 @@
+"""Tests for REP (repeat).
+
+DEC STD 070 does not mention this feature.  It is adapted from ECMA-48,
+which in turn does not mention margins, by xterm, to follow the DEC standard
+which limits editing and cursor movement using top/bottom and left/right
+margins.  Top/bottom margins are a VT100 feature; left/right margins were
+introduced with the VT420.
+"""
 from esc import NUL
 import esccmd
 import escio
@@ -10,14 +18,14 @@ class REPTests(object):
   def test_REP_DefaultParam(self):
     escio.Write("a")
     esccmd.REP()
-    AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1), [ "aa" + NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1), ["aa" + NUL])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_REP_ExplicitParam(self):
     escio.Write("a")
     esccmd.REP(2)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 4, 1), [ "aaa" + NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 4, 1), ["aaa" + NUL])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -30,8 +38,8 @@ class REPTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 2),
-        [ NUL + "aaa" + NUL ,
-          NUL + "a" + NUL * 3 ])
+                                 [NUL + "aaa" + NUL,
+                                  NUL + "a" + NUL * 3])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -43,5 +51,5 @@ class REPTests(object):
     esccmd.REP(3)
 
     AssertScreenCharsInRectEqual(Rect(1, 3, width, 4),
-        [ NUL * (width - 3) + "aaa",
-          "a" + NUL * (width - 1) ])
+                                 [NUL * (width - 3) + "aaa",
+                                  "a" + NUL * (width - 1)])
