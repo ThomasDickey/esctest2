@@ -2,7 +2,7 @@ import esc
 import escargs
 import esccmd
 import escio
-from esclog import LogInfo
+from esclog import LogInfo, LogDebug
 import esctypes
 from esctypes import Point, Size, Rect
 import functools
@@ -188,7 +188,7 @@ def GetChecksumOfRect(rect):
   i += 2
 
   hex_checksum = params[i:]
-  # LogInfo("GetChecksum " + str_pid + " = " + hex_checksum)
+  LogDebug("GetChecksum " + str_pid + " = " + hex_checksum)
   return int(hex_checksum, 16)
 
 def vtLevel(minimum):

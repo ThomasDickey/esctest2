@@ -58,8 +58,18 @@ class BSTests(object):
     escio.Write(esc.BS)
     AssertEQ(GetCursorPosition(), Point(10, 2))
 
-  # The other tests assume reverse-wrap follows margins - modified this for consistency
   def test_BS_ReverseWrapWontPassTop(self):
+    """If the cursor starts within the top/bottom margins, after doing a
+    reverse wrap, the cursor remains within those margins.
+
+    Reverse-wrap is a feature of xterm since its first release in 1986.
+    The X10.4 version would reverse-wrap (as some hardware terminals did)
+    from the upper-left corner of the screen to the lower-right.
+    Left/right margin support, which was added to xterm in 2012,
+    modified the reverse-wrap feature to limit the cursor to those margins.
+    Because top/bottom margins should be treated consistently,
+    xterm was modified in 2018 to further amend the handling of
+    reverse-wrap."""
     esccmd.DECSET(esccmd.DECAWM)
     esccmd.DECSET(esccmd.ReverseWraparound)
     esccmd.DECSTBM(2, 5)
@@ -99,5 +109,5 @@ class BSTests(object):
     escio.Write(esc.BS)
     escio.Write("X")
     AssertScreenCharsInRectEqual(Rect(size.width() - 1, 1, size.width(), 1),
-                                 [ "Xb" ])
+                                 ["Xb"])
 

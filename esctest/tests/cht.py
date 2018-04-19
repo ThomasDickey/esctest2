@@ -17,8 +17,14 @@ class CHTTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't support CHT")
-  # CHT is just a parameterized tab; tabs stop at the right margin...
   def test_CHT_IgnoresScrollingRegion(self):
+    """Test cursor forward tab (ECMA-48).
+
+    CHT is just a parameterized tab.
+    In DEC terminals (and compatible such as xterm),
+    tabs stop at the right margin.
+    ECMA-48 does not specify margins, so the behavior follows DEC.
+    """
     # Set a scroll region.
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(5, 30)

@@ -460,9 +460,9 @@ class XtermWinopsTests(object):
       display_size = GetDisplaySize()
       esclog.LogInfo("actual size " + str(actual_size.height()) + "x" + str(actual_size.width()))
       esclog.LogInfo("display size " + str(display_size.height()) + "x" + str(display_size.width()))
+      esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_EXIT)
       AssertTrue(actual_size.width() >= display_size.width() - max_error)
       AssertTrue(actual_size.height() >= display_size.height() - max_error)
-      esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_EXIT)
     else:
       esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_HV)
       AssertEQ(GetScreenSize(), GetDisplaySize())
@@ -478,9 +478,9 @@ class XtermWinopsTests(object):
       esclog.LogInfo("actual   size " + str(actual_size.height()) + "x" + str(actual_size.width()))
       esclog.LogInfo("display  size " + str(display_size.height()) + "x" + str(display_size.width()))
       esclog.LogInfo("original size " + str(original_size.height()) + "x" + str(original_size.width()))
+      esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_EXIT)
       AssertTrue(abs(actual_size.width() - display_size.width()) < max_error)
       AssertTrue(abs(actual_size.height() - original_size.height()) < max_error)
-      esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_EXIT)
     else:
       display_size = GetDisplaySize()
       original_size = GetScreenSize()
@@ -500,9 +500,9 @@ class XtermWinopsTests(object):
       esclog.LogInfo("actual   size " + str(actual_size.height()) + "x" + str(actual_size.width()))
       esclog.LogInfo("display  size " + str(display_size.height()) + "x" + str(display_size.width()))
       esclog.LogInfo("original size " + str(original_size.height()) + "x" + str(original_size.width()))
+      esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_EXIT)
       AssertTrue(abs(actual_size.width() - original_size.width()) < max_error)
       AssertTrue(abs(actual_size.height() - display_size.height()) < max_error)
-      esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_EXIT)
     else:
       display_size = GetDisplaySize()
       original_size = GetScreenSize()
