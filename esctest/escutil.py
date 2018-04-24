@@ -15,6 +15,7 @@ gHaveAsserted = False
 CHAR_SIZE_PIXELS = Size(0, 0)
 FRAME_SIZE_PIXELS = Size(0, 0)
 SCREEN_SIZE_PIXELS = Size(0, 0)
+CAN_QUERY_SHELL_SIZE = -1
 
 KNOWN_BUG_TERMINALS = "known_bug_terminals"
 
@@ -50,13 +51,50 @@ def GetWindowTitle():
   esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_WINDOW_TITLE)
   return escio.ReadOSC("l")
 
-def GetWindowSizePixels():
-  """Returns a Size giving the window's size in pixels.
+def can_query_shell_size():
+  """Determine if the terminal responds to a request for shell-window size vs
+  text-window size.
 
-  xterm's "window" is the shell-window which includes the title and other
-  decorations.  Unless those are suppressed (an option in some window
-  managers), it will be larger than the terminal's character-cell window."""
-  esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_WINDOW_SIZE_PIXELS)
+  xterm has two windows of interest:
+  a) the text-window
+  b) the shell-window (i.e., outer window).
+
+  The shell-window includes the title and other decorations.  Unless those are
+  suppressed (an option in some window managers), it will be larger than the
+  terminal's character-cell window.  In any case, it also has a border which is
+  normally present.
+
+  The window operations report for the window-size in pixels was added to xterm
+  to provide an alternate way to measure the text-window (and indirectly, the
+  font size).  That is the default operation.  Alternatively, the size of the
+  shell window can be returned."""
+  global CAN_QUERY_SHELL_SIZE
+  if CAN_QUERY_SHELL_SIZE < 0:
+    CAN_QUERY_SHELL_SIZE = 0
+    # check for the default operation
+    esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_WINDOW_SIZE_PIXELS)
+    params = escio.ReadCSI("t")
+    if params[0] == 4 and len(params) >= 3:
+      # TODO: compare size_1 with result from text-window size
+      # If it is larger, then that's a special case.
+      size_1 = Size(params[2], params[1])
+      CAN_QUERY_SHELL_SIZE = 1
+      # check for the window-shell operation
+      esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_WINDOW_SIZE_PIXELS, 2)
+      params = escio.ReadCSI("t")
+      if params[0] == 4 and len(params) >= 3:
+        size_2 = Size(params[2], params[1])
+        if size_2.height() > size_1.height() and \
+           size_2.width() > size_1.width():
+          CAN_QUERY_SHELL_SIZE = 2
+  return CAN_QUERY_SHELL_SIZE
+
+def GetWindowSizePixels():
+  """Returns a Size giving the window's size in pixels."""
+  if can_query_shell_size() == 2:
+    esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_WINDOW_SIZE_PIXELS, 2)
+  else:
+    esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_WINDOW_SIZE_PIXELS)
   params = escio.ReadCSI("t")
   AssertTrue(params[0] == 4)
   AssertTrue(len(params) >= 3)
@@ -75,7 +113,7 @@ def GetScreenSizePixels():
     AssertTrue(params[0] == 5)
     AssertTrue(len(params) >= 3)
     SCREEN_SIZE_PIXELS = Size(params[2], params[1])
-    LogInfo("size of SCREEN " + str(SCREEN_SIZE_PIXELS.height()) + "x" + str(SCREEN_SIZE_PIXELS.width()))
+    LogDebug("size of SCREEN " + str(SCREEN_SIZE_PIXELS.height()) + "x" + str(SCREEN_SIZE_PIXELS.width()))
   return SCREEN_SIZE_PIXELS
 
 def GetFrameSizePixels():
@@ -91,7 +129,7 @@ def GetFrameSizePixels():
     inner = GetScreenSize()
     FRAME_SIZE_PIXELS = Size(outer.height() - (inner.height() * CHAR_SIZE_PIXELS.height()),
                              outer.width() - (inner.width() * CHAR_SIZE_PIXELS.width()))
-    LogInfo("size of FRAME " + str(FRAME_SIZE_PIXELS.height()) + "x" + str(FRAME_SIZE_PIXELS.width()))
+    LogDebug("size of FRAME " + str(FRAME_SIZE_PIXELS.height()) + "x" + str(FRAME_SIZE_PIXELS.width()))
   return FRAME_SIZE_PIXELS
 
 def GetCharSizePixels():
@@ -107,7 +145,7 @@ def GetCharSizePixels():
     AssertTrue(params[0] == 6)
     AssertTrue(len(params) >= 3)
     CHAR_SIZE_PIXELS = Size(params[2], params[1])
-    LogInfo("size of CHARS " + str(CHAR_SIZE_PIXELS.height()) + "x" + str(CHAR_SIZE_PIXELS.width()))
+    LogDebug("size of CHARS " + str(CHAR_SIZE_PIXELS.height()) + "x" + str(CHAR_SIZE_PIXELS.width()))
   return CHAR_SIZE_PIXELS
 
 def GetWindowPosition():

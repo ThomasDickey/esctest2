@@ -9,16 +9,16 @@ class DECALNTests(object):
     the corners and center."""
     esccmd.DECALN()
     size = GetScreenSize()
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "E" ])
-    AssertScreenCharsInRectEqual(Rect(size.width(), 1, size.width(), 1), [ "E" ])
-    AssertScreenCharsInRectEqual(Rect(1, size.height(), 1, size.height()), [ "E" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["E"])
+    AssertScreenCharsInRectEqual(Rect(size.width(), 1, size.width(), 1), ["E"])
+    AssertScreenCharsInRectEqual(Rect(1, size.height(), 1, size.height()), ["E"])
     AssertScreenCharsInRectEqual(Rect(size.width(), size.height(), size.width(), size.height()),
-                                 [ "E" ])
+                                 ["E"])
     AssertScreenCharsInRectEqual(Rect(size.width() / 2,
-                                     size.height() / 2,
-                                     size.width() / 2,
-                                     size.height() / 2),
-                                 [ "E" ])
+                                      size.height() / 2,
+                                      size.width() / 2,
+                                      size.height() / 2),
+                                 ["E"])
 
   def test_DECALN_MovesCursorHome(self):
     esccmd.CUP(Point(5, 5))

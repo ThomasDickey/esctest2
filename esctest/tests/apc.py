@@ -14,7 +14,7 @@ class APCTests(object):
     escio.Write("A")
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
-                                 [ "A" + NUL * 2 ])
+                                 ["A" + NUL * 2])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")
@@ -32,5 +32,5 @@ class APCTests(object):
     escio.use8BitControls = False
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
-                                 [ "A" + NUL * 2 ])
+                                 ["A" + NUL * 2])
 

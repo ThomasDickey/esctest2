@@ -99,4 +99,4 @@ class CUPTests(object):
 
     # Make sure there's an X at 5,6
     AssertScreenCharsInRectEqual(Rect(5, 6, 5, 6),
-                                 [ "X" ])
+                                 ["X"])

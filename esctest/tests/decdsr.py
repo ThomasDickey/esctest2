@@ -38,9 +38,9 @@ class DECDSRTests(object):
       # Last arg is page, which is always 1 (at least in xterm, and I think
       # that's reasonable in all modern terminals, which won't have a direct
       # notion of a page.)
-      AssertEQ(params, [ 6, 5, 1 ])
+      AssertEQ(params, [6, 5, 1])
     else:
-      AssertEQ(params, [ 6, 5 ])
+      AssertEQ(params, [6, 5])
 
   @vtLevel(2)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
@@ -58,7 +58,7 @@ class DECDSRTests(object):
     esccmd.DECDSR(esccmd.DSRPrinterPort)
     params = escio.ReadCSI('n', expected_prefix='?')
     AssertEQ(len(params), 1)
-    AssertTrue(params[0] in [ 10, 11, 13, 18, 19 ])
+    AssertTrue(params[0] in [10, 11, 13, 18, 19])
 
   @vtLevel(2)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
@@ -74,7 +74,7 @@ class DECDSRTests(object):
     esccmd.DECDSR(esccmd.DSRUDKLocked)
     params = escio.ReadCSI('n', expected_prefix='?')
     AssertEQ(len(params), 1)
-    AssertTrue(params[0] in [ 20, 21 ])
+    AssertTrue(params[0] in [20, 21])
 
   @vtLevel(2)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
@@ -112,13 +112,13 @@ class DECDSRTests(object):
       AssertEQ(len(params), 4)
     AssertEQ(params[0], 27)
     if len(params) > 1:
-      AssertTrue(params[1] in [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-        10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22, 28, 29, 30,
-        31, 33, 35, 36, 38, 39, 40 ])
+      AssertTrue(params[1] in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+                               10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22, 28,
+                               29, 30, 31, 33, 35, 36, 38, 39, 40])
     if len(params) > 2:
-      AssertTrue(params[2] in [ 0, 3, 8 ])
+      AssertTrue(params[2] in [0, 3, 8])
     if len(params) > 3:
-      AssertTrue(params[3] in [ 0, 1, 4, 5 ])
+      AssertTrue(params[3] in [0, 1, 4, 5])
 
   @vtLevel(4)
   def doLocatorStatusTest(self, code):
@@ -128,7 +128,7 @@ class DECDSRTests(object):
     params = escio.ReadCSI('n', expected_prefix='?')
 
     AssertEQ(len(params), 1)
-    AssertTrue(params[0] in [ 50, 53, 55 ])
+    AssertTrue(params[0] in [50, 53, 55])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
@@ -151,7 +151,7 @@ class DECDSRTests(object):
     params = escio.ReadCSI('n', expected_prefix='?')
 
     AssertEQ(params[0], 57)
-    AssertTrue(params[1] in [ 0, 1, 2 ])
+    AssertTrue(params[1] in [0, 1, 2])
   # 1 = mouse, 2 = tablet, pretty sure 1 is the only reasonable response.
 
   @vtLevel(4)
@@ -211,5 +211,5 @@ class DECDSRTests(object):
     AssertEQ(len(params), 1)
     # 83 and 87 both seem like reasonable responses for a terminal that
     # supports tabs or windows.
-    AssertTrue(params[0] in [ 83, 87 ])
+    AssertTrue(params[0] in [83, 87])
 

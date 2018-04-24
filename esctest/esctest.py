@@ -60,7 +60,7 @@ def reset():
   # Pop the title stack just in case something got left on there
   for i in xrange(5):
     esccmd.XTERM_WINOPS(esccmd.WINOP_POP_TITLE,
-                            esccmd.WINOP_PUSH_TITLE_ICON_AND_WINDOW)
+                        esccmd.WINOP_PUSH_TITLE_ICON_AND_WINDOW)
 
   # Clear tab stops and reset them at 1, 9, ...
   esccmd.TBC(3)
@@ -121,7 +121,7 @@ def RunTest(name, method):
 
 def MatchingNamesAndMethods():
   classes = []
-  for category in [ tests.tests ]:
+  for category in [tests.tests]:
     classes.extend(category)
 
   for testClass in classes:
@@ -172,16 +172,16 @@ def RunTests():
   if failed > 0:
     esclog.LogInfo(
         "*** %s passed, %s, %s FAILED ***" % (
-          plural("test", passed),
-          plural("known bug", knownBugs),
-          plural("TEST", failed, caps=True)))
+            plural("test", passed),
+            plural("known bug", knownBugs),
+            plural("TEST", failed, caps=True)))
     esclog.LogInfo("Failing tests:\n" + "\n".join(failures))
   else:
     esclog.LogInfo(
         "*** %s passed, %s, %s failed ***" % (
-          plural("test", passed),
-          plural("known bug", knownBugs),
-          plural("test", failed)))
+            plural("test", passed),
+            plural("known bug", knownBugs),
+            plural("test", failed)))
 
 def plural(word, count, caps=False):
   if count == 1:

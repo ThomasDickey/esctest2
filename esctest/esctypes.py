@@ -114,7 +114,7 @@ class Rect(object):
     return self._bottom - self._top + 1
 
   def params(self):
-    return [ self._top, self._left, self._bottom, self._right ]
+    return [self._top, self._left, self._bottom, self._right]
 
   def points(self):
     y = self._top

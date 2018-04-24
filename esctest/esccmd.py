@@ -148,11 +148,11 @@ def CBT(Pn=None):
   if Pn is None:
     params = []
   else:
-    params = [ Pn ]
+    params = [Pn]
   escio.WriteCSI(params=params, final="Z")
 
 def ChangeColor(*args):
-  params = [ 4 ]
+  params = [4]
   isQuery = True
   try:
     params.index("?")
@@ -162,7 +162,7 @@ def ChangeColor(*args):
   escio.WriteOSC(params, requestsReport=isQuery)
 
 def ChangeDynamicColor(*args):
-  params = [ ]
+  params = []
   isQuery = True
   try:
     params.index("?")
@@ -175,7 +175,7 @@ def ChangeSpecialColor(*args):
   if len(args) > 0 and int(args[0]) >= 10:
     params = []
   else:
-    params = [ 5 ]
+    params = [5]
   isQuery = True
   try:
     params.index("?")
@@ -186,15 +186,15 @@ def ChangeSpecialColor(*args):
 
 def ChangeWindowTitle(title, bel=False, suppressSideChannel=False):
   """Change the window title."""
-  escio.WriteOSC(params=[ "2", title ], bel=bel, requestsReport=suppressSideChannel)
+  escio.WriteOSC(params=["2", title], bel=bel, requestsReport=suppressSideChannel)
 
 def ChangeIconTitle(title, bel=False, suppressSideChannel=False):
   """Change the icon (tab) title."""
-  escio.WriteOSC(params=[ "1", title ], bel=bel, requestsReport=suppressSideChannel)
+  escio.WriteOSC(params=["1", title], bel=bel, requestsReport=suppressSideChannel)
 
 def ChangeWindowAndIconTitle(title, bel=False, suppressSideChannel=False):
   """Change the window and icon (tab) title."""
-  escio.WriteOSC(params=[ "0", title ],
+  escio.WriteOSC(params=["0", title],
                  bel=bel,
                  requestsReport=suppressSideChannel)
 def CHA(Pn=None):
@@ -202,7 +202,7 @@ def CHA(Pn=None):
   if Pn is None:
     params = []
   else:
-    params = [ Pn ]
+    params = [Pn]
   escio.WriteCSI(params=params, final="G")
 
 def CHT(Ps=None):
@@ -210,7 +210,7 @@ def CHT(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="I")
 
 def CNL(Ps=None):
@@ -218,7 +218,7 @@ def CNL(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="E")
 
 def CPL(Ps=None):
@@ -226,7 +226,7 @@ def CPL(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="F")
 
 def CUB(Ps=None):
@@ -234,7 +234,7 @@ def CUB(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="D")
 
 def CUD(Ps=None):
@@ -242,7 +242,7 @@ def CUD(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="B")
 
 def CUF(Ps=None):
@@ -250,29 +250,29 @@ def CUF(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="C")
 
 def CUP(point=None, row=None, col=None):
   """ Move cursor to |point| """
   if point is None and row is None and col is None:
-    escio.WriteCSI(params=[ ], final="H")
+    escio.WriteCSI(params=[], final="H")
   elif point is None:
     if row is None:
       row = ""
     if col is None:
-      escio.WriteCSI(params=[ row ], final="H")
+      escio.WriteCSI(params=[row], final="H")
     else:
-      escio.WriteCSI(params=[ row, col ], final="H")
+      escio.WriteCSI(params=[row, col], final="H")
   else:
-    escio.WriteCSI(params=[ point.y(), point.x() ], final="H")
+    escio.WriteCSI(params=[point.y(), point.x()], final="H")
 
 def CUU(Ps=None):
   """Cursor up Ps times."""
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="A")
 
 def DA(Ps=None):
@@ -280,7 +280,7 @@ def DA(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="c")
 
 def DA2(Ps=None):
@@ -288,7 +288,7 @@ def DA2(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, prefix='>', final="c")
 
 def DCH(Ps=None):
@@ -296,7 +296,7 @@ def DCH(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="P")
 
 def DCS():
@@ -315,23 +315,23 @@ def DECBI():
   escio.Write(ESC + "6")
 
 def DECCRA(source_top=None, source_left=None, source_bottom=None,
-               source_right=None, source_page=None, dest_top=None,
-               dest_left=None, dest_page=None):
+           source_right=None, source_page=None, dest_top=None,
+           dest_left=None, dest_page=None):
   """Copy a region."""
-  params = [ source_top,
-             source_left,
-             source_bottom,
-             source_right,
-             source_page,
-             dest_top,
-             dest_left,
-             dest_page ]
+  params = [source_top,
+            source_left,
+            source_bottom,
+            source_right,
+            source_page,
+            dest_top,
+            dest_left,
+            dest_page]
   escio.WriteCSI(params=params, intermediate="$", final="v")
 
 def DECDC(Pn=None):
   """Delete column at cursor."""
   if Pn is not None:
-    params = [ Pn ]
+    params = [Pn]
   else:
     params = []
   escio.WriteCSI(params=params, intermediate="'", final="~")
@@ -348,14 +348,14 @@ def DECDSR(Ps, Pid=None, suppressSideChannel=False):
     params = []
   else:
     if Pid is None:
-      params = [ Ps ]
+      params = [Ps]
     else:
-      params = [ Ps, Pid ]
+      params = [Ps, Pid]
   escio.WriteCSI(params=params, prefix='?', requestsReport=suppressSideChannel, final='n')
 
 def DECERA(Pt, Pl, Pb, Pr):
   """Erase rectangle."""
-  escio.WriteCSI(params=[ Pt, Pl, Pb, Pr ], intermediate="$", final="z")
+  escio.WriteCSI(params=[Pt, Pl, Pb, Pr], intermediate="$", final="z")
 
 def DECFI():
   """Forward index."""
@@ -363,12 +363,12 @@ def DECFI():
 
 def DECFRA(Pch, Pt, Pl, Pb, Pr):
   """Fill rectangle with Pch"""
-  escio.WriteCSI(params=[ Pch, Pt, Pl, Pb, Pr ], intermediate="$", final="x")
+  escio.WriteCSI(params=[Pch, Pt, Pl, Pb, Pr], intermediate="$", final="x")
 
 def DECIC(Pn=None):
   """Insert column at cursor."""
   if Pn is not None:
-    params = [ Pn ]
+    params = [Pn]
   else:
     params = []
   escio.WriteCSI(params=params, intermediate="'", final="}")
@@ -389,16 +389,16 @@ def DECRQCRA(Pid, Pp=None, rect=None):
   # xterm versions 314 and earlier incorrectly expect the Pid in the second
   # argument and ignore Pp.
   # For the time being, iTerm2 is compatible with the bug.
-  AssertVTLevel(4,"DECRQCRA")
+  AssertVTLevel(4, "DECRQCRA")
   if not escargs.args.disable_xterm_checksum_bug:
     Pid, Pp = Pp, Pid
 
-  params = [ Pid ]
+  params = [Pid]
 
   if Pp is not None:
-    params += [ Pp ]
+    params += [Pp]
   elif Pp is None and rect is not None:
-    params += [ "" ]
+    params += [""]
 
   if rect is not None:
     params.extend(rect.params())
@@ -407,26 +407,26 @@ def DECRQCRA(Pid, Pp=None, rect=None):
 
 def DECRQM(mode, DEC):
   """Requests if a mode is set or not."""
-  AssertVTLevel(3,"DECRQM")
+  AssertVTLevel(3, "DECRQM")
   if DEC:
-    escio.WriteCSI(params=[ mode ], intermediate='$', prefix='?', final='p')
+    escio.WriteCSI(params=[mode], intermediate='$', prefix='?', final='p')
   else:
-    escio.WriteCSI(params=[ mode ], intermediate='$', final='p')
+    escio.WriteCSI(params=[mode], intermediate='$', final='p')
 
 def DECRQSS(Pt):
-  AssertVTLevel(4,"DECRQSS")
+  AssertVTLevel(4, "DECRQSS")
   escio.WriteDCS("$q", Pt)
 
 def DECRESET(Pm):
   """Reset the parameter |Pm|."""
-  escio.WriteCSI(params=[ Pm ], prefix='?', final='l')
+  escio.WriteCSI(params=[Pm], prefix='?', final='l')
 
 def DECSASD(Ps=None):
   """Direct output to status line if Ps is 1, to main display if 0."""
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, intermediate='$', final="}")
 
 def DECSC():
@@ -438,24 +438,24 @@ def DECSCA(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, intermediate='"', final="q")
 
 def DECSCL(level, sevenBit=None):
   """Level should be one of 61, 62, 63, or 64. sevenBit can be 0 or 1, or not
   specified."""
   if sevenBit is None:
-    params = [ level ]
+    params = [level]
   else:
-    params = [ level, sevenBit ]
+    params = [level, sevenBit]
   escio.WriteCSI(params=params, intermediate='"', final="p")
 
 def DECSCUSR(Ps=None):
   """Set cursor style 0 through 6, or default of 1."""
   if Ps is None:
-    params = [ ]
+    params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, intermediate=' ', final="q")
 
 def DECSED(Ps=None):
@@ -463,7 +463,7 @@ def DECSED(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, prefix='?', final="J")
 
 def DECSEL(Ps=None):
@@ -471,22 +471,22 @@ def DECSEL(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, prefix='?', final="K")
 
 def DECSERA(Pt, Pl, Pb, Pr):
   """Selective erase rectangle."""
-  AssertVTLevel(4,"DECSERA")
-  escio.WriteCSI(params=[ Pt, Pl, Pb, Pr ], intermediate="$", final="{")
+  AssertVTLevel(4, "DECSERA")
+  escio.WriteCSI(params=[Pt, Pl, Pb, Pr], intermediate="$", final="{")
 
 def DECSET(Pm):
   """Set the parameter |Pm|."""
-  escio.WriteCSI(params=[ Pm ], prefix='?', final='h')
+  escio.WriteCSI(params=[Pm], prefix='?', final='h')
 
 def DECSLRM(Pl, Pr):
   """Set the left and right margins."""
-  AssertVTLevel(4,"DECSLRM")
-  escio.WriteCSI(params=[ Pl, Pr ], final='s')
+  AssertVTLevel(4, "DECSLRM")
+  escio.WriteCSI(params=[Pl, Pr], final='s')
 
 def DECSTBM(top=None, bottom=None):
   """Set Scrolling Region [top;bottom] (default = full size of window)."""
@@ -507,7 +507,7 @@ def DL(Pn=None):
   if Pn is None:
     params = []
   else:
-    params = [ Pn ]
+    params = [Pn]
   escio.WriteCSI(params=params, final="M")
 
 def DSR(Ps, suppressSideChannel=False):
@@ -515,7 +515,7 @@ def DSR(Ps, suppressSideChannel=False):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, requestsReport=suppressSideChannel, final='n')
 
 def ECH(Pn=None):
@@ -523,7 +523,7 @@ def ECH(Pn=None):
   if Pn is None:
     params = []
   else:
-    params = [ Pn ]
+    params = [Pn]
   escio.WriteCSI(params=params, final="X")
 
 def ED(Ps=None):
@@ -536,7 +536,7 @@ def ED(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="J")
 
 def EL(Ps=None):
@@ -549,7 +549,7 @@ def EL(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="K")
 
 def EPA():
@@ -564,7 +564,7 @@ def HPA(Pn=None):
   if Pn is None:
     params = []
   else:
-    params = [ Pn ]
+    params = [Pn]
   escio.WriteCSI(params=params, final="`")
 
 def HPR(Pn=None):
@@ -573,7 +573,7 @@ def HPR(Pn=None):
   if Pn is None:
     params = []
   else:
-    params = [ Pn ]
+    params = [Pn]
   escio.WriteCSI(params=params, final="a")
 
 def HTS():
@@ -586,23 +586,23 @@ def HTS():
 def HVP(point=None, row=None, col=None):
   """ Move cursor to |point| """
   if point is None and row is None and col is None:
-    escio.WriteCSI(params=[ ], final="H")
+    escio.WriteCSI(params=[], final="H")
   elif point is None:
     if row is None:
       row = ""
     if col is None:
-      escio.WriteCSI(params=[ row ], final="H")
+      escio.WriteCSI(params=[row], final="H")
     else:
-      escio.WriteCSI(params=[ row, col ], final="H")
+      escio.WriteCSI(params=[row, col], final="H")
   else:
-    escio.WriteCSI(params=[ point.y(), point.x() ], final="f")
+    escio.WriteCSI(params=[point.y(), point.x()], final="f")
 
 def ICH(Pn=None):
   """ Insert |Pn| blanks at cursor. Cursor does not move. """
   if Pn is None:
     params = []
   else:
-    params = [ Pn ]
+    params = [Pn]
   escio.WriteCSI(params=params, final="@")
 
 def IL(Pn=None):
@@ -610,7 +610,7 @@ def IL(Pn=None):
   if Pn is None:
     params = []
   else:
-    params = [ Pn ]
+    params = [Pn]
   escio.WriteCSI(params=params, final="L")
 
 def IND():
@@ -621,7 +621,7 @@ def IND():
     escio.Write(ESC + "D")
 
 def ManipulateSelectionData(Pc="", Pd=None):
-  params = [ "52", Pc ]
+  params = ["52", Pc]
   if Pd is not None:
     params.append(Pd)
   escio.WriteOSC(params)
@@ -645,19 +645,19 @@ def REP(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="b")
 
 def ResetSpecialColor(*args):
-  params = [ "105" ]
+  params = ["105"]
   params.extend(args)
   escio.WriteOSC(params)
 
 def ResetColor(c=""):
-  escio.WriteOSC([ "104", c ])
+  escio.WriteOSC(["104", c])
 
 def ResetDynamicColor(c):
-  escio.WriteOSC([ str(c) ])
+  escio.WriteOSC([str(c)])
 
 def RI():
   """Move cursor up one line."""
@@ -675,12 +675,12 @@ def RM(Pm=None):
   if Pm is None:
     params = []
   else:
-    params = [ Pm ]
+    params = [Pm]
   escio.WriteCSI(params=params, final="l")
 
 def RM_Title(Ps1, Ps2=None):
   """Reset title mode."""
-  params = [ Ps1 ]
+  params = [Ps1]
   if Ps2 is not None:
     params.append(Ps2)
   escio.WriteCSI(params=params, prefix=">", final="T")
@@ -690,7 +690,7 @@ def SD(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="T")
 
 def SM(Pm=None):
@@ -698,12 +698,12 @@ def SM(Pm=None):
   if Pm is None:
     params = []
   else:
-    params = [ Pm ]
+    params = [Pm]
   escio.WriteCSI(params=params, final="h")
 
 def SM_Title(Ps1, Ps2=None):
   """Set title mode."""
-  params = [ Ps1 ]
+  params = [Ps1]
   if Ps2 is not None:
     params.append(Ps2)
   escio.WriteCSI(params=params, prefix=">", final="t")
@@ -731,7 +731,7 @@ def SU(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="S")
 
 def TBC(Ps=None):
@@ -739,7 +739,7 @@ def TBC(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="g")
 
 def VPA(Ps=None):
@@ -747,7 +747,7 @@ def VPA(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="d")
 
 def VPR(Ps=None):
@@ -755,7 +755,7 @@ def VPR(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, final="e")
 
 def XTERM_RESTORE(Ps=None):
@@ -763,7 +763,7 @@ def XTERM_RESTORE(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, prefix="?", final="r")
 
 def XTERM_SAVE(Ps=None):
@@ -771,24 +771,24 @@ def XTERM_SAVE(Ps=None):
   if Ps is None:
     params = []
   else:
-    params = [ Ps ]
+    params = [Ps]
   escio.WriteCSI(params=params, prefix="?", final="s")
 
 def XTERM_WINOPS(Ps1=None, Ps2=None, Ps3=None):
   if Ps3 is not None:
-    params = [ Ps1, Ps2, Ps3 ]
+    params = [Ps1, Ps2, Ps3]
   elif Ps2 is not None:
-    params = [ Ps1, Ps2 ]
+    params = [Ps1, Ps2]
   elif Ps1 is not None:
-    params = [ Ps1 ]
+    params = [Ps1]
   else:
     params = []
-  requestsReport = Ps1 in [ WINOP_REPORT_WINDOW_STATE,
-                            WINOP_REPORT_WINDOW_POSITION,
-                            WINOP_REPORT_WINDOW_SIZE_PIXELS,
-                            WINOP_REPORT_TEXT_AREA_CHARS,
-                            WINOP_REPORT_SCREEN_SIZE_CHARS,
-                            WINOP_REPORT_ICON_LABEL,
-                            WINOP_REPORT_WINDOW_TITLE ]
+  requestsReport = Ps1 in [WINOP_REPORT_WINDOW_STATE,
+                           WINOP_REPORT_WINDOW_POSITION,
+                           WINOP_REPORT_WINDOW_SIZE_PIXELS,
+                           WINOP_REPORT_TEXT_AREA_CHARS,
+                           WINOP_REPORT_SCREEN_SIZE_CHARS,
+                           WINOP_REPORT_ICON_LABEL,
+                           WINOP_REPORT_WINDOW_TITLE]
   escio.WriteCSI(params=params, final="t", requestsReport=requestsReport)
 

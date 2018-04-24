@@ -35,8 +35,8 @@ class ChangeSpecialColorTests(object):
     esccmd.ChangeSpecialColor(c, value)
     esccmd.ChangeSpecialColor(c, "?")
     s = escio.ReadOSC("4")
-    AssertTrue(s in [ ";" + str(int(c) + 16) + ";rgb:" + rgb,
-                      ";" + str(int(c) + 256) + ";rgb:" + rgb ])
+    AssertTrue(s in [";" + str(int(c) + 16) + ";rgb:" + rgb,
+                     ";" + str(int(c) + 256) + ";rgb:" + rgb])
 
   @knownBug(terminal="iTerm2", reason="Color reporting not implemented.", shouldTry=False)
   def test_ChangeSpecialColor_RGB(self):

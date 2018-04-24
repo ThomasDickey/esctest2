@@ -18,7 +18,7 @@ class XtermWinopsTests(object):
   def delay_after_icon(self):
     need_sleep = escargs.args.expected_terminal in ["xterm"]
     if need_sleep:
-      time.sleep(0.5)
+      time.sleep(1)
 
   def delay_after_move(self):
     need_sleep = escargs.args.expected_terminal in ["xterm"]
@@ -36,24 +36,27 @@ class XtermWinopsTests(object):
     return Size(frame.width() + characterCells * chars.width(),
                 frame.height() + characterCells * chars.height())
 
+  def debug_size(self, name, value):
+    esclog.LogDebug(name + str(value.height()) + "x" + str(value.width()))
+
   def check_any_size(self, desired_size, actual_size, limit):
-    esclog.LogInfo("actual  size " + str(actual_size.height()) + "x" + str(actual_size.width()))
-    esclog.LogInfo("desired size " + str(desired_size.height()) + "x" + str(desired_size.width()))
+    self.debug_size("actual  size ", actual_size)
+    self.debug_size("desired size ", desired_size)
     error = Size(abs(actual_size.width() - desired_size.width()),
                  abs(actual_size.height() - desired_size.height()))
-    esclog.LogInfo("error limit  " + str(limit.height()) + "x" + str(limit.width()))
-    esclog.LogInfo("actual error " + str(error.height()) + "x" + str(error.width()))
+    self.debug_size("error limit  ", limit)
+    self.debug_size("actual error ", error)
     AssertTrue(error.width() <= (limit.width()))
     AssertTrue(error.height() <= (limit.height()))
 
   def check_actual_size_pixels(self, desired_size):
-    self.check_any_size(desired_size, GetWindowSizePixels(), self.get_pixel_error_limit(3))
+    self.check_any_size(desired_size, GetWindowSizePixels(), self.get_pixel_error_limit(1))
 
   def check_actual_size_chars(self, desired_size, limit):
     self.check_any_size(desired_size, GetScreenSize(), limit)
 
   def check_for_shrinkage(self, original_size, actual_size):
-    esclog.LogInfo("actual size  " + str(actual_size.height()) + "x" + str(actual_size.width()))
+    self.debug_size("check shrink ", actual_size)
     AssertTrue(actual_size.width() >= original_size.width())
     AssertTrue(actual_size.height() >= original_size.height())
 
