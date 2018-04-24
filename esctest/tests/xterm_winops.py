@@ -1,7 +1,10 @@
 import escargs
 import esccmd
 import esclog
-from escutil import AssertEQ, AssertTrue, GetDisplaySize, GetIconTitle, GetIsIconified, GetScreenSize, GetWindowPosition, GetCharSizePixels, GetScreenSizePixels, GetWindowSizePixels, GetWindowTitle, knownBug
+from escutil import AssertEQ, AssertTrue, GetDisplaySize, GetIconTitle
+from escutil import GetIsIconified, GetScreenSize, GetWindowPosition
+from escutil import GetCharSizePixels, GetFrameSizePixels, GetScreenSizePixels
+from escutil import GetWindowSizePixels, GetWindowTitle, knownBug
 from esctypes import Point, Size
 import time
 
@@ -26,6 +29,25 @@ class XtermWinopsTests(object):
     needsSleep = escargs.args.expected_terminal in ["xterm"]
     if needsSleep:
       time.sleep(3)
+
+  def getPixelErrorLimit(self, characterCells):
+    frame = GetFrameSizePixels()
+    chars = GetCharSizePixels()
+    return Size(frame.width() + characterCells * chars.width(),
+                frame.height() + characterCells * chars.height())
+
+  def checkActualPixelSize(self, desired_size):
+    actual_size = GetWindowSizePixels()
+    charcell_size = GetCharSizePixels()
+    esclog.LogInfo("actual  size " + str(actual_size.height()) + "x" + str(actual_size.width()))
+    esclog.LogInfo("desired size " + str(desired_size.height()) + "x" + str(desired_size.width()))
+    limit = self.getPixelErrorLimit(3)
+    error = Size(abs(actual_size.width() - desired_size.width()),
+                 abs(actual_size.height() - desired_size.height()))
+    esclog.LogInfo("error limit  " + str(error.height()) + "x" + str(error.width()))
+    esclog.LogInfo("actual error " + str(limit.height()) + "x" + str(limit.width()))
+    AssertTrue(error.width() <= (limit.width()))
+    AssertTrue(error.height() <= (limit.height()))
 
   def average_width(self, a, b):
     return (a.width() + b.width()) / 2
@@ -69,7 +91,6 @@ class XtermWinopsTests(object):
     if escargs.args.expected_terminal == "xterm":
       maximum_size = GetScreenSizePixels()
       original_size = GetWindowSizePixels()
-      charcell_size = GetCharSizePixels()
       desired_size = Size(self.average_width(maximum_size, original_size),
                           self.average_height(maximum_size, original_size))
 
@@ -77,16 +98,7 @@ class XtermWinopsTests(object):
                           desired_size.height(),
                           desired_size.width())
       self.delayAfterResize()
-      actual_size = GetWindowSizePixels()
-      esclog.LogInfo("actual  size " + str(actual_size.height()) + "x" + str(actual_size.width()))
-      esclog.LogInfo("desired size " + str(desired_size.height()) + "x" + str(desired_size.width()))
-      error = Size(abs(actual_size.width() - desired_size.width()),
-                   abs(actual_size.height() - desired_size.height()))
-      max_error = 3
-      esclog.LogInfo("error diff " + str(error.height()) + "x" + str(error.width()))
-      esclog.LogInfo("chars diff " + str(charcell_size.height()) + "x" + str(charcell_size.width()))
-      AssertTrue(error.width() <= (charcell_size.width() * max_error))
-      AssertTrue(error.height() <= (charcell_size.height() * max_error))
+      self.checkActualPixelSize(desired_size)
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
                           original_size.height(),
@@ -126,17 +138,7 @@ class XtermWinopsTests(object):
                           None,
                           desired_size.width())
       self.delayAfterResize()
-
-      actual_size = GetWindowSizePixels()
-      esclog.LogInfo("actual size " + str(actual_size.height()) + "x" + str(actual_size.width()))
-      esclog.LogInfo("desired size " + str(desired_size.height()) + "x" + str(desired_size.width()))
-      error = Size(abs(actual_size.width() - desired_size.width()),
-                   abs(actual_size.height() - desired_size.height()))
-      max_error = 3
-      esclog.LogInfo("error diff " + str(error.height()) + "x" + str(error.width()))
-      esclog.LogInfo("chars diff " + str(charcell_size.height()) + "x" + str(charcell_size.width()))
-      AssertTrue(error.width() <= (charcell_size.width() * max_error))
-      AssertTrue(error.height() <= (charcell_size.height() * max_error))
+      self.checkActualPixelSize(desired_size)
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
                           original_size.height(),
@@ -176,18 +178,7 @@ class XtermWinopsTests(object):
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
                           desired_size.height())
       self.delayAfterResize()
-
-      actual_size = GetWindowSizePixels()
-      esclog.LogInfo("maximum size " + str(maximum_size.height()) + "x" + str(maximum_size.width()))
-      esclog.LogInfo("actual  size " + str(actual_size.height()) + "x" + str(actual_size.width()))
-      esclog.LogInfo("desired size " + str(desired_size.height()) + "x" + str(desired_size.width()))
-      error = Size(abs(actual_size.width() - desired_size.width()),
-                   abs(actual_size.height() - desired_size.height()))
-      max_error = 2
-      esclog.LogInfo("error   diff " + str(error.height()) + "x" + str(error.width()))
-      esclog.LogInfo("char    size " + str(charcell_size.height()) + "x" + str(charcell_size.width()))
-      AssertTrue(error.width() <= (charcell_size.width() * max_error))
-      AssertTrue(error.height() <= (charcell_size.height() * max_error))
+      self.checkActualPixelSize(desired_size)
 
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
                           original_size.height(),
@@ -221,17 +212,13 @@ class XtermWinopsTests(object):
       charcell_size = GetCharSizePixels()
 
       # Set height and maximize width.
-      desired_height = self.average_height(maximum_size, original_size)
+      desired_size = Size(maximum_size.width(),
+                          self.average_height(maximum_size, original_size))
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
-                          desired_height,
+                          desired_size.height(),
                           0)
       self.delayAfterResize()
-
-      # Make sure the height changed as requested.
-      max_error = charcell_size.height() * 3
-      actual_size = GetWindowSizePixels()
-      esclog.LogInfo("actual size " + str(actual_size.height()) + "x" + str(actual_size.width()))
-      AssertTrue(abs(actual_size.height() - desired_height) < max_error)
+      self.checkActualPixelSize(desired_size)
 
       # See if the width is about as big as the display (only measurable in
       # characters, not pixels).
@@ -280,17 +267,13 @@ class XtermWinopsTests(object):
       charcell_size = GetCharSizePixels()
 
       # Set height and maximize width.
-      desired_width = self.average_width(maximum_size, original_size)
+      desired_size = Size(self.average_width(maximum_size, original_size),
+                          maximum_size.height())
       esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_PIXELS,
                           0,
-                          desired_width)
+                          desired_size.width())
       self.delayAfterResize()
-
-      # Make sure the height changed as requested.
-      max_error = charcell_size.width() * 3
-      actual_size = GetWindowSizePixels()
-      esclog.LogInfo("actual size " + str(actual_size.height()) + "x" + str(actual_size.width()))
-      AssertTrue(abs(actual_size.width() - desired_width) < max_error)
+      self.checkActualPixelSize(desired_size)
 
       # See if the height is about as big as the display (only measurable in
       # characters, not pixels).
