@@ -50,7 +50,6 @@ class RISTests(object):
     AssertEQ(GetIconTitle(), "a")
 
   @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="iTerm2 doesn't support ALTBUF.")
   def test_RIS_ExitAltScreen(self):
     escio.Write("m")
     esccmd.DECSET(esccmd.ALTBUF)

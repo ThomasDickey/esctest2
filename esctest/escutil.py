@@ -12,10 +12,10 @@ from esctypes import Point, Size, Rect
 gNextId = 1
 gHaveAsserted = False
 
-CHAR_SIZE_PIXELS = Size(0, 0)
-FRAME_SIZE_PIXELS = Size(0, 0)
-SCREEN_SIZE_PIXELS = Size(0, 0)
-CAN_QUERY_SHELL_SIZE = -1
+gCharSizePixels = Size(0, 0)
+gFrameSizePixels = Size(0, 0)
+gScreenSizePixels = Size(0, 0)
+gCanQueryShellSize = -1
 
 KNOWN_BUG_TERMINALS = "known_bug_terminals"
 
@@ -51,7 +51,7 @@ def GetWindowTitle():
   esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_WINDOW_TITLE)
   return escio.ReadOSC("l")
 
-def can_query_shell_size():
+def CanQueryShellSize():
   """Determine if the terminal responds to a request for shell-window size vs
   text-window size.
 
@@ -68,9 +68,9 @@ def can_query_shell_size():
   to provide an alternate way to measure the text-window (and indirectly, the
   font size).  That is the default operation.  Alternatively, the size of the
   shell window can be returned."""
-  global CAN_QUERY_SHELL_SIZE
-  if CAN_QUERY_SHELL_SIZE < 0:
-    CAN_QUERY_SHELL_SIZE = 0
+  global gCanQueryShellSize
+  if gCanQueryShellSize < 0:
+    gCanQueryShellSize = 0
     # check for the default operation
     esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_WINDOW_SIZE_PIXELS)
     params = escio.ReadCSI("t")
@@ -78,7 +78,7 @@ def can_query_shell_size():
       # TODO: compare size_1 with result from text-window size
       # If it is larger, then that's a special case.
       size_1 = Size(params[2], params[1])
-      CAN_QUERY_SHELL_SIZE = 1
+      gCanQueryShellSize = 1
       # check for the window-shell operation
       esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_WINDOW_SIZE_PIXELS, 2)
       params = escio.ReadCSI("t")
@@ -86,12 +86,12 @@ def can_query_shell_size():
         size_2 = Size(params[2], params[1])
         if size_2.height() > size_1.height() and \
            size_2.width() > size_1.width():
-          CAN_QUERY_SHELL_SIZE = 2
-  return CAN_QUERY_SHELL_SIZE
+          gCanQueryShellSize = 2
+  return gCanQueryShellSize
 
 def GetWindowSizePixels():
   """Returns a Size giving the window's size in pixels."""
-  if can_query_shell_size() == 2:
+  if CanQueryShellSize() == 2:
     esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_WINDOW_SIZE_PIXELS, 2)
   else:
     esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_WINDOW_SIZE_PIXELS)
@@ -106,15 +106,18 @@ def GetScreenSizePixels():
   The "screen" refers to the X display on which xterm is running.
   Because that does not change as a result of these tests, we
   cache a value to help with performance."""
-  global SCREEN_SIZE_PIXELS
-  if SCREEN_SIZE_PIXELS.height() == 0:
-    esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_SCREEN_SIZE_PIXELS)
-    params = escio.ReadCSI("t")
-    AssertTrue(params[0] == 5)
-    AssertTrue(len(params) >= 3)
-    SCREEN_SIZE_PIXELS = Size(params[2], params[1])
-    LogDebug("size of SCREEN " + str(SCREEN_SIZE_PIXELS.height()) + "x" + str(SCREEN_SIZE_PIXELS.width()))
-  return SCREEN_SIZE_PIXELS
+  global gScreenSizePixels
+  if gScreenSizePixels.height() == 0:
+    if escargs.args.expected_terminal == "xterm":
+      esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_SCREEN_SIZE_PIXELS)
+      params = escio.ReadCSI("t")
+      AssertTrue(params[0] == 5)
+      AssertTrue(len(params) >= 3)
+      gScreenSizePixels = Size(params[2], params[1])
+    else:
+      gScreenSizePixels = Size(1024, 768)
+    LogDebug("size of SCREEN " + str(gScreenSizePixels.height()) + "x" + str(gScreenSizePixels.width()))
+  return gScreenSizePixels
 
 def GetFrameSizePixels():
   """Returns a Size giving the terminal's border/title frame size.
@@ -122,15 +125,15 @@ def GetFrameSizePixels():
   The frame size is used to adjust the expected error in window-resizing
   tests which modify the shell window's size.
   """
-  global FRAME_SIZE_PIXELS
-  if FRAME_SIZE_PIXELS.height() == 0:
+  global gFrameSizePixels
+  if gFrameSizePixels.height() == 0:
     GetCharSizePixels()
     outer = GetWindowSizePixels()
     inner = GetScreenSize()
-    FRAME_SIZE_PIXELS = Size(outer.height() - (inner.height() * CHAR_SIZE_PIXELS.height()),
-                             outer.width() - (inner.width() * CHAR_SIZE_PIXELS.width()))
-    LogDebug("size of FRAME " + str(FRAME_SIZE_PIXELS.height()) + "x" + str(FRAME_SIZE_PIXELS.width()))
-  return FRAME_SIZE_PIXELS
+    gFrameSizePixels = Size(outer.height() - (inner.height() * gCharSizePixels.height()),
+                            outer.width() - (inner.width() * gCharSizePixels.width()))
+    LogDebug("size of FRAME " + str(gFrameSizePixels.height()) + "x" + str(gFrameSizePixels.width()))
+  return gFrameSizePixels
 
 def GetCharSizePixels():
   """Returns a Size giving the font's character-size in pixels.
@@ -138,15 +141,15 @@ def GetCharSizePixels():
   While xterm can be told to change its font, none of these tests exercise
   that feature.  We cache a value to improve performance.
   """
-  global CHAR_SIZE_PIXELS
-  if CHAR_SIZE_PIXELS.height() == 0:
+  global gCharSizePixels
+  if gCharSizePixels.height() == 0:
     esccmd.XTERM_WINOPS(esccmd.WINOP_REPORT_CHAR_SIZE_PIXELS)
     params = escio.ReadCSI("t")
     AssertTrue(params[0] == 6)
     AssertTrue(len(params) >= 3)
-    CHAR_SIZE_PIXELS = Size(params[2], params[1])
-    LogDebug("size of CHARS " + str(CHAR_SIZE_PIXELS.height()) + "x" + str(CHAR_SIZE_PIXELS.width()))
-  return CHAR_SIZE_PIXELS
+    gCharSizePixels = Size(params[2], params[1])
+    LogDebug("size of CHARS " + str(gCharSizePixels.height()) + "x" + str(gCharSizePixels.width()))
+  return gCharSizePixels
 
 def GetWindowPosition():
   """Returns a Point giving the window's origin in screen pixels.

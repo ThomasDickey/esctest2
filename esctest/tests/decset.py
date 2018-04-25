@@ -443,7 +443,6 @@ class DECSETTests(object):
     entering alt and restores it after returning to main."""
     self.doAltBuftest(esccmd.OPT_ALTBUF_CURSOR, True, True, True)
 
-  # xterm doesn't implement auto-wrap mode when wide characters are disabled.
   @vtLevel(4)
   def test_DECSET_DECLRMM(self):
     """Left-right margin. This is tested extensively in many other places as well."""
