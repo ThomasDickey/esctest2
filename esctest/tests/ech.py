@@ -11,7 +11,7 @@ class ECHTests(object):
     escio.Write("abc")
     esccmd.CUP(Point(1, 1))
     esccmd.ECH()
-    AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1), [ blank() + "bc" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1), [blank() + "bc"])
 
   @vtLevel(4)
   def test_ECH_ExplicitParam(self):
@@ -19,7 +19,7 @@ class ECHTests(object):
     escio.Write("abc")
     esccmd.CUP(Point(1, 1))
     esccmd.ECH(2)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1), [ blank() * 2 + "c" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1), [blank() * 2 + "c"])
 
   @vtLevel(4)
   def test_ECH_IgnoresScrollRegion(self):
@@ -31,7 +31,7 @@ class ECHTests(object):
     esccmd.ECH(4)
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 7, 1), [ "ab" + blank() * 4 + "g" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 7, 1), ["ab" + blank() * 4 + "g"])
 
   @vtLevel(4)
   def test_ECH_OutsideScrollRegion(self):
@@ -43,7 +43,7 @@ class ECHTests(object):
     esccmd.ECH(4)
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 7, 1), [ blank() * 4 + "efg" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 7, 1), [blank() * 4 + "efg"])
 
   @vtLevel(4)
   @knownBug(terminal="xterm",
@@ -58,7 +58,7 @@ class ECHTests(object):
     esccmd.CUP(Point(1, 1))
     esccmd.ECH(3)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
-                                 [ blank() * 3 ])
+                                 [blank() * 3])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2",
@@ -73,5 +73,5 @@ class ECHTests(object):
     esccmd.CUP(Point(1, 1))
     esccmd.ECH(3)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
-                                 [ blank() * 2 + "c" ])
+                                 [blank() * 2 + "c"])
 

@@ -9,8 +9,18 @@ opinion."
 The tested set of control sequences are documented somewhat tersely at this URL:
 http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
 
-The official documentation for DEC-supported escape sequences is here:
-http://www.vt100.net/docs/vt510-rm/.
+In its references section, the xterm control sequences summary lists several
+more extensive documents, with which developers are expected to be familiar.
+
+Among those are manuals for VT100 through VT420 and VT510, for example:
+http://www.vt100.net/docs/vt510-rm/
+
+DEC's standard for video terminals is here:
+http://www.bitsavers.org/pdf/dec/standards/EL-SM070-00_DEC_STD_070_Video_Systems_Reference_Manual_Dec91.pdf
+The xterm control sequences document mentions a few instances where the later
+programmer reference manuals do not agree with the standard, apparently due to
+editorial blunders.  In cases where the programmer reference manuals differ
+from the video standards document, the latter is used.
 
 All tests are automatic; no user interaction is required. As a consequence, some
 control sequences cannot be tested. For example, it is impossible to examine the
@@ -20,9 +30,30 @@ cursor position; these form the bulk of the tests.
 
 Notes on xterm
 --------------
-You should build xterm yourself and configure it with --enable-dec-locator. Some
-tests will fail unless it is provided. Most other configuration settings are not
-tested and may or may not cause problems.
+Several tests give different results depending on whether Unicode support is
+compiled into xterm or not.  Other tests fail if more than 16 colors are
+configured.  As of xterm patch 332, two sets of configuration options are used
+for testing with these scripts.
+
+Use these options when testing without Unicode:
+
+	--enable-dec-locator
+	--disable-256-color
+	--disable-direct-color
+	--disable-88-color
+	--disable-luit
+	--disable-wide-chars
+	--disable-mini-luit
+
+Use these options when testing with Unicode:
+
+	--enable-dec-locator
+	--disable-256-color
+	--disable-direct-color
+	--disable-88-color
+
+Most other configuration settings are not tested and may or may not cause
+problems.
 
 Notes on iTerm2
 ---------------
@@ -56,9 +87,9 @@ Selects the action that the test framework performs.
   looking for bugs to fix in your terminal.
 
 --disable-xterm-checksum-bug
-xterm's implementation of DECRQCRA (as of patch 314) contains a bug. DECRQCRA is
-essential to these tests. By default, a workaround for the bug is used. If it is
-fixed in the future, this flag should be given until the workaround is dropped.
+xterm's implementation of DECRQCRA (fixed in patch 315, early 2015) contained a
+bug.  DECRQCRA is essential to these tests.  By default, a workaround for the
+bug is used in case an old version of xterm is tested.
 
 --include=regex
 Only tests whose name matches "regex" will be run.

@@ -6,7 +6,7 @@ from escutil import AssertEQ, GetIconTitle, GetWindowTitle, knownBug, optionRequ
 
 class SMTitleTests(object):
   @optionRequired(terminal="xterm", option=escargs.XTERM_WINOPS_ENABLED,
-      allowPassWithoutOption=True)
+                  allowPassWithoutOption=True)
   @knownBug(terminal="iTerm2", reason="SM_Title not implemented.")
   def test_SMTitle_SetHexQueryUTF8(self):
     esccmd.RM_Title(SET_UTF8, QUERY_HEX)
@@ -23,7 +23,7 @@ class SMTitleTests(object):
     AssertEQ(GetIconTitle(), "a")
 
   @optionRequired(terminal="xterm", option=escargs.XTERM_WINOPS_ENABLED,
-      allowPassWithoutOption=True)
+                  allowPassWithoutOption=True)
   @knownBug(terminal="iTerm2", reason="SM_Title not implemented.")
   def test_SMTitle_SetUTF8QueryUTF8(self):
     esccmd.RM_Title(SET_HEX, QUERY_HEX)
@@ -40,7 +40,7 @@ class SMTitleTests(object):
     AssertEQ(GetIconTitle(), "a")
 
   @optionRequired(terminal="xterm", option=escargs.XTERM_WINOPS_ENABLED,
-      allowPassWithoutOption=True)
+                  allowPassWithoutOption=True)
   @knownBug(terminal="iTerm2", reason="SM_Title not implemented.")
   def test_SMTitle_SetUTF8QueryHex(self):
     esccmd.RM_Title(SET_HEX, QUERY_UTF8)
@@ -57,7 +57,7 @@ class SMTitleTests(object):
     AssertEQ(GetIconTitle(), "61")
 
   @optionRequired(terminal="xterm", option=escargs.XTERM_WINOPS_ENABLED,
-      allowPassWithoutOption=True)
+                  allowPassWithoutOption=True)
   @knownBug(terminal="iTerm2", reason="SM_Title not implemented.")
   def test_SMTitle_SetHexQueryHex(self):
     esccmd.RM_Title(SET_UTF8, QUERY_UTF8)

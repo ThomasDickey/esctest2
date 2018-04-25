@@ -47,11 +47,11 @@ class EDTests(object):
     self.prepare()
     esccmd.ED()
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "b" + NUL * 2,
-                                   NUL * 3,
-                                   NUL * 3 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "b" + NUL * 2,
+                                  NUL * 3,
+                                  NUL * 3])
 
   @vtLevel(4)
   def test_ED_0(self):
@@ -59,11 +59,11 @@ class EDTests(object):
     self.prepare()
     esccmd.ED(0)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "b" + NUL * 2,
-                                   NUL * 3,
-                                   NUL * 3 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "b" + NUL * 2,
+                                  NUL * 3,
+                                  NUL * 3])
 
   @vtLevel(4)
   def test_ED_1(self):
@@ -71,11 +71,11 @@ class EDTests(object):
     self.prepare()
     esccmd.ED(1)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ NUL * 3,
-                                   NUL * 3,
-                                   blank() * 2 + "d",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 [NUL * 3,
+                                  NUL * 3,
+                                  blank() * 2 + "d",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
   @vtLevel(4)
   def test_ED_2(self):
@@ -83,11 +83,11 @@ class EDTests(object):
     self.prepare()
     esccmd.ED(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ NUL * 3,
-                                   NUL * 3,
-                                   NUL * 3,
-                                   NUL * 3,
-                                   NUL * 3 ])
+                                 [NUL * 3,
+                                  NUL * 3,
+                                  NUL * 3,
+                                  NUL * 3,
+                                  NUL * 3])
 
   @vtLevel(4)
   def test_ED_3(self):
@@ -97,11 +97,11 @@ class EDTests(object):
     self.prepare()
     esccmd.ED(3)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
   @vtLevel(4)
   def test_ED_0_WithScrollRegion(self):
@@ -115,9 +115,9 @@ class EDTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ "abcde",
-                                   "fg" + NUL * 3,
-                                   NUL * 5 ])
+                                 ["abcde",
+                                  "fg" + NUL * 3,
+                                  NUL * 5])
 
   @vtLevel(4)
   def test_ED_1_WithScrollRegion(self):
@@ -131,9 +131,9 @@ class EDTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ NUL * 5,
-                                   blank() * 3 + "ij",
-                                   "klmno" ])
+                                 [NUL * 5,
+                                  blank() * 3 + "ij",
+                                  "klmno"])
 
   @vtLevel(4)
   def test_ED_2_WithScrollRegion(self):
@@ -147,9 +147,9 @@ class EDTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ NUL * 5,
-                                   NUL * 5,
-                                   NUL * 5 ])
+                                 [NUL * 5,
+                                  NUL * 5,
+                                  NUL * 5])
 
   @vtLevel(4)
   def test_ED_doesNotRespectDECProtection(self):
@@ -162,7 +162,7 @@ class EDTests(object):
     esccmd.CUP(Point(1, 1))
     esccmd.ED(0)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
-                               [ NUL * 3 ])
+                                 [NUL * 3])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2",
@@ -177,5 +177,5 @@ class EDTests(object):
     esccmd.CUP(Point(1, 1))
     esccmd.ED(0)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
-                                 [ blank() * 2 + "c" ])
+                                 [blank() * 2 + "c"])
 

@@ -14,9 +14,9 @@ class DECSTBMTests(object):
     esccmd.CUP(Point(1, 2))
     escio.Write("1" + CR + LF)
     escio.Write("2")
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [ "1", "2" ])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), ["1", "2"])
     escio.Write(CR + LF)
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [ "2", NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), ["2", NUL])
     AssertEQ(GetCursorPosition().y(), 3)
 
   @vtLevel(4)
@@ -28,7 +28,7 @@ class DECSTBMTests(object):
     escio.Write("2")
     esccmd.CUP(Point(1, 4))
     escio.Write(CR + LF)
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [ "1", "2" ])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), ["1", "2"])
 
   def test_DECSTBM_MovsCursorToOrigin(self):
     """DECSTBM moves the cursor to column 1, line 1 of the page."""
@@ -48,15 +48,15 @@ class DECSTBMTests(object):
         escio.Write(CR + LF)
     for i in xrange(size.height()):
       y = i + 1
-      AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [ "%04d" % i ])
+      AssertScreenCharsInRectEqual(Rect(1, y, 4, y), ["%04d" % i])
     esccmd.CUP(Point(1, size.height()))
     escio.Write(LF)
     for i in xrange(size.height() - 1):
       y = i + 1
-      AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [ "%04d" % (i + 1) ])
+      AssertScreenCharsInRectEqual(Rect(1, y, 4, y), ["%04d" % (i + 1)])
 
     y = size.height()
-    AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [ NUL * 4 ])
+    AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [NUL * 4])
 
   @vtLevel(4)
   def test_DECSTBM_DefaultRestores(self):
@@ -65,12 +65,12 @@ class DECSTBMTests(object):
     esccmd.CUP(Point(1, 2))
     escio.Write("1" + CR + LF)
     escio.Write("2")
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [ "1", "2" ])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), ["1", "2"])
     position = GetCursorPosition()
     esccmd.DECSTBM()
     esccmd.CUP(position)
     escio.Write(CR + LF)
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [ "1", "2" ])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), ["1", "2"])
     AssertEQ(GetCursorPosition().y(), 4)
 
   @vtLevel(4)
@@ -84,8 +84,8 @@ class DECSTBMTests(object):
     esccmd.CUP(Point(1, size.height()))
     escio.Write("3" + CR + LF)
 
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [ "1", "2" ])
-    AssertScreenCharsInRectEqual(Rect(1, size.height(), 1, size.height()), [ "3" ])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), ["1", "2"])
+    AssertScreenCharsInRectEqual(Rect(1, size.height(), 1, size.height()), ["3"])
     AssertEQ(GetCursorPosition().y(), size.height())
 
   @vtLevel(4)
@@ -104,7 +104,7 @@ class DECSTBMTests(object):
     escio.Write(CR + LF)
 
     # Verify that line 2 scrolled up to line 1.
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 2), [ "x", NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 2), ["x", NUL])
 
     # Verify the cursor is at the last line on the page.
     AssertEQ(GetCursorPosition().y(), size.height())
@@ -118,7 +118,7 @@ class DECSTBMTests(object):
     escio.Write("2" + CR + LF)
     escio.Write("3" + CR + LF)
     escio.Write("4")
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 3), [ "2", "3", "4" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 3), ["2", "3", "4"])
 
   @vtLevel(4)
   def test_DECSTBM_BottomOfZeroIsBottomOfScreen(self):
@@ -136,7 +136,7 @@ class DECSTBMTests(object):
     escio.Write(CR + LF)
 
     # Verify that line 3 scrolled up to line 2.
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [ "x", NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), ["x", NUL])
 
     # Verify the cursor is at the last line on the page.
     AssertEQ(GetCursorPosition().y(), size.height())

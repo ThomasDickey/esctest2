@@ -67,4 +67,4 @@ class HPRTests(object):
     esccmd.DECSTBM()
 
     # See what happened
-    AssertScreenCharsInRectEqual(Rect(5, 7, 9, 7), [ NUL + "X" + NUL * 2 + "Y" ])
+    AssertScreenCharsInRectEqual(Rect(5, 7, 9, 7), [NUL + "X" + NUL * 2 + "Y"])

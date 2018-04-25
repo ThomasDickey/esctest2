@@ -5,6 +5,7 @@ from escutil import AssertEQ, AssertTrue, GetDisplaySize, GetIconTitle
 from escutil import GetIsIconified, GetScreenSize, GetWindowPosition
 from escutil import GetCharSizePixels, GetFrameSizePixels, GetScreenSizePixels
 from escutil import GetWindowSizePixels, GetWindowTitle, knownBug
+from escutil import can_query_shell_size
 from esctypes import Point, Size
 import time
 
@@ -16,30 +17,58 @@ import time
 
 class XtermWinopsTests(object):
   def delay_after_icon(self):
+    """Account for time needed by window manager to iconify/deiconify a
+    window."""
     need_sleep = escargs.args.expected_terminal in ["xterm"]
     if need_sleep:
       time.sleep(1)
 
   def delay_after_move(self):
+    """Account for time needed by window manager to move a window."""
     need_sleep = escargs.args.expected_terminal in ["xterm"]
     if need_sleep:
       time.sleep(0.1)
 
   def delay_after_resize(self):
+    """Account for time needed by window manager to resize a window."""
     need_sleep = escargs.args.expected_terminal in ["xterm"]
     if need_sleep:
       time.sleep(1)
 
-  def get_pixel_error_limit(self, characterCells):
+  def get_pixel_error_limit(self):
+    """Returns a Size denoting the expected error limit for pixel-based
+    resizing tests.
+
+    For xterm, there are two cases for pixel-based resizing:
+    a) WINOP_RESIZE_PIXELS, which requests that the (inner) text-window be
+       resize, and
+    b) the various "maximize" operations, which operate directly on the (outer)
+       shell window.
+
+    They both run into the same constraint: xterm uses window manager
+    hints to request that the window manager keep the size of the text
+    window an multiple of the character cell-size.  Most window managers
+    ignore those hints when asked to maximize a window, and will produce
+    a window with cut-off rows/columns.
+
+    While it is "always" true that one can use xwininfo with xterm's
+    $WINDOWID to obtain the dimensions of the shell-window, xterm patch 333
+    adds a control sequence which returns this information."""
+    cells = 3
+    if can_query_shell_size() == 2:
+      cells = 1
     frame = GetFrameSizePixels()
     chars = GetCharSizePixels()
-    return Size(frame.width() + characterCells * chars.width(),
-                frame.height() + characterCells * chars.height())
+    return Size(frame.width() + cells * chars.width(),
+                frame.height() + cells * chars.height())
 
   def debug_size(self, name, value):
+    """Log information on a given Size value and its name."""
     esclog.LogDebug(name + str(value.height()) + "x" + str(value.width()))
 
   def check_any_size(self, desired_size, actual_size, limit):
+    """After resizing a window, check if its actual size is within the test's
+    limits of the desired size."""
     self.debug_size("actual  size ", actual_size)
     self.debug_size("desired size ", desired_size)
     error = Size(abs(actual_size.width() - desired_size.width()),
@@ -50,21 +79,38 @@ class XtermWinopsTests(object):
     AssertTrue(error.height() <= (limit.height()))
 
   def check_actual_size_pixels(self, desired_size):
-    self.check_any_size(desired_size, GetWindowSizePixels(), self.get_pixel_error_limit(1))
+    """After resizing an xterm window using pixel-units, check if it is close
+    enough to pass the test."""
+    self.check_any_size(desired_size,
+                        GetWindowSizePixels(),
+                        self.get_pixel_error_limit())
 
   def check_actual_size_chars(self, desired_size, limit):
+    """After resizing an xterm window using character-units, check if it is close enough to pass the test."""
     self.check_any_size(desired_size, GetScreenSize(), limit)
 
   def check_for_shrinkage(self, original_size, actual_size):
+    """After resizing the screen, check if it became smaller.
+
+    The window could become smaller due to a miscomputation,
+    since the requested size (perhaps in floating point)
+    is truncated to integer values."""
     self.debug_size("check shrink ", actual_size)
     AssertTrue(actual_size.width() >= original_size.width())
     AssertTrue(actual_size.height() >= original_size.height())
 
-  def average_width(self, a, b):
-    return (a.width() + b.width()) / 2
+  def average_width(self, size_a, size_b):
+    """Return the average of the widths from two sizes.
 
-  def average_height(self, a, b):
-    return (a.height() + b.height()) / 2
+    Some of the xterm resizing-tests use an average of the current
+    window size and the X screen-size, since that is fairly likely
+    to succeed where a fixed size would fail since it does not take
+    into account the actual screen-size."""
+    return (size_a.width() + size_b.width()) / 2
+
+  def average_height(self, size_a, size_b):
+    """Return the average of the heights from two sizes."""
+    return (size_a.height() + size_b.height()) / 2
 
   def test_XtermWinops_IconifyDeiconfiy(self):
     esccmd.XTERM_WINOPS(esccmd.WINOP_ICONIFY)
@@ -333,7 +379,7 @@ class XtermWinopsTests(object):
                           desired_size.width())
       self.delay_after_resize()
 
-      self.check_actual_size_chars(desired_size, Size(3, 3))
+      self.check_actual_size_chars(desired_size, Size(1, 1))
     else:
       desired_size = Size(20, 21)
 
@@ -355,7 +401,7 @@ class XtermWinopsTests(object):
                           0)
       self.delay_after_resize()
 
-      self.check_actual_size_chars(desired_size, Size(3, 0))
+      self.check_actual_size_chars(desired_size, Size(1, 0))
     else:
       max_size = GetDisplaySize()
       desired_size = Size(max_size.width(), 21)
@@ -379,7 +425,7 @@ class XtermWinopsTests(object):
                           desired_size.width())
       self.delay_after_resize()
 
-      self.check_actual_size_chars(desired_size, Size(0, 3))
+      self.check_actual_size_chars(desired_size, Size(0, 1))
     else:
       max_size = GetDisplaySize()
       desired_size = Size(20, max_size.height())

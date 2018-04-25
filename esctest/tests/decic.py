@@ -18,8 +18,8 @@ class DECICTests(object):
     esccmd.DECIC()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 8, 2),
-                                 [ "a" + blank() + "bcdefg",
-                                   "A" + blank() + "BCDEFG" ])
+                                 ["a" + blank() + "bcdefg",
+                                  "A" + blank() + "BCDEFG"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -34,9 +34,9 @@ class DECICTests(object):
     esccmd.DECIC(2)
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 9, 3),
-                                 [ "a" + blank() * 2 + "bcdefg",
-                                   "A" + blank() * 2 + "BCDEFG",
-                                   "z" + blank() * 2 + "yxwvut" ])
+                                 ["a" + blank() * 2 + "bcdefg",
+                                  "A" + blank() * 2 + "BCDEFG",
+                                  "z" + blank() * 2 + "yxwvut"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -60,13 +60,13 @@ class DECICTests(object):
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 9, 4),
-                                 [ "abcdefg" + NUL * 2,
-                                   "A" + blank() * 2 + "BCDEFG",
-                                   "z" + blank() * 2 + "yxwvut",
-                                   "ZYXWVUT" + NUL * 2 ])
+                                 ["abcdefg" + NUL * 2,
+                                  "A" + blank() * 2 + "BCDEFG",
+                                  "z" + blank() * 2 + "yxwvut",
+                                  "ZYXWVUT" + NUL * 2])
 
   @vtLevel(4)
-  @knownBug(terminal="iTerm2",reason="Not implemented", noop=True)
+  @knownBug(terminal="iTerm2", reason="Not implemented", noop=True)
   def test_DECIC_IsNoOpWhenCursorBeginsOutsideScrollRegion(self):
     """Ensure DECIC does nothing when the cursor starts out outside the scroll
     region."""
@@ -86,8 +86,8 @@ class DECICTests(object):
     # Ensure nothing happened.
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 7, 2),
-                                 [ "abcdefg",
-                                   "ABCDEFG" ])
+                                 ["abcdefg",
+                                  "ABCDEFG"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -104,10 +104,10 @@ class DECICTests(object):
     esccmd.DECIC()
 
     AssertScreenCharsInRectEqual(Rect(startX, 1, width, 2),
-                                 [ "a" + blank() + "bcdef",
-                                   "A" + blank() + "BCDEF" ])
+                                 ["a" + blank() + "bcdef",
+                                  "A" + blank() + "BCDEF"])
     # Ensure there is no wrap-around.
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [ NUL, NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [NUL, NUL])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -124,10 +124,10 @@ class DECICTests(object):
     expectedLine = blank() * width
 
     AssertScreenCharsInRectEqual(Rect(1, 1, width, 2),
-                                 [ expectedLine, expectedLine ])
+                                 [expectedLine, expectedLine])
     # Ensure there is no wrap-around.
     AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3),
-                                 [ blank(), blank() ])
+                                 [blank(), blank()])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -152,7 +152,7 @@ class DECICTests(object):
     # Ensure the 'e' gets dropped.
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, len(s), 2),
-                                 [ "ab" + blank() + "cdfg",
-                                   "AB" + blank() + "CDFG" ])
+                                 ["ab" + blank() + "cdfg",
+                                  "AB" + blank() + "CDFG"])
 
 

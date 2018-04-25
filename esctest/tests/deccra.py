@@ -81,7 +81,7 @@ class DECCRATests(object):
                                       size.width(),
                                       size.height()),
                                  ["jk",
-                                   "rs"])
+                                  "rs"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")

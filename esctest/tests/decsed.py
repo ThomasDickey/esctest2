@@ -49,11 +49,11 @@ class DECSEDTests(object):
     self.prepare()
     esccmd.DECSED()
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "b" + NUL * 2,
-                                   NUL * 3,
-                                   NUL * 3 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "b" + NUL * 2,
+                                  NUL * 3,
+                                  NUL * 3])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -62,11 +62,11 @@ class DECSEDTests(object):
     self.prepare()
     esccmd.DECSED(0)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "b" + NUL * 2,
-                                   NUL * 3,
-                                   NUL * 3 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "b" + NUL * 2,
+                                  NUL * 3,
+                                  NUL * 3])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -75,11 +75,11 @@ class DECSEDTests(object):
     self.prepare()
     esccmd.DECSED(1)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ NUL * 3,
-                                   NUL * 3,
-                                   blank() * 2 + "d",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 [NUL * 3,
+                                  NUL * 3,
+                                  blank() * 2 + "d",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -88,11 +88,11 @@ class DECSEDTests(object):
     self.prepare()
     esccmd.DECSED(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ NUL * 3,
-                                   NUL * 3,
-                                   NUL * 3,
-                                   NUL * 3,
-                                   NUL * 3 ])
+                                 [NUL * 3,
+                                  NUL * 3,
+                                  NUL * 3,
+                                  NUL * 3,
+                                  NUL * 3])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented", noop=True)
@@ -104,11 +104,11 @@ class DECSEDTests(object):
     esccmd.DECSED(3)
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -123,9 +123,9 @@ class DECSEDTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ "abcde",
-                                   "fg" + NUL * 3,
-                                   NUL * 5 ])
+                                 ["abcde",
+                                  "fg" + NUL * 3,
+                                  NUL * 5])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -140,9 +140,9 @@ class DECSEDTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ NUL * 5,
-                                   blank() * 3 + "ij",
-                                   "klmno" ])
+                                 [NUL * 5,
+                                  blank() * 3 + "ij",
+                                  "klmno"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -157,9 +157,9 @@ class DECSEDTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ NUL * 5,
-                                   NUL * 5,
-                                   NUL * 5 ])
+                                 [NUL * 5,
+                                  NUL * 5,
+                                  NUL * 5])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -176,11 +176,11 @@ class DECSEDTests(object):
 
     esccmd.DECSED()
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -197,11 +197,11 @@ class DECSEDTests(object):
 
     esccmd.DECSED()
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -220,11 +220,11 @@ class DECSEDTests(object):
 
     # X should be erased, other characters not.
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -241,11 +241,11 @@ class DECSEDTests(object):
     esccmd.CUP(Point(2, 3))
     esccmd.DECSED(1)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -262,11 +262,11 @@ class DECSEDTests(object):
     # Erase the screen
     esccmd.DECSED(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented", noop=True)
@@ -284,11 +284,11 @@ class DECSEDTests(object):
 
     esccmd.DECSED(3)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "aX" + NUL,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["aX" + NUL,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -316,9 +316,9 @@ class DECSEDTests(object):
     esccmd.DECSTBM()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ "abcde",
-                                   "fghij",
-                                   blank() + "lmno" ])
+                                 ["abcde",
+                                  "fghij",
+                                  blank() + "lmno"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -346,9 +346,9 @@ class DECSEDTests(object):
     esccmd.DECSTBM()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ blank() + "bcde",
-                                   "fghij",
-                                   "klmno" ])
+                                 [blank() + "bcde",
+                                  "fghij",
+                                  "klmno"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -370,9 +370,9 @@ class DECSEDTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ blank() + "bcde",
-                                   "fghij",
-                                   "klmno" ])
+                                 [blank() + "bcde",
+                                  "fghij",
+                                  "klmno"])
 
   @vtLevel(4)
   @knownBug(terminal="xterm",
@@ -385,5 +385,5 @@ class DECSEDTests(object):
     escio.Write("b")
     esccmd.EPA()
     esccmd.DECSED(2)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [ blank() * 2 ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [blank() * 2])
 

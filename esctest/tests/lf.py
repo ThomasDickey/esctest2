@@ -32,12 +32,12 @@ class LFTests(object):
     # Move down, ensure no scroll yet.
     escio.Write(LF)
     AssertEQ(GetCursorPosition().y(), height)
-    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), [ NUL, "a", "b" ])
+    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), [NUL, "a", "b"])
 
     # Move down, ensure scroll.
     escio.Write(LF)
     AssertEQ(GetCursorPosition().y(), height)
-    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), [ "a", "b", NUL ])
+    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), ["a", "b", NUL])
 
   @vtLevel(4)
   def test_LF_ScrollsInTopBottomRegionStartingAbove(self):
@@ -51,7 +51,7 @@ class LFTests(object):
     escio.Write(LF)
     escio.Write(LF)
     AssertEQ(GetCursorPosition(), Point(2, 5))
-    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), [ "x", NUL ])
+    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", NUL])
 
   @vtLevel(4)
   def test_LF_ScrollsInTopBottomRegionStartingWithin(self):
@@ -64,7 +64,7 @@ class LFTests(object):
     escio.Write(LF)
     escio.Write(LF)
     AssertEQ(GetCursorPosition(), Point(2, 5))
-    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), [ "x", NUL ])
+    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", NUL])
 
   @vtLevel(4)
   def test_LF_MovesDoesNotScrollOutsideLeftRight(self):
@@ -80,7 +80,7 @@ class LFTests(object):
     escio.Write(LF)
     # Cursor won't pass bottom or scroll.
     AssertEQ(GetCursorPosition(), Point(6, 5))
-    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), [ "x" ])
+    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), ["x"])
 
     # Cursor can move down
     esccmd.CUP(Point(6, 4))
@@ -92,20 +92,20 @@ class LFTests(object):
     esccmd.CUP(Point(6, height))
     escio.Write(LF)
     AssertEQ(GetCursorPosition(), Point(6, height))
-    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), [ "x" ])
+    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), ["x"])
 
     # Move past bottom margin but to the left of the left-right region
     esccmd.CUP(Point(1, 5))
     escio.Write(LF)
     AssertEQ(GetCursorPosition(), Point(1, 5))
-    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), [ "x" ])
+    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), ["x"])
 
     # Try to move past the bottom of the screen but to the left of the left-right region
     height = GetScreenSize().height()
     esccmd.CUP(Point(1, height))
     escio.Write(LF)
     AssertEQ(GetCursorPosition(), Point(1, height))
-    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), [ "x" ])
+    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), ["x"])
 
   @vtLevel(4)
   def test_LF_StopsAtBottomLineWhenBegunBelowScrollRegion(self):
@@ -127,4 +127,4 @@ class LFTests(object):
     AssertEQ(GetCursorPosition().y(), height)
 
     # Ensure no scroll
-    AssertScreenCharsInRectEqual(Rect(1, 6, 1, 6), [ "x" ])
+    AssertScreenCharsInRectEqual(Rect(1, 6, 1, 6), ["x"])

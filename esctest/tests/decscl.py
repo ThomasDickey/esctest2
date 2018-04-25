@@ -70,7 +70,7 @@ class DECSCLTests(object):
     esccmd.CUP(Point(1, 1))
     escio.Write("1")
     esccmd.DECSET(esccmd.DECCOLM)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
 
     # Make sure DECSLRM succeeds.
     esccmd.DECSET(esccmd.DECLRMM)
@@ -91,7 +91,7 @@ class DECSCLTests(object):
     esccmd.CUP(Point(1, 1))
     escio.Write("1")
     esccmd.DECSET(esccmd.DECCOLM)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "1" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["1"])
 
   @vtLevel(4)
   @knownBug(terminal="xterm", reason="xterm always turns on 8-bit controls.", shouldTry=False)
@@ -116,7 +116,7 @@ class DECSCLTests(object):
     esccmd.SM(esccmd.IRM)
 
     esccmd.DECSCL(61)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
 
     # Ensure saved cursor position is the origin
     esccmd.DECRC()
@@ -127,4 +127,4 @@ class DECSCLTests(object):
     escio.Write("a")
     esccmd.CUP(Point(1, 1))
     escio.Write("b")
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "b" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["b"])

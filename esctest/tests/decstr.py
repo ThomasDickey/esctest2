@@ -52,7 +52,7 @@ class DECSTRTests(object):
     escio.Write("a")
     esccmd.CUP(Point(1, 1))
     escio.Write("b")
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "b" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["b"])
 
   @vtLevel(4)
   def test_DECSTR_DECOM(self):
@@ -80,10 +80,10 @@ class DECSTRTests(object):
     # Make sure the X was at 1, 1, implying origin mode was off.
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 3, 4), [ "X" + NUL * 2,
-                                                     NUL * 3,
-                                                     NUL * 3,
-                                                     NUL * 3 ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 3, 4), ["X" + NUL * 2,
+                                                    NUL * 3,
+                                                    NUL * 3,
+                                                    NUL * 3])
 
   @intentionalDeviationFromSpec(terminal="iTerm2",
                                 reason="For compatibility purposes, iTerm2 mimics xterm's behavior of turning on DECAWM by default.")
@@ -142,7 +142,7 @@ class DECSTRTests(object):
     esccmd.CUP(Point(1, 1))
     escio.Write("X")
     esccmd.DECSED(2)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
 
   @vtLevel(4)
   def test_DECSTR_DECSASD(self):
@@ -154,7 +154,7 @@ class DECSTRTests(object):
 
     # Ensure output goes to screen
     escio.Write("X")
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "X" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["X"])
 
   @vtLevel(4)
   def test_DECSTR_DECRLM(self):
@@ -168,8 +168,8 @@ class DECSTRTests(object):
     esccmd.CUP(Point(2, 1))
     escio.Write("a")
     escio.Write("b")
-    AssertScreenCharsInRectEqual(Rect(2, 1, 2, 1), [ "a" ])
-    AssertScreenCharsInRectEqual(Rect(3, 1, 3, 1), [ "b" ])
+    AssertScreenCharsInRectEqual(Rect(2, 1, 2, 1), ["a"])
+    AssertScreenCharsInRectEqual(Rect(3, 1, 3, 1), ["b"])
 
   @vtLevel(4)
   def test_DECSTR_DECLRMM(self):

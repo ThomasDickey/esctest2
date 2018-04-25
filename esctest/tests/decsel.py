@@ -20,7 +20,7 @@ class DECSELTests(object):
     self.prepare()
     esccmd.DECSEL()
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ "abcd" + 6 * NUL ])
+                                 ["abcd" + 6 * NUL])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -29,7 +29,7 @@ class DECSELTests(object):
     self.prepare()
     esccmd.DECSEL(0)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ "abcd" + 6 * NUL ])
+                                 ["abcd" + 6 * NUL])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -38,7 +38,7 @@ class DECSELTests(object):
     self.prepare()
     esccmd.DECSEL(1)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ 5 * blank() + "fghij" ])
+                                 [5 * blank() + "fghij"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -47,7 +47,7 @@ class DECSELTests(object):
     self.prepare()
     esccmd.DECSEL(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ 10 * NUL ])
+                                 [10 * NUL])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -60,7 +60,7 @@ class DECSELTests(object):
     esccmd.DECSEL(2)
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ 10 * NUL ])
+                                 [10 * NUL])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -77,7 +77,7 @@ class DECSELTests(object):
 
     esccmd.DECSEL()
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ "abcdefghi" + NUL ])
+                                 ["abcdefghi" + NUL])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -95,7 +95,7 @@ class DECSELTests(object):
     esccmd.DECSEL(0)
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ "abcdefghi" + NUL ])
+                                 ["abcdefghi" + NUL])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -112,7 +112,7 @@ class DECSELTests(object):
     esccmd.CUP(Point(5, 1))
     esccmd.DECSEL(1)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ blank() + "bcdefghij" ])
+                                 [blank() + "bcdefghij"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -128,7 +128,7 @@ class DECSELTests(object):
 
     esccmd.DECSEL(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ blank() + "bcdefghij" ])
+                                 [blank() + "bcdefghij"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -148,7 +148,7 @@ class DECSELTests(object):
     esccmd.DECSEL(2)
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ blank() + "bcdefghij" ])
+                                 [blank() + "bcdefghij"])
 
   @vtLevel(4)
   @knownBug(terminal="xterm",
@@ -161,5 +161,5 @@ class DECSELTests(object):
     escio.Write("b")
     esccmd.EPA()
     esccmd.DECSEL(2)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [ blank() * 2 ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [blank() * 2])
 

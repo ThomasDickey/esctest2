@@ -16,7 +16,7 @@ class ICHTests(object):
     esccmd.ICH()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 8, 1),
-                                 [ "a" + blank() + "bcdefg" ])
+                                 ["a" + blank() + "bcdefg"])
 
   @vtLevel(4)
   def test_ICH_ExplicitParam(self):
@@ -29,7 +29,7 @@ class ICHTests(object):
     esccmd.ICH(2)
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 9, 1),
-                                 [ "a" + blank() + blank() + "bcdefg"])
+                                 ["a" + blank() + blank() + "bcdefg"])
 
   @vtLevel(4)
   def test_ICH_IsNoOpWhenCursorBeginsOutsideScrollRegion(self):
@@ -51,7 +51,7 @@ class ICHTests(object):
     # Ensure nothing happened.
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, len(s), 1),
-                                 [ s ])
+                                 [s])
 
   @vtLevel(4)
   def test_ICH_ScrollOffRightEdge(self):
@@ -65,9 +65,9 @@ class ICHTests(object):
     esccmd.ICH()
 
     AssertScreenCharsInRectEqual(Rect(startX, 1, width, 1),
-                                 [ "a" + blank() + "bcdef" ])
+                                 ["a" + blank() + "bcdef"])
     # Ensure there is no wrap-around.
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [ NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [NUL])
 
   @vtLevel(4)
   def test_ICH_ScrollEntirelyOffRightEdge(self):
@@ -81,9 +81,9 @@ class ICHTests(object):
     expectedLine = blank() * width
 
     AssertScreenCharsInRectEqual(Rect(1, 1, width, 1),
-                                 [ expectedLine ])
+                                 [expectedLine])
     # Ensure there is no wrap-around.
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [ NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [NUL])
 
   @vtLevel(4)
   def test_ICH_ScrollOffRightMarginInScrollRegion(self):
@@ -105,5 +105,5 @@ class ICHTests(object):
     # Ensure the 'e' gets dropped.
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, len(s), 1),
-                                 [ "ab" + blank() + "cdfg" ])
+                                 ["ab" + blank() + "cdfg"])
 

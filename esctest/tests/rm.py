@@ -19,5 +19,5 @@ class RMTests(object):
     esccmd.CUP(Point(1, 1))
     esccmd.RM(esccmd.IRM)
     escio.Write("YZ")
-    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [ "YZ" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), ["YZ"])
 

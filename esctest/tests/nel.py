@@ -31,12 +31,12 @@ class NELTests(object):
     # Move down, ensure no scroll yet.
     esccmd.NEL()
     AssertEQ(GetCursorPosition(), Point(1, height))
-    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), [ NUL, "a", "b" ])
+    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), [NUL, "a", "b"])
 
     # Move down, ensure scroll.
     esccmd.NEL()
     AssertEQ(GetCursorPosition(), Point(1, height))
-    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), [ "a", "b", NUL ])
+    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), ["a", "b", NUL])
 
   @vtLevel(4)
   def test_NEL_ScrollsInTopBottomRegionStartingAbove(self):
@@ -50,7 +50,7 @@ class NELTests(object):
     esccmd.NEL()  # To 5
     esccmd.NEL()  # Stay at 5 and scroll x up one line
     AssertEQ(GetCursorPosition(), Point(1, 5))
-    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), [ "x", NUL ])
+    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", NUL])
 
   @vtLevel(4)
   def test_NEL_ScrollsInTopBottomRegionStartingWithin(self):
@@ -63,7 +63,7 @@ class NELTests(object):
     esccmd.NEL()  # To 5
     esccmd.NEL()  # Stay at 5 and scroll x up one line
     AssertEQ(GetCursorPosition(), Point(1, 5))
-    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), [ "x", NUL ])
+    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", NUL])
 
   @vtLevel(4)
   def test_NEL_MovesDoesNotScrollOutsideLeftRight(self):
@@ -79,7 +79,7 @@ class NELTests(object):
     esccmd.NEL()
     # Cursor won't pass bottom or scroll.
     AssertEQ(GetCursorPosition(), Point(2, 5))
-    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), [ "x" ])
+    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), ["x"])
 
     # Cursor can move down a line without scrolling.
     esccmd.CUP(Point(6, 4))
@@ -91,20 +91,20 @@ class NELTests(object):
     esccmd.CUP(Point(6, height))
     esccmd.NEL()
     AssertEQ(GetCursorPosition(), Point(2, height))
-    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), [ "x" ])
+    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), ["x"])
 
     # Move past bottom margin but to the left of the left-right region
     esccmd.CUP(Point(1, 5))
     esccmd.NEL()
     AssertEQ(GetCursorPosition(), Point(1, 5))
-    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), [ "x" ])
+    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), ["x"])
 
     # Try to move past the bottom of the screen but to the left of the left-right region
     height = GetScreenSize().height()
     esccmd.CUP(Point(1, height))
     esccmd.NEL()
     AssertEQ(GetCursorPosition(), Point(1, height))
-    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), [ "x" ])
+    AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), ["x"])
 
   @vtLevel(4)
   def test_NEL_StopsAtBottomLineWhenBegunBelowScrollRegion(self):
@@ -126,7 +126,7 @@ class NELTests(object):
     AssertEQ(GetCursorPosition(), Point(1, height))
 
     # Ensure no scroll
-    AssertScreenCharsInRectEqual(Rect(1, 6, 1, 6), [ "x" ])
+    AssertScreenCharsInRectEqual(Rect(1, 6, 1, 6), ["x"])
 
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")

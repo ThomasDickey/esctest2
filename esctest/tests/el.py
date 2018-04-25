@@ -18,7 +18,7 @@ class ELTests(object):
     self.prepare()
     esccmd.EL()
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ "abcd" + 6 * NUL ])
+                                 ["abcd" + 6 * NUL])
 
   @vtLevel(4)
   def test_EL_0(self):
@@ -26,7 +26,7 @@ class ELTests(object):
     self.prepare()
     esccmd.EL(0)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ "abcd" + 6 * NUL ])
+                                 ["abcd" + 6 * NUL])
 
   @vtLevel(4)
   def test_EL_1(self):
@@ -34,7 +34,7 @@ class ELTests(object):
     self.prepare()
     esccmd.EL(1)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ 5 * blank() + "fghij" ])
+                                 [5 * blank() + "fghij"])
 
   @vtLevel(4)
   def test_EL_2(self):
@@ -42,7 +42,7 @@ class ELTests(object):
     self.prepare()
     esccmd.EL(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ 10 * NUL ])
+                                 [10 * NUL])
 
   @vtLevel(4)
   def test_EL_IgnoresScrollRegion(self):
@@ -54,7 +54,7 @@ class ELTests(object):
     esccmd.EL(2)
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ 10 * NUL ])
+                                 [10 * NUL])
 
   @vtLevel(4)
   def test_EL_doesNotRespectDECProtection(self):
@@ -67,7 +67,7 @@ class ELTests(object):
     esccmd.CUP(Point(1, 1))
     esccmd.EL(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
-                                 [ NUL * 3 ])
+                                 [NUL * 3])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2",
@@ -82,5 +82,5 @@ class ELTests(object):
     esccmd.CUP(Point(1, 1))
     esccmd.EL(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
-                                 [ blank() * 2 + "c" ])
+                                 [blank() * 2 + "c"])
 

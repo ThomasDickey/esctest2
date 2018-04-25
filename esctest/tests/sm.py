@@ -14,7 +14,7 @@ class SMTests(object):
     esccmd.CUP(Point(1, 1))
     esccmd.SM(esccmd.IRM)
     escio.Write("X")
-    AssertScreenCharsInRectEqual(Rect(1, 1, 4, 1), [ "Xabc" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 4, 1), ["Xabc"])
 
   @vtLevel(4)
   def test_SM_IRM_DoesNotWrapUnlessCursorAtMargin(self):
@@ -24,12 +24,12 @@ class SMTests(object):
     escio.Write("b")
     esccmd.CUP(Point(1, 1))
     esccmd.SM(esccmd.IRM)
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [ NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [NUL])
     escio.Write("X")
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [ NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [NUL])
     esccmd.CUP(Point(size.width(), 1))
     escio.Write("YZ")
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [ "Z" ])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), ["Z"])
 
   @vtLevel(4)
   def test_SM_IRM_TruncatesAtRightMargin(self):
@@ -46,7 +46,7 @@ class SMTests(object):
     escio.Write("X")
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    AssertScreenCharsInRectEqual(Rect(5, 1, 11, 1), [ "abXcde" + NUL ])
+    AssertScreenCharsInRectEqual(Rect(5, 1, 11, 1), ["abXcde" + NUL])
 
   def doLinefeedModeTest(self, code):
     esccmd.RM(esccmd.LNM)

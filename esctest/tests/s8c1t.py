@@ -54,6 +54,6 @@ class S8C1TTests(object):
     esccmd.CUP(Point(1, 1))
     esccmd.ECH(3)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
-                                 [ blank() * 2 + "c" ])
+                                 [blank() * 2 + "c"])
 
 

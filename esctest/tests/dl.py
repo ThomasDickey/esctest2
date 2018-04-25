@@ -25,11 +25,11 @@ class DLTests(object):
     uvwxy
 
     With the cursor on the 'h'."""
-    lines = [ "abcde",
-              "fghij",
-              "klmno",
-              "pqrst",
-              "uvwxy" ]
+    lines = ["abcde",
+             "fghij",
+             "klmno",
+             "pqrst",
+             "uvwxy"]
     for i in xrange(len(lines)):
       y = i + 1
       line = lines[i]
@@ -95,7 +95,7 @@ class DLTests(object):
 
     # Build an array of 0001 followed by height-1 empty lines.
     y = 1
-    expected_lines = [ "0001" ]
+    expected_lines = ["0001"]
     for i in xrange(height - 1):
       expected_lines.append(NUL * 4)
 
@@ -111,11 +111,11 @@ class DLTests(object):
     esccmd.DL()
     esccmd.DECSTBM()
 
-    expected_lines = [ "abcde",
-                       "klmno",
-                       "pqrst",
-                       NUL * 5,
-                       "uvwxy" ]
+    expected_lines = ["abcde",
+                      "klmno",
+                      "pqrst",
+                      NUL * 5,
+                      "uvwxy"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -128,11 +128,11 @@ class DLTests(object):
     esccmd.DL()
     esccmd.DECSTBM()
 
-    expected_lines = [ "abcde",
-                       "fghij",
-                       "klmno",
-                       "pqrst",
-                       "uvwxy" ]
+    expected_lines = ["abcde",
+                      "fghij",
+                      "klmno",
+                      "pqrst",
+                      "uvwxy"]
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
@@ -146,11 +146,11 @@ class DLTests(object):
     esccmd.DL()
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    expected_lines = [ "abcde",
-                       "flmnj",
-                       "kqrso",
-                       "pvwxt",
-                       "u" + NUL * 3 + "y" ]
+    expected_lines = ["abcde",
+                      "flmnj",
+                      "kqrso",
+                      "pvwxt",
+                      "u" + NUL * 3 + "y"]
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
@@ -164,11 +164,11 @@ class DLTests(object):
     esccmd.DL()
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    expected_lines = [ "abcde",
-                       "fghij",
-                       "klmno",
-                       "pqrst",
-                       "uvwxy" ]
+    expected_lines = ["abcde",
+                      "fghij",
+                      "klmno",
+                      "pqrst",
+                      "uvwxy"]
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
@@ -184,11 +184,11 @@ class DLTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
 
-    expected_lines = [ "abcde",
-                       "flmnj",
-                       "kqrso",
-                       "p" + NUL * 3 + "t",
-                       "uvwxy" ]
+    expected_lines = ["abcde",
+                      "flmnj",
+                      "kqrso",
+                      "p" + NUL * 3 + "t",
+                      "uvwxy"]
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
@@ -204,11 +204,11 @@ class DLTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
 
-    expected_lines = [ "abcde",
-                       "f" + NUL * 3 + "j",
-                       "k" + NUL * 3 + "o",
-                       "p" + NUL * 3 + "t",
-                       "uvwxy" ]
+    expected_lines = ["abcde",
+                      "f" + NUL * 3 + "j",
+                      "k" + NUL * 3 + "o",
+                      "p" + NUL * 3 + "t",
+                      "uvwxy"]
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
@@ -224,11 +224,11 @@ class DLTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
 
-    expected_lines = [ "abcde",
-                       "fghij",
-                       "klmno",
-                       "pqrst",
-                       "uvwxy" ]
+    expected_lines = ["abcde",
+                      "fghij",
+                      "klmno",
+                      "pqrst",
+                      "uvwxy"]
 
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)

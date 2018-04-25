@@ -14,11 +14,11 @@ class SUTests(object):
     uvwxy
 
     With the cursor on the 'h'."""
-    lines = [ "abcde",
-              "fghij",
-              "klmno",
-              "pqrst",
-              "uvwxy" ]
+    lines = ["abcde",
+             "fghij",
+             "klmno",
+             "pqrst",
+             "uvwxy"]
     for i in xrange(len(lines)):
       y = i + 1
       line = lines[i]
@@ -31,11 +31,11 @@ class SUTests(object):
     """SU with no parameter should scroll the screen contents up one line."""
     self.prepare()
     esccmd.SU()
-    expected_lines = [ "fghij",
-                       "klmno",
-                       "pqrst",
-                       "uvwxy",
-                       NUL * 5 ]
+    expected_lines = ["fghij",
+                      "klmno",
+                      "pqrst",
+                      "uvwxy",
+                      NUL * 5]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -43,11 +43,11 @@ class SUTests(object):
     """SU should scroll the screen up by the number of lines given in the parameter."""
     self.prepare()
     esccmd.SU(2)
-    expected_lines = [ "klmno",
-                       "pqrst",
-                       "uvwxy",
-                       NUL * 5,
-                       NUL * 5 ]
+    expected_lines = ["klmno",
+                      "pqrst",
+                      "uvwxy",
+                      NUL * 5,
+                      NUL * 5]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -78,11 +78,11 @@ class SUTests(object):
     esccmd.SU(2)
     esccmd.DECSTBM()
 
-    expected_lines = [ "abcde",
-                       "pqrst",
-                       NUL * 5,
-                       NUL * 5,
-                       "uvwxy" ]
+    expected_lines = ["abcde",
+                      "pqrst",
+                      NUL * 5,
+                      NUL * 5,
+                      "uvwxy"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -95,11 +95,11 @@ class SUTests(object):
     esccmd.SU(2)
     esccmd.DECSTBM()
 
-    expected_lines = [ "abcde",
-                       "pqrst",
-                       NUL * 5,
-                       NUL * 5,
-                       "uvwxy" ]
+    expected_lines = ["abcde",
+                      "pqrst",
+                      NUL * 5,
+                      NUL * 5,
+                      "uvwxy"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -113,11 +113,11 @@ class SUTests(object):
     esccmd.SU(2)
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    expected_lines = [ "almne",
-                       "fqrsj",
-                       "kvwxo",
-                       "p" + NUL * 3 + "t",
-                       "u" + NUL * 3 + "y" ]
+    expected_lines = ["almne",
+                      "fqrsj",
+                      "kvwxo",
+                      "p" + NUL * 3 + "t",
+                      "u" + NUL * 3 + "y"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -132,11 +132,11 @@ class SUTests(object):
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    expected_lines = [ "almne",
-                       "fqrsj",
-                       "kvwxo",
-                       "p" + NUL * 3 + "t",
-                       "u" + NUL * 3 + "y" ]
+    expected_lines = ["almne",
+                      "fqrsj",
+                      "kvwxo",
+                      "p" + NUL * 3 + "t",
+                      "u" + NUL * 3 + "y"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -152,11 +152,11 @@ class SUTests(object):
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    expected_lines = [ "abcde",
-                       "fqrsj",
-                       "k" + NUL * 3 + "o",
-                       "p" + NUL * 3 + "t",
-                       "uvwxy" ]
+    expected_lines = ["abcde",
+                      "fqrsj",
+                      "k" + NUL * 3 + "o",
+                      "p" + NUL * 3 + "t",
+                      "uvwxy"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -171,9 +171,9 @@ class SUTests(object):
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    expected_lines = [ "abcde",
-                       "f" + NUL * 3 + "j",
-                       "k" + NUL * 3 + "o",
-                       "p" + NUL * 3 + "t",
-                       "uvwxy" ]
+    expected_lines = ["abcde",
+                      "f" + NUL * 3 + "j",
+                      "k" + NUL * 3 + "o",
+                      "p" + NUL * 3 + "t",
+                      "uvwxy"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)

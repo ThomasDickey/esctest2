@@ -63,7 +63,7 @@ class VPRTests(object):
     esccmd.DECSTBM()
 
     # See what happened
-    AssertScreenCharsInRectEqual(Rect(6, 7, 7, 9), [ 'X' + NUL,
-                                                      NUL * 2,
-                                                      NUL + 'Y' ])
+    AssertScreenCharsInRectEqual(Rect(6, 7, 7, 9), ['X' + NUL,
+                                                    NUL * 2,
+                                                    NUL + 'Y'])
 

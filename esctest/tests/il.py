@@ -24,11 +24,11 @@ class ILTests(object):
 
   def prepare_region(self):
     # The capital letters are in the scroll region
-    lines = [ "abcde",
-              "fGHIj",
-              "kLMNo",
-              "pQRSt",
-              "uvwxy" ]
+    lines = ["abcde",
+             "fGHIj",
+             "kLMNo",
+             "pQRSt",
+             "uvwxy"]
     for i in xrange(len(lines)):
       esccmd.CUP(Point(1, i + 1))
       escio.Write(lines[i])
@@ -46,10 +46,10 @@ class ILTests(object):
     self.prepare_wide()
     esccmd.IL()
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 4),
-                                 [ "abcde",
-                                   "fghij",
-                                   NUL * 5,
-                                   "klmno" ])
+                                 ["abcde",
+                                  "fghij",
+                                  NUL * 5,
+                                  "klmno"])
 
   @vtLevel(4)
   def test_IL_ExplicitParam(self):
@@ -57,11 +57,11 @@ class ILTests(object):
     self.prepare_wide()
     esccmd.IL(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5),
-                                 [ "abcde",
-                                   "fghij",
-                                   NUL * 5,
-                                   NUL * 5,
-                                   "klmno" ])
+                                 ["abcde",
+                                  "fghij",
+                                  NUL * 5,
+                                  NUL * 5,
+                                  "klmno"])
 
   @vtLevel(4)
   def test_IL_ScrollsOffBottom(self):
@@ -77,9 +77,9 @@ class ILTests(object):
     for i in xrange(height):
       y = i + 1
       if y == 2:
-        AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [ NUL * 4 ])
+        AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [NUL * 4])
       else:
-        AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [ "%04d" % expected ])
+        AssertScreenCharsInRectEqual(Rect(1, y, 4, y), ["%04d" % expected])
         expected += 1
 
   @vtLevel(4)
@@ -94,11 +94,11 @@ class ILTests(object):
     esccmd.DECSTBM()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5),
-                                 [ "abcde",
-                                   "f" + NUL * 3 + "j",
-                                   "kGHIo",
-                                   "pLMNt",
-                                   "uvwxy" ])
+                                 ["abcde",
+                                  "f" + NUL * 3 + "j",
+                                  "kGHIo",
+                                  "pLMNt",
+                                  "uvwxy"])
 
   @vtLevel(4)
   def test_IL_RespectsScrollRegion_Over(self):
@@ -110,11 +110,11 @@ class ILTests(object):
     esccmd.DECSTBM()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5),
-                                 [ "abcde",
-                                   "f" + NUL * 3 + "j",
-                                   "k" + NUL * 3 + "o",
-                                   "p" + NUL * 3 + "t",
-                                   "uvwxy" ])
+                                 ["abcde",
+                                  "f" + NUL * 3 + "j",
+                                  "k" + NUL * 3 + "o",
+                                  "p" + NUL * 3 + "t",
+                                  "uvwxy"])
 
   @vtLevel(4)
   def test_IL_AboveScrollRegion(self):
@@ -127,8 +127,8 @@ class ILTests(object):
     esccmd.DECSTBM()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5),
-                                 [ "abcde",
-                                   "fGHIj",
-                                   "kLMNo",
-                                   "pQRSt",
-                                   "uvwxy" ])
+                                 ["abcde",
+                                  "fGHIj",
+                                  "kLMNo",
+                                  "pQRSt",
+                                  "uvwxy"])

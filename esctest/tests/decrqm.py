@@ -18,35 +18,35 @@ class DECRQMTests(object):
     before = self.requestAnsiMode(mode)
     if before[1] == 2:
       esccmd.SM(mode)
-      AssertEQ(self.requestAnsiMode(mode), [ mode, 1 ])
+      AssertEQ(self.requestAnsiMode(mode), [mode, 1])
 
       esccmd.RM(mode)
-      AssertEQ(self.requestAnsiMode(mode), [ mode, 2 ])
+      AssertEQ(self.requestAnsiMode(mode), [mode, 2])
     else:
       esccmd.RM(mode)
-      AssertEQ(self.requestAnsiMode(mode), [ mode, 2 ])
+      AssertEQ(self.requestAnsiMode(mode), [mode, 2])
 
       esccmd.SM(mode)
-      AssertEQ(self.requestAnsiMode(mode), [ mode, 1 ])
+      AssertEQ(self.requestAnsiMode(mode), [mode, 1])
 
   def doPermanentlyResetAnsiTest(self, mode):
-    AssertEQ(self.requestAnsiMode(mode), [ mode, 4 ])
+    AssertEQ(self.requestAnsiMode(mode), [mode, 4])
 
   def doModifiableDecTest(self, mode):
     before = self.requestDECMode(mode)
     if before[1] == 2:
       esccmd.DECSET(mode)
-      AssertEQ(self.requestDECMode(mode), [ mode, 1 ])
+      AssertEQ(self.requestDECMode(mode), [mode, 1])
       esccmd.DECRESET(mode)
-      AssertEQ(self.requestDECMode(mode), [ mode, 2 ])
+      AssertEQ(self.requestDECMode(mode), [mode, 2])
     else:
       esccmd.DECRESET(mode)
-      AssertEQ(self.requestDECMode(mode), [ mode, 2 ])
+      AssertEQ(self.requestDECMode(mode), [mode, 2])
       esccmd.DECSET(mode)
-      AssertEQ(self.requestDECMode(mode), [ mode, 1 ])
+      AssertEQ(self.requestDECMode(mode), [mode, 1])
 
   def doPermanentlyResetDecTest(self, mode):
-    AssertEQ(self.requestDECMode(mode), [ mode, 4 ])
+    AssertEQ(self.requestDECMode(mode), [mode, 4])
 
   # Modifiable ANSI modes ----------------------------------------------------
 
@@ -154,7 +154,7 @@ class DECRQMTests(object):
   @vtLevel(3)
   @knownBug(terminal="iTerm2", reason="DECRQM not supported.", shouldTry=False)
   def test_DECRQM_DEC_DECCOLM(self):
-    needsPermission = escargs.args.expected_terminal in [ "xterm", "iTerm2" ]
+    needsPermission = escargs.args.expected_terminal in ["xterm", "iTerm2"]
     if needsPermission:
       esccmd.DECSET(esccmd.Allow80To132)
     self.doModifiableDecTest(esccmd.DECCOLM)
@@ -282,11 +282,11 @@ class DECRQMTests(object):
   @optionRequired(terminal="xterm",
                   option=escargs.XTERM_WINOPS_ENABLED)
   def test_DECRQM_DEC_DECNCSM(self):
-    needsPermission = escargs.args.expected_terminal in [ "xterm", "iTerm2" ]
+    needsPermission = escargs.args.expected_terminal in ["xterm", "iTerm2"]
     if needsPermission:
       esccmd.DECSET(esccmd.Allow80To132)
     self.doModifiableDecTest(esccmd.DECNCSM)
-    needsPermission = escargs.args.expected_terminal in [ "xterm", "iTerm2" ]
+    needsPermission = escargs.args.expected_terminal in ["xterm", "iTerm2"]
     if needsPermission:
       esccmd.DECRESET(esccmd.Allow80To132)
 
