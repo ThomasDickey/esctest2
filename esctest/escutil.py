@@ -115,6 +115,7 @@ def GetScreenSizePixels():
       AssertTrue(len(params) >= 3)
       gScreenSizePixels = Size(params[2], params[1])
     else:
+      # iTerm2 doesn't support esccmd.WINOP_REPORT_SCREEN_SIZE_PIXELS so just fake it.
       gScreenSizePixels = Size(1024, 768)
     LogDebug("size of SCREEN " + str(gScreenSizePixels.height()) + "x" + str(gScreenSizePixels.width()))
   return gScreenSizePixels
@@ -188,10 +189,12 @@ def GetDisplaySize():
   params = escio.ReadCSI("t")
   return Size(params[2], params[1])
 
-# decorators are more elegant, but several of the tests would hang as written
-# without a direct check.  Use this to point out problems in the tests versus
-# problems in the terminal.
 def AssertVTLevel(minimum, reason):
+  """Checks that the vtLevel is at least minimum.
+
+  This is used to find bugs in tests that are not properly annotated with a vt
+  level.
+  """
   if esc.vtLevel < minimum:
     if reason is not None:
       LogInfo("BUG: " + reason + " feature is not supported at this level")

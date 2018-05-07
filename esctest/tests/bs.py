@@ -1,7 +1,7 @@
 import esc
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, vtLevel
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, vtLevel
 from esctypes import Point, Rect
 
 class BSTests(object):
@@ -58,7 +58,8 @@ class BSTests(object):
     escio.Write(esc.BS)
     AssertEQ(GetCursorPosition(), Point(10, 2))
 
-  def test_BS_ReverseWrapWontPassTop(self):
+  @knownBug(terminal="iTerm2", reason="Does not wrap around properly")
+  def test_BS_ReverseWrapGoesToBottom(self):
     """If the cursor starts within the top/bottom margins, after doing a
     reverse wrap, the cursor remains within those margins.
 

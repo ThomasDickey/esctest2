@@ -62,7 +62,8 @@ class DECBITests(object):
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   @vtLevel(4)
   def test_DECBI_WholeScreenScrolls(self):
-    """Test DECBI (back-index) when the cursor is before the left-margin, but at the left edge of the screen.
+    """Test DECBI (back-index) when the cursor is before the left-margin, but
+    at the left edge of the screen.
 
     Refer to DEC STD 070, which says if the cursor is outside the margins,
     at the left edge of the page (which xterm equates with its screen),
