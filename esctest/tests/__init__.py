@@ -232,4 +232,4 @@ tests = [
     vt.VTTests,
     xterm_save.XtermSaveTests,
     xterm_winops.XtermWinopsTests,
-  ]
+    ]

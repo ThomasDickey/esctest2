@@ -1,17 +1,17 @@
-from esc import ESC, NUL, TAB
+from esc import NUL, TAB
 import esccmd
 import escio
-import esclog
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, AssertTrue, GetCursorPosition, GetScreenSize, GetIconTitle, GetWindowTitle, knownBug, vtLevel
-from esctypes import InternalError, Point, Rect
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, GetIconTitle, GetWindowTitle, knownBug, vtLevel
+from esctypes import Point, Rect
 
 class RISTests(object):
+  @vtLevel(4)
   def test_RIS_ClearsScreen(self):
     escio.Write("x")
 
     esccmd.RIS()
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
 
   def test_RIS_CursorToOrigin(self):
     esccmd.CUP(Point(5, 6))
@@ -49,6 +49,7 @@ class RISTests(object):
     esccmd.ChangeIconTitle("a")
     AssertEQ(GetIconTitle(), "a")
 
+  @vtLevel(4)
   def test_RIS_ExitAltScreen(self):
     escio.Write("m")
     esccmd.DECSET(esccmd.ALTBUF)
@@ -57,13 +58,18 @@ class RISTests(object):
 
     esccmd.RIS()
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
     esccmd.DECSET(esccmd.ALTBUF)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "a" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["a"])
 
-  @knownBug(terminal="xterm",
-            reason="xterm seems to check initflags rather than flags in ReallyReset() (bug reported)")
   def test_RIS_ResetDECCOLM(self):
+    """Test whether RIS resets DECCOLM.
+
+    The control sequence allowing 80/132 switching is an xterm feature
+    not found in DEC terminals.  When doing a full reset, xterm checks
+    that, as well as checking if the terminal is currently in 132-column
+    mode.  Older versions of xterm would reset the 132-column mode
+    before checking if it was enabled, failing this test."""
     esccmd.DECSET(esccmd.Allow80To132)
     esccmd.DECSET(esccmd.DECCOLM)
     AssertEQ(GetScreenSize().width(), 132)
@@ -72,6 +78,7 @@ class RISTests(object):
 
     AssertEQ(GetScreenSize().width(), 80)
 
+  @vtLevel(4)
   def test_RIS_ResetDECOM(self):
     esccmd.DECSTBM(5, 7)
     esccmd.DECSET(esccmd.DECLRMM)
@@ -84,8 +91,9 @@ class RISTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "X" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["X"])
 
+  @vtLevel(4)
   def test_RIS_RemoveMargins(self):
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(3, 5)

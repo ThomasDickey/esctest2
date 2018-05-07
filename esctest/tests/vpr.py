@@ -1,7 +1,7 @@
 from esc import NUL
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, vtLevel
 from esctypes import Point, Rect
 
 class VPRTests(object):
@@ -36,6 +36,7 @@ class VPRTests(object):
     AssertEQ(position.x(), 5)
     AssertEQ(position.y(), 8)
 
+  @vtLevel(4)
   def test_VPR_IgnoresOriginMode(self):
     """VPR continues to work in origin mode."""
     # Set a scroll region.
@@ -62,7 +63,7 @@ class VPRTests(object):
     esccmd.DECSTBM()
 
     # See what happened
-    AssertScreenCharsInRectEqual(Rect(6, 7, 7, 9), [ 'X' + NUL,
-                                                      NUL * 2,
-                                                      NUL + 'Y' ])
+    AssertScreenCharsInRectEqual(Rect(6, 7, 7, 9), ['X' + NUL,
+                                                    NUL * 2,
+                                                    NUL + 'Y'])
 

@@ -1,18 +1,16 @@
-from esc import NUL
 import esccmd
 import escio
-import esclog
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, AssertTrue, GetScreenSize, knownBug
-from esctypes import Point, Rect
+from escutil import AssertEQ, AssertTrue, knownBug, vtLevel
+from esctypes import Point
 
 class DECDSRTests(object):
   def getVTLevel(self):
     esccmd.DA2()
     params = escio.ReadCSI('c', expected_prefix='>')
-    vtLevel = params[0]
-    if vtLevel < 18:
+    myLevel = params[0]
+    if myLevel < 18:
       return 2
-    elif vtLevel <= 24:
+    elif myLevel <= 24:
       return 3
     else:
       return 4
@@ -21,6 +19,7 @@ class DECDSRTests(object):
   # introduced, so I'm not sure it makes sense to test it in a term that
   # returns a lower VT level. I plan to go back and update all the tests for
   # different VT level capabilities.
+  @vtLevel(3)
   def test_DECDSR_DECXCPR(self):
     """DECXCPR reports the cursor position. Response is:
     CSI ? Pl ; Pc ; Pr R
@@ -28,21 +27,22 @@ class DECDSRTests(object):
       Pc - column
       Pr - page"""
     # First, get the VT level.
-    vtLevel = self.getVTLevel()
+    myLevel = self.getVTLevel()
 
     esccmd.CUP(Point(5, 6))
     esccmd.DECDSR(esccmd.DECXCPR)
     params = escio.ReadCSI('R', expected_prefix='?')
 
-    if vtLevel >= 4:
+    if myLevel >= 4:
       # VT400+
       # Last arg is page, which is always 1 (at least in xterm, and I think
       # that's reasonable in all modern terminals, which won't have a direct
       # notion of a page.)
-      AssertEQ(params, [ 6, 5, 1 ])
+      AssertEQ(params, [6, 5, 1])
     else:
-      AssertEQ(params, [ 6, 5 ])
+      AssertEQ(params, [6, 5])
 
+  @vtLevel(2)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECDSR_DSRPrinterPort(self):
     """Requests printer status. The allowed responses are:
@@ -58,9 +58,9 @@ class DECDSRTests(object):
     esccmd.DECDSR(esccmd.DSRPrinterPort)
     params = escio.ReadCSI('n', expected_prefix='?')
     AssertEQ(len(params), 1)
-    AssertTrue(params[0] in [ 10, 11, 13, 18, 19 ])
+    AssertTrue(params[0] in [10, 11, 13, 18, 19])
 
-
+  @vtLevel(2)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECDSR_DSRUDKLocked(self):
     """Tests if user-defined keys are locked or unlocked. The allowed repsonses are:
@@ -74,8 +74,9 @@ class DECDSRTests(object):
     esccmd.DECDSR(esccmd.DSRUDKLocked)
     params = escio.ReadCSI('n', expected_prefix='?')
     AssertEQ(len(params), 1)
-    AssertTrue(params[0] in [ 20, 21 ])
+    AssertTrue(params[0] in [20, 21])
 
+  @vtLevel(2)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECDSR_DSRKeyboard(self):
     """Gets info about the keyboard. The response is:
@@ -97,13 +98,13 @@ class DECDSRTests(object):
         4 - LK450  # DEC 510
         5 - PCXAL  # DEC 510"""
     # First get the VT level with a DA2
-    vtLevel = self.getVTLevel()
+    myLevel = self.getVTLevel()
     esccmd.DECDSR(esccmd.DSRKeyboard)
     params = escio.ReadCSI('n', expected_prefix='?')
-    if vtLevel <= 2:
+    if myLevel <= 2:
       # VT240 or earlier
       AssertEQ(len(params), 2)
-    elif vtLevel == 3:
+    elif myLevel == 3:
       # VT340 or earlier
       AssertEQ(len(params), 3)
     else:
@@ -111,14 +112,15 @@ class DECDSRTests(object):
       AssertEQ(len(params), 4)
     AssertEQ(params[0], 27)
     if len(params) > 1:
-      AssertTrue(params[1] in [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-        10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22, 28, 29, 30,
-        31, 33, 35, 36, 38, 39, 40 ])
+      AssertTrue(params[1] in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+                               10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22, 28,
+                               29, 30, 31, 33, 35, 36, 38, 39, 40])
     if len(params) > 2:
-      AssertTrue(params[2] in [ 0, 3, 8 ])
+      AssertTrue(params[2] in [0, 3, 8])
     if len(params) > 3:
-      AssertTrue(params[3] in [ 0, 1, 4, 5 ])
+      AssertTrue(params[3] in [0, 1, 4, 5])
 
+  @vtLevel(4)
   def doLocatorStatusTest(self, code):
     """I couldn't find docs on these codes outside xterm. 53 and 55 seem to be
     the same. Returns 50 if no locator, 53 if available."""
@@ -126,16 +128,19 @@ class DECDSRTests(object):
     params = escio.ReadCSI('n', expected_prefix='?')
 
     AssertEQ(len(params), 1)
-    AssertTrue(params[0] in [ 50, 53, 55 ])
+    AssertTrue(params[0] in [50, 53, 55])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECDSR_DSRDECLocatorStatus(self):
     self.doLocatorStatusTest(esccmd.DSRDECLocatorStatus)
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECDSR_DSRXtermLocatorStatus(self):
     self.doLocatorStatusTest(esccmd.DSRXtermLocatorStatus)
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECDSR_LocatorType(self):
     """Get the type of the locator (pointing device.)
@@ -146,9 +151,10 @@ class DECDSRTests(object):
     params = escio.ReadCSI('n', expected_prefix='?')
 
     AssertEQ(params[0], 57)
-    AssertTrue(params[1] in [ 0, 1, 2 ])
+    AssertTrue(params[1] in [0, 1, 2])
   # 1 = mouse, 2 = tablet, pretty sure 1 is the only reasonable response.
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECDSR_DECMSR(self):
     """Get space available for macros. This test assumes it's always 0."""
@@ -160,6 +166,7 @@ class DECDSRTests(object):
     AssertEQ(len(params), 1)
     AssertEQ(params[0], 0)
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECDSR_DECCKSR(self):
     """Get checksum of macros. This test assumes it's always 0."""
@@ -167,6 +174,7 @@ class DECDSRTests(object):
     value = escio.ReadDCS()
     AssertEQ(value, "123!~0000")
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECDSR_DSRDataIntegrity(self):
     """Check for link errors. Should always report OK."""
@@ -175,6 +183,7 @@ class DECDSRTests(object):
     AssertEQ(len(params), 1)
     AssertEQ(params[0], 70)
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECDSR_DSRMultipleSessionStatus(self):
     """Checks on the status of multiple sessons. SSU refers to some proprietary
@@ -202,5 +211,5 @@ class DECDSRTests(object):
     AssertEQ(len(params), 1)
     # 83 and 87 both seem like reasonable responses for a terminal that
     # supports tabs or windows.
-    AssertTrue(params[0] in [ 83, 87 ])
+    AssertTrue(params[0] in [83, 87])
 

@@ -6,14 +6,14 @@ from esctypes import Point
 
 class FillRectangleTests(object):
   def data(self):
-    return [ "abcdefgh",
-             "ijklmnop",
-             "qrstuvwx",
-             "yz012345",
-             "ABCDEFGH",
-             "IJKLMNOP",
-             "QRSTUVWX",
-             "YZ6789!@" ]
+    return ["abcdefgh",
+            "ijklmnop",
+            "qrstuvwx",
+            "yz012345",
+            "ABCDEFGH",
+            "IJKLMNOP",
+            "QRSTUVWX",
+            "YZ6789!@"]
 
   def prepare(self):
     esccmd.CUP(Point(1, 1))
@@ -37,14 +37,14 @@ class FillRectangleTests(object):
               bottom=7,
               right=7)
     AssertScreenCharsInRectEqual(Rect(1, 1, 8, 8),
-                                 [ "abcdefgh",
-                                   "ijklmnop",
-                                   "qrstuvwx",
-                                   "yz012345",
-                                   "ABCD" + self.characters(Point(5, 5), 3) + "H",
-                                   "IJKL" + self.characters(Point(5, 6), 3) + "P",
-                                   "QRST" + self.characters(Point(5, 7), 3) + "X",
-                                   "YZ6789!@" ])
+                                 ["abcdefgh",
+                                  "ijklmnop",
+                                  "qrstuvwx",
+                                  "yz012345",
+                                  "ABCD" + self.characters(Point(5, 5), 3) + "H",
+                                  "IJKL" + self.characters(Point(5, 6), 3) + "P",
+                                  "QRST" + self.characters(Point(5, 7), 3) + "X",
+                                  "YZ6789!@"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented", noop=True)
@@ -55,14 +55,14 @@ class FillRectangleTests(object):
               bottom=4,
               right=4)
     AssertScreenCharsInRectEqual(Rect(1, 1, 8, 8),
-                                 [ "abcdefgh",
-                                   "ijklmnop",
-                                   "qrstuvwx",
-                                   "yz012345",
-                                   "ABCDEFGH",
-                                   "IJKLMNOP",
-                                   "QRSTUVWX",
-                                   "YZ6789!@" ])
+                                 ["abcdefgh",
+                                  "ijklmnop",
+                                  "qrstuvwx",
+                                  "yz012345",
+                                  "ABCDEFGH",
+                                  "IJKLMNOP",
+                                  "QRSTUVWX",
+                                  "YZ6789!@"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -70,10 +70,10 @@ class FillRectangleTests(object):
     """Write a value at each corner, run fill with no args, and verify the
     corners have all been replaced with self.character."""
     size = GetScreenSize()
-    points = [ Point(1, 1),
-               Point(size.width(), 1),
-               Point(size.width(), size.height()),
-               Point(1, size.height()) ]
+    points = [Point(1, 1),
+              Point(size.width(), 1),
+              Point(size.width(), size.height()),
+              Point(1, size.height())]
     n = 1
     for point in points:
       esccmd.CUP(point)
@@ -85,7 +85,7 @@ class FillRectangleTests(object):
     for point in points:
       AssertScreenCharsInRectEqual(
           Rect(point.x(), point.y(), point.x(), point.y()),
-          [ self.characters(point, 1) ])
+          [self.characters(point, 1)])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -113,14 +113,14 @@ class FillRectangleTests(object):
 
     # See what happened.
     AssertScreenCharsInRectEqual(Rect(1, 1, 8, 8),
-                                 [ "abcdefgh",
-                                   "i" + self.characters(Point(2, 2), 3) + "mnop",
-                                   "q" + self.characters(Point(2, 3), 3) + "uvwx",
-                                   "y" + self.characters(Point(2, 4), 3) + "2345",
-                                   "ABCDEFGH",
-                                   "IJKLMNOP",
-                                   "QRSTUVWX",
-                                   "YZ6789!@" ])
+                                 ["abcdefgh",
+                                  "i" + self.characters(Point(2, 2), 3) + "mnop",
+                                  "q" + self.characters(Point(2, 3), 3) + "uvwx",
+                                  "y" + self.characters(Point(2, 4), 3) + "2345",
+                                  "ABCDEFGH",
+                                  "IJKLMNOP",
+                                  "QRSTUVWX",
+                                  "YZ6789!@"])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -142,8 +142,8 @@ class FillRectangleTests(object):
                                       size.height() - 1,
                                       size.width(),
                                       size.height()),
-                                 [ "ab",
-                                   "c" + self.characters(Point(size.width(), size.height()), 1) ])
+                                 ["ab",
+                                  "c" + self.characters(Point(size.width(), size.height()), 1)])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented", noop=True)
@@ -186,11 +186,11 @@ class FillRectangleTests(object):
 
     # Did it ignore the margins?
     AssertScreenCharsInRectEqual(Rect(1, 1, 8, 8),
-                                 [ "abcdefgh",
-                                   "ijklmnop",
-                                   "qrstuvwx",
-                                   "yz012345",
-                                   "ABCD" + self.characters(Point(5, 5), 3) + "H",
-                                   "IJKL" + self.characters(Point(5, 6), 3) + "P",
-                                   "QRST" + self.characters(Point(5, 7), 3) + "X",
-                                   "YZ6789!@" ])
+                                 ["abcdefgh",
+                                  "ijklmnop",
+                                  "qrstuvwx",
+                                  "yz012345",
+                                  "ABCD" + self.characters(Point(5, 5), 3) + "H",
+                                  "IJKL" + self.characters(Point(5, 6), 3) + "P",
+                                  "QRST" + self.characters(Point(5, 7), 3) + "X",
+                                  "YZ6789!@"])

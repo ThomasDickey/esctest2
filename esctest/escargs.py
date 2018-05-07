@@ -6,13 +6,10 @@ import argparse
 XTERM_WINOPS_ENABLED = "xtermWinopsEnabled"
 DISABLE_WIDE_CHARS = "disableWideChars"
 
-ACTION_RUN="run"
-ACTION_LIST_KNOWN_BUGS="list-known-bugs"
+ACTION_RUN = "run"
+ACTION_LIST_KNOWN_BUGS = "list-known-bugs"
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--disable-xterm-checksum-bug",
-                    help="Don't use buggy parameter order for DECRQCRA",
-                    action="store_true")
 parser.add_argument("--include",
                     help="Regex for names of tests to run.",
                     default=".*")
@@ -24,8 +21,8 @@ parser.add_argument("--no-print-logs",
                     help="Print logs after finishing?",
                     action="store_true")
 parser.add_argument("--test-case-dir",
-                     help="Create files with test cases in the specified directory",
-                     default=None)
+                    help="Create files with test cases in the specified directory",
+                    default=None)
 parser.add_argument("--stop-on-failure",
                     help="Stop running tests after a failure.",
                     action="store_true")
@@ -35,7 +32,7 @@ parser.add_argument("--force",
 parser.add_argument("--options",
                     help="Space-separated options that are enabled.",
                     nargs="+",
-                    choices=[ XTERM_WINOPS_ENABLED, DISABLE_WIDE_CHARS ])
+                    choices=[XTERM_WINOPS_ENABLED, DISABLE_WIDE_CHARS])
 parser.add_argument("--max-vt-level",
                     help="Do not run tests requiring a higher VT level than this.",
                     type=int,
@@ -50,7 +47,7 @@ parser.add_argument("--v",
 parser.add_argument("--action",
                     help="Action to perform.",
                     default=ACTION_RUN,
-                    choices=[ ACTION_RUN, ACTION_LIST_KNOWN_BUGS ])
+                    choices=[ACTION_RUN, ACTION_LIST_KNOWN_BUGS])
 parser.add_argument("--timeout",
                     help="Timeout for reading reports from terminal.",
                     default=1,

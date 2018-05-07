@@ -1,7 +1,7 @@
 from esc import NUL
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, vtLevel
 from esctypes import Point, Rect
 
 class HPRTests(object):
@@ -39,6 +39,7 @@ class HPRTests(object):
     AssertEQ(position.x(), 7)
     AssertEQ(position.y(), 6)
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_HPR_IgnoresOriginMode(self):
     """HPR continues to work in origin mode."""
@@ -66,4 +67,4 @@ class HPRTests(object):
     esccmd.DECSTBM()
 
     # See what happened
-    AssertScreenCharsInRectEqual(Rect(5, 7, 9, 7), [ NUL + "X" + NUL * 2 + "Y" ])
+    AssertScreenCharsInRectEqual(Rect(5, 7, 9, 7), [NUL + "X" + NUL * 2 + "Y"])

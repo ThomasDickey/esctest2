@@ -1,5 +1,4 @@
 import esccmd
-from escutil import knownBug
 from tests.save_restore_cursor import SaveRestoreCursorTests
 
 class ANSIRCTests(SaveRestoreCursorTests):

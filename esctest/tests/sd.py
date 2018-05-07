@@ -2,9 +2,16 @@ from esc import NUL
 import esccmd
 import escio
 from esctypes import Point, Rect
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug
+from escutil import AssertScreenCharsInRectEqual, GetScreenSize, vtLevel
 
 class SDTests(object):
+  """Test SD (scroll down), referred to as PAN UP in DEC STD 070.
+
+  The DEC programmer reference manuals do not mention this, but ECMA-48
+  and DEC STD 070 both state that the "Active Position" (the cursor)
+  does not move along with the data.
+  """
+
   def prepare(self):
     """Sets the screen up as
     abcde
@@ -14,11 +21,11 @@ class SDTests(object):
     uvwxy
 
     With the cursor on the 'h'."""
-    lines = [ "abcde",
-              "fghij",
-              "klmno",
-              "pqrst",
-              "uvwxy" ]
+    lines = ["abcde",
+             "fghij",
+             "klmno",
+             "pqrst",
+             "uvwxy"]
     for i in xrange(len(lines)):
       y = i + 1
       line = lines[i]
@@ -26,31 +33,37 @@ class SDTests(object):
       escio.Write(line)
     esccmd.CUP(Point(3, 2))
 
+  @vtLevel(4)
   def test_SD_DefaultParam(self):
     """SD with no parameter should scroll the screen contents down one line."""
     self.prepare()
     esccmd.SD()
-    expected_lines = [ NUL * 5,
-                       "abcde",
-                       "fghij",
-                       "klmno",
-                       "pqrst" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    expected_lines = [NUL * 5,
+                      "abcde",
+                      "fghij",
+                      "klmno",
+                      "pqrst"]
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
+  @vtLevel(4)
   def test_SD_ExplicitParam(self):
     """SD should scroll the screen down by the number of lines given in the parameter."""
     self.prepare()
     esccmd.SD(2)
-    expected_lines = [ NUL * 5,
-                       NUL * 5,
-                       "abcde",
-                       "fghij",
-                       "klmno" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    expected_lines = [NUL * 5,
+                      NUL * 5,
+                      "abcde",
+                      "fghij",
+                      "klmno"]
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
-  @knownBug(terminal="xterm", reason="Asserts", shouldTry=False)
+  @vtLevel(4)
   def test_SD_CanClearScreen(self):
-    """An SD equal to the height of the screen clears it."""
+    """An SD equal to the height of the screen clears it.
+
+    Some older versions of xterm failed this test, due to an incorrect fix
+    for debugging-assertions in patch #318.  That was corrected in #332.
+    """
     # Fill the screen with 0001, 0002, ..., height. Fill expected_lines with empty rows.
     height = GetScreenSize().height()
     expected_lines = []
@@ -64,8 +77,9 @@ class SDTests(object):
     esccmd.SD(height)
 
     # Ensure the screen is empty
-    AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines);
+    AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines)
 
+  @vtLevel(4)
   def test_SD_RespectsTopBottomScrollRegion(self):
     """When the cursor is inside the scroll region, SD should scroll the
     contents of the scroll region only."""
@@ -75,13 +89,14 @@ class SDTests(object):
     esccmd.SD(2)
     esccmd.DECSTBM()
 
-    expected_lines = [ "abcde",
-                       NUL * 5,
-                       NUL * 5,
-                       "fghij",
-                       "uvwxy" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    expected_lines = ["abcde",
+                      NUL * 5,
+                      NUL * 5,
+                      "fghij",
+                      "uvwxy"]
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
+  @vtLevel(4)
   def test_SD_OutsideTopBottomScrollRegion(self):
     """When the cursor is outside the scroll region, SD should scroll the
     contents of the scroll region only."""
@@ -91,13 +106,14 @@ class SDTests(object):
     esccmd.SD(2)
     esccmd.DECSTBM()
 
-    expected_lines = [ "abcde",
-                       NUL * 5,
-                       NUL * 5,
-                       "fghij",
-                       "uvwxy" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    expected_lines = ["abcde",
+                      NUL * 5,
+                      NUL * 5,
+                      "fghij",
+                      "uvwxy"]
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
+  @vtLevel(4)
   def test_SD_RespectsLeftRightScrollRegion(self):
     """When the cursor is inside the scroll region, SD should scroll the
     contents of the scroll region only."""
@@ -108,13 +124,14 @@ class SDTests(object):
     esccmd.SD(2)
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    expected_lines = [ "a" + NUL * 3 + "e",
-                       "f" + NUL * 3 + "j",
-                       "kbcdo",
-                       "pghit",
-                       "ulmny" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    expected_lines = ["a" + NUL * 3 + "e",
+                      "f" + NUL * 3 + "j",
+                      "kbcdo",
+                      "pghit",
+                      "ulmny"]
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
+  @vtLevel(4)
   def test_SD_OutsideLeftRightScrollRegion(self):
     """When the cursor is outside the scroll region, SD should scroll the
     contents of the scroll region only."""
@@ -126,15 +143,16 @@ class SDTests(object):
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    expected_lines = [ "a" + NUL * 3 + "e",
-                       "f" + NUL * 3 + "j",
-                       "kbcdo",
-                       "pghit",
-                       "ulmny",
-                       NUL + "qrs" + NUL,
-                       NUL + "vwx" + NUL ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 7), expected_lines);
+    expected_lines = ["a" + NUL * 3 + "e",
+                      "f" + NUL * 3 + "j",
+                      "kbcdo",
+                      "pghit",
+                      "ulmny",
+                      NUL + "qrs" + NUL,
+                      NUL + "vwx" + NUL]
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 7), expected_lines)
 
+  @vtLevel(4)
   def test_SD_LeftRightAndTopBottomScrollRegion(self):
     """When the cursor is outside the scroll region, SD should scroll the
     contents of the scroll region only."""
@@ -147,13 +165,14 @@ class SDTests(object):
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    expected_lines = [ "abcde",
-                       "f" + NUL * 3 + "j",
-                       "k" + NUL * 3 + "o",
-                       "pghit",
-                       "uvwxy" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    expected_lines = ["abcde",
+                      "f" + NUL * 3 + "j",
+                      "k" + NUL * 3 + "o",
+                      "pghit",
+                      "uvwxy"]
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
+  @vtLevel(4)
   def test_SD_BigScrollLeftRightAndTopBottomScrollRegion(self):
     """Scroll a lr and tb scroll region by more than its height."""
     self.prepare()
@@ -165,9 +184,9 @@ class SDTests(object):
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    expected_lines = [ "abcde",
-                       "f" + NUL * 3 + "j",
-                       "k" + NUL * 3 + "o",
-                       "p" + NUL * 3 + "t",
-                       "uvwxy" ]
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines);
+    expected_lines = ["abcde",
+                      "f" + NUL * 3 + "j",
+                      "k" + NUL * 3 + "o",
+                      "p" + NUL * 3 + "t",
+                      "uvwxy"]
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)

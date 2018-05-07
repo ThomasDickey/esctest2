@@ -21,8 +21,9 @@
 #     XTerm extension, same as ESC 7 but can be disabled by a resource.
 import esc
 import esccmd
+import escargs
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, Rect, knownBug
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, Rect, knownBug, vtLevel
 from esctypes import Point
 
 class SaveRestoreCursorTests(object):
@@ -41,6 +42,7 @@ class SaveRestoreCursorTests(object):
     self.restoreCursor()
     AssertEQ(GetCursorPosition(), Point(1, 1))
 
+  @vtLevel(4)
   def test_SaveRestoreCursor_ResetsOriginMode(self):
     esccmd.CUP(Point(5, 6))
     self.saveCursor()
@@ -68,8 +70,9 @@ class SaveRestoreCursorTests(object):
     esccmd.DECRESET(esccmd.DECOM)
 
     # Ensure the X was placed at the true origin
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "X" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["X"])
 
+  @vtLevel(4)
   def test_SaveRestoreCursor_WorksInLRM(self, shouldWork=True):
     """Subclasses may cause shouldWork to be set to false."""
     esccmd.CUP(Point(2, 3))
@@ -88,7 +91,13 @@ class SaveRestoreCursorTests(object):
       AssertEQ(GetCursorPosition(), Point(2, 3))
 
   def test_SaveRestoreCursor_AltVsMain(self):
-    """Separate saved cursor in alt screen vs main screen."""
+    """Separate saved cursor in alternate screen versus main screen.
+
+    This is xterm-specific, not DEC, because DEC terminals did not implement
+    an alternate screen.  xterm maintains separate saved-cursor state for
+    the normal (main) and alternate screens so that it can restore the
+    position of the cursor in the normal screen when switching back from
+    the alternate screen."""
     esccmd.CUP(Point(2, 3))
     self.saveCursor()
 
@@ -106,6 +115,7 @@ class SaveRestoreCursorTests(object):
     self.restoreCursor()
     AssertEQ(GetCursorPosition(), Point(6, 7))
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSCA and DECSERA not implemented", noop=True)
   def test_SaveRestoreCursor_Protection(self):
     # Turn on protection and save
@@ -119,9 +129,19 @@ class SaveRestoreCursorTests(object):
     # Write a protected character and try to erase it, which should fail.
     escio.Write("a")
     esccmd.DECSERA(1, 1, 1, 1)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [ "a" ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["a"])
 
   def test_SaveRestoreCursor_Wrap(self):
+    """Test the position of the cursor after turning auto-wrap mode on and off.
+
+    According to DEC STD 070 (see description on page 5-139 as well as
+    pseudo-code on following pages), resetting auto-wrap mode resets the
+    terminal's last-column flag, which tells the terminal if it is in the
+    special wrap/last-column state.  Older versions of xterm did not
+    save/restore the last-column flag in DECRC, causing the cursor to be the
+    second column rather than the first when text is written "past" the
+    wrapping point.
+    """
     # Turn on wrap and save
     esccmd.DECSET(esccmd.DECAWM)
     self.saveCursor()
@@ -133,7 +153,10 @@ class SaveRestoreCursorTests(object):
     # See if we're wrapping.
     esccmd.CUP(Point(GetScreenSize().width() - 1, 1))
     escio.Write("abcd")
-    AssertEQ(GetCursorPosition().y(), 2)
+    if escargs.args.expected_terminal == "xterm":
+      AssertEQ(GetCursorPosition().y(), 1)
+    else:
+      AssertEQ(GetCursorPosition().y(), 2)
 
   def test_SaveRestoreCursor_ReverseWrapNotAffected(self):
     # Turn on reverse wrap and save
@@ -149,6 +172,7 @@ class SaveRestoreCursorTests(object):
     escio.Write(esc.BS)
     AssertEQ(GetCursorPosition().x(), 1)
 
+  @vtLevel(4)
   def test_SaveRestoreCursor_InsertNotAffected(self):
     # Turn on insert and save
     esccmd.SM(esccmd.IRM)
@@ -163,4 +187,4 @@ class SaveRestoreCursorTests(object):
     escio.Write("a")
     esccmd.CUP(Point(1, 1))
     escio.Write("b")
-    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [ "b" + esc.NUL ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), ["b" + esc.NUL])

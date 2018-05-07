@@ -1,9 +1,8 @@
 from esc import NUL, blank
-import escargs
 import esccmd
 import escio
 from esctypes import Point, Rect
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, knownBug
+from escutil import AssertScreenCharsInRectEqual, knownBug, vtLevel
 
 class DECSELTests(object):
 
@@ -14,38 +13,43 @@ class DECSELTests(object):
     escio.Write("abcdefghij")
     esccmd.CUP(Point(5, 1))
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_DECSEL_Default(self):
     """Should erase to right of cursor."""
     self.prepare()
     esccmd.DECSEL()
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ "abcd" + 6 * NUL ])
+                                 ["abcd" + 6 * NUL])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_DECSEL_0(self):
     """Should erase to right of cursor."""
     self.prepare()
     esccmd.DECSEL(0)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ "abcd" + 6 * NUL ])
+                                 ["abcd" + 6 * NUL])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_DECSEL_1(self):
     """Should erase to left of cursor."""
     self.prepare()
     esccmd.DECSEL(1)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ 5 * blank() + "fghij" ])
+                                 [5 * blank() + "fghij"])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_DECSEL_2(self):
     """Should erase whole line."""
     self.prepare()
     esccmd.DECSEL(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ 10 * NUL ])
+                                 [10 * NUL])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_DECSEL_IgnoresScrollRegion(self):
     """Should erase whole line."""
@@ -56,8 +60,9 @@ class DECSELTests(object):
     esccmd.DECSEL(2)
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ 10 * NUL ])
+                                 [10 * NUL])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_DECSEL_Default_Protection(self):
     """Should erase to right of cursor."""
@@ -72,8 +77,9 @@ class DECSELTests(object):
 
     esccmd.DECSEL()
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ "abcdefghi" + NUL ])
+                                 ["abcdefghi" + NUL])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_DECSEL_0_Protection(self):
     """All letters are protected so nothing should happen."""
@@ -89,8 +95,9 @@ class DECSELTests(object):
     esccmd.DECSEL(0)
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ "abcdefghi" + NUL ])
+                                 ["abcdefghi" + NUL])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_DECSEL_1_Protection(self):
     """All letters are protected so nothing should happen."""
@@ -105,8 +112,9 @@ class DECSELTests(object):
     esccmd.CUP(Point(5, 1))
     esccmd.DECSEL(1)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ blank() + "bcdefghij" ])
+                                 [blank() + "bcdefghij"])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_DECSEL_2_Protection(self):
     """All letters are protected so nothing should happen."""
@@ -120,8 +128,9 @@ class DECSELTests(object):
 
     esccmd.DECSEL(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ blank() + "bcdefghij" ])
+                                 [blank() + "bcdefghij"])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_DECSEL_IgnoresScrollRegion_Protection(self):
     """All letters are protected so nothing should happen."""
@@ -139,8 +148,9 @@ class DECSELTests(object):
     esccmd.DECSEL(2)
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [ blank() + "bcdefghij" ])
+                                 [blank() + "bcdefghij"])
 
+  @vtLevel(4)
   @knownBug(terminal="xterm",
             reason="DECSEL respects ISO protection for backward compatibility reasons, per email from Thomas")
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -151,5 +161,5 @@ class DECSELTests(object):
     escio.Write("b")
     esccmd.EPA()
     esccmd.DECSEL(2)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [ blank() * 2 ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [blank() * 2])
 

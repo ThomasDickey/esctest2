@@ -1,6 +1,7 @@
 import escargs
 
 NUL = chr(0)
+BEL = chr(7)
 BS = chr(8)
 TAB = chr(9)
 LF = chr(10)
@@ -18,8 +19,8 @@ ST = ESC + "\\"
 vtLevel = 1
 
 def blank():
-    if escargs.args.expected_terminal == "xterm":
-      return ' '
-    else:
-      return NUL
+  if escargs.args.expected_terminal == "xterm":
+    return ' '
+  else:
+    return NUL
 

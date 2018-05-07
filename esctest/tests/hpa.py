@@ -1,7 +1,6 @@
 import esccmd
-import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug
-from esctypes import Point, Rect
+from escutil import AssertEQ, GetCursorPosition, GetScreenSize, knownBug, vtLevel
+from esctypes import Point
 
 class HPATests(object):
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -42,6 +41,7 @@ class HPATests(object):
     AssertEQ(position.x(), 2)
     AssertEQ(position.y(), 6)
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_HPA_IgnoresOriginMode(self):
     """HPA does not respect origin mode."""

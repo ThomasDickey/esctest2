@@ -1,8 +1,7 @@
 from esc import NUL, blank
-import escargs
 import esccmd
 import escio
-from escutil import AssertScreenCharsInRectEqual, knownBug
+from escutil import AssertScreenCharsInRectEqual, knownBug, vtLevel
 from esctypes import Point, Rect
 
 class DECSEDTests(object):
@@ -43,54 +42,59 @@ class DECSEDTests(object):
 
     esccmd.CUP(Point(2, 3))
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_Default(self):
     """Should be the same as DECSED_0."""
     self.prepare()
     esccmd.DECSED()
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "b" + NUL * 2,
-                                   NUL * 3,
-                                   NUL * 3 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "b" + NUL * 2,
+                                  NUL * 3,
+                                  NUL * 3])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_0(self):
     """Erase after cursor."""
     self.prepare()
     esccmd.DECSED(0)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "b" + NUL * 2,
-                                   NUL * 3,
-                                   NUL * 3 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "b" + NUL * 2,
+                                  NUL * 3,
+                                  NUL * 3])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_1(self):
     """Erase before cursor."""
     self.prepare()
     esccmd.DECSED(1)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ NUL * 3,
-                                   NUL * 3,
-                                   blank() * 2 + "d",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 [NUL * 3,
+                                  NUL * 3,
+                                  blank() * 2 + "d",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_2(self):
     """Erase whole screen."""
     self.prepare()
     esccmd.DECSED(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ NUL * 3,
-                                   NUL * 3,
-                                   NUL * 3,
-                                   NUL * 3,
-                                   NUL * 3 ])
+                                 [NUL * 3,
+                                  NUL * 3,
+                                  NUL * 3,
+                                  NUL * 3,
+                                  NUL * 3])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented", noop=True)
   def test_DECSED_3(self):
     """xterm supports a "3" parameter, which also erases scrollback history. There
@@ -100,12 +104,13 @@ class DECSEDTests(object):
     esccmd.DECSED(3)
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_0_WithScrollRegion(self):
     """Erase after cursor with a scroll region present. The scroll region is ignored."""
@@ -118,10 +123,11 @@ class DECSEDTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ "abcde",
-                                   "fg" + NUL * 3,
-                                   NUL * 5 ])
+                                 ["abcde",
+                                  "fg" + NUL * 3,
+                                  NUL * 5])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_1_WithScrollRegion(self):
     """Erase before cursor with a scroll region present. The scroll region is ignored."""
@@ -134,10 +140,11 @@ class DECSEDTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ NUL * 5,
-                                   blank() * 3 + "ij",
-                                   "klmno" ])
+                                 [NUL * 5,
+                                  blank() * 3 + "ij",
+                                  "klmno"])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_2_WithScrollRegion(self):
     """Erase whole screen with a scroll region present. The scroll region is ignored."""
@@ -150,10 +157,11 @@ class DECSEDTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ NUL * 5,
-                                   NUL * 5,
-                                   NUL * 5 ])
+                                 [NUL * 5,
+                                  NUL * 5,
+                                  NUL * 5])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_Default_Protection(self):
     """Should be the same as DECSED_0."""
@@ -168,12 +176,13 @@ class DECSEDTests(object):
 
     esccmd.DECSED()
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_DECSCA_2(self):
     """DECSCA 2 should be the same as DECSCA 0."""
@@ -188,12 +197,13 @@ class DECSEDTests(object):
 
     esccmd.DECSED()
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_0_Protection(self):
     """Erase after cursor."""
@@ -210,12 +220,13 @@ class DECSEDTests(object):
 
     # X should be erased, other characters not.
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_1_Protection(self):
     """Erase before cursor."""
@@ -230,12 +241,13 @@ class DECSEDTests(object):
     esccmd.CUP(Point(2, 3))
     esccmd.DECSED(1)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_2_Protection(self):
     """Erase whole screen."""
@@ -250,12 +262,13 @@ class DECSEDTests(object):
     # Erase the screen
     esccmd.DECSED(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "a" + NUL * 2,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["a" + NUL * 2,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented", noop=True)
   def test_DECSED_3_Protection(self):
     """xterm supports a "3" parameter, which also erases scrollback history. There
@@ -271,12 +284,13 @@ class DECSEDTests(object):
 
     esccmd.DECSED(3)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 5),
-                                 [ "aX" + NUL,
-                                   NUL * 3,
-                                   "bcd",
-                                   NUL * 3,
-                                   "e" + NUL * 2 ])
+                                 ["aX" + NUL,
+                                  NUL * 3,
+                                  "bcd",
+                                  NUL * 3,
+                                  "e" + NUL * 2])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_0_WithScrollRegion_Protection(self):
     """Erase after cursor with a scroll region present. The scroll region is ignored."""
@@ -302,10 +316,11 @@ class DECSEDTests(object):
     esccmd.DECSTBM()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ "abcde",
-                                   "fghij",
-                                   blank() + "lmno" ])
+                                 ["abcde",
+                                  "fghij",
+                                  blank() + "lmno"])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_1_WithScrollRegion_Protection(self):
     """Erase after cursor with a scroll region present. The scroll region is ignored."""
@@ -331,10 +346,11 @@ class DECSEDTests(object):
     esccmd.DECSTBM()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ blank() + "bcde",
-                                   "fghij",
-                                   "klmno" ])
+                                 [blank() + "bcde",
+                                  "fghij",
+                                  "klmno"])
 
+  @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_2_WithScrollRegion_Protection(self):
     """Erase whole screen with a scroll region present. The scroll region is ignored."""
@@ -354,10 +370,11 @@ class DECSEDTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     esccmd.DECSTBM()
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 3),
-                                 [ blank() + "bcde",
-                                   "fghij",
-                                   "klmno" ])
+                                 [blank() + "bcde",
+                                  "fghij",
+                                  "klmno"])
 
+  @vtLevel(4)
   @knownBug(terminal="xterm",
             reason="DECSED respects ISO protection for backward compatibility reasons, per email from Thomas")
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
@@ -368,5 +385,5 @@ class DECSEDTests(object):
     escio.Write("b")
     esccmd.EPA()
     esccmd.DECSED(2)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [ blank() * 2 ])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [blank() * 2])
 
