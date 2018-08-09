@@ -3,20 +3,17 @@ from esctypes import Point
 from escutil import AssertEQ, GetCursorPosition, knownBug, vtLevel
 
 class CHTTests(object):
-  @knownBug(terminal="iTerm2", reason="iTerm2 doesn't support CHT")
   def test_CHT_OneTabStopByDefault(self):
     esccmd.CHT()
     position = GetCursorPosition()
     AssertEQ(position.x(), 9)
 
-  @knownBug(terminal="iTerm2", reason="iTerm2 doesn't support CHT")
   def test_CHT_ExplicitParameter(self):
     esccmd.CHT(2)
     position = GetCursorPosition()
     AssertEQ(position.x(), 17)
 
   @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="iTerm2 doesn't support CHT")
   def test_CHT_IgnoresScrollingRegion(self):
     """Test cursor forward tab (ECMA-48).
 
