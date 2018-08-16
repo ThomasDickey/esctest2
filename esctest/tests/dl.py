@@ -1,4 +1,4 @@
-from esc import NUL
+from esc import empty
 import esccmd
 import escio
 from esctypes import Point, Rect
@@ -56,7 +56,7 @@ class DLTests(object):
       y += 1
 
     # The last line should be blank
-    expected_lines.append(NUL * 4)
+    expected_lines.append(empty() * 4)
     AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines)
 
   @vtLevel(4)
@@ -78,8 +78,8 @@ class DLTests(object):
       y += 1
 
     # The last two lines should be blank
-    expected_lines.append(NUL * 4)
-    expected_lines.append(NUL * 4)
+    expected_lines.append(empty() * 4)
+    expected_lines.append(empty() * 4)
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines)
 
@@ -97,7 +97,7 @@ class DLTests(object):
     y = 1
     expected_lines = ["0001"]
     for i in xrange(height - 1):
-      expected_lines.append(NUL * 4)
+      expected_lines.append(empty() * 4)
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines)
 
@@ -114,7 +114,7 @@ class DLTests(object):
     expected_lines = ["abcde",
                       "klmno",
                       "pqrst",
-                      NUL * 5,
+                      empty() * 5,
                       "uvwxy"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
@@ -150,7 +150,7 @@ class DLTests(object):
                       "flmnj",
                       "kqrso",
                       "pvwxt",
-                      "u" + NUL * 3 + "y"]
+                      "u" + empty() * 3 + "y"]
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
@@ -187,7 +187,7 @@ class DLTests(object):
     expected_lines = ["abcde",
                       "flmnj",
                       "kqrso",
-                      "p" + NUL * 3 + "t",
+                      "p" + empty() * 3 + "t",
                       "uvwxy"]
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
@@ -205,9 +205,9 @@ class DLTests(object):
     esccmd.DECSTBM()
 
     expected_lines = ["abcde",
-                      "f" + NUL * 3 + "j",
-                      "k" + NUL * 3 + "o",
-                      "p" + NUL * 3 + "t",
+                      "f" + empty() * 3 + "j",
+                      "k" + empty() * 3 + "o",
+                      "p" + empty() * 3 + "t",
                       "uvwxy"]
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)

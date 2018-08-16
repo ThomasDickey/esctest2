@@ -1,4 +1,4 @@
-from esc import NUL, S7C1T, S8C1T
+from esc import empty, S7C1T, S8C1T
 import escargs
 import esccmd
 import escio
@@ -29,12 +29,12 @@ class RITests(object):
     # Move up, ensure no scroll yet.
     esccmd.RI()
     AssertEQ(GetCursorPosition().y(), 1)
-    AssertScreenCharsInRectEqual(Rect(2, 1, 2, 3), ["a", "b", NUL])
+    AssertScreenCharsInRectEqual(Rect(2, 1, 2, 3), ["a", "b", empty()])
 
     # Move up, ensure scroll.
     esccmd.RI()
     AssertEQ(GetCursorPosition().y(), 1)
-    AssertScreenCharsInRectEqual(Rect(2, 1, 2, 3), [NUL, "a", "b"])
+    AssertScreenCharsInRectEqual(Rect(2, 1, 2, 3), [empty(), "a", "b"])
 
   @vtLevel(4)
   def test_RI_ScrollsInTopBottomRegionStartingBelow(self):
@@ -48,7 +48,7 @@ class RITests(object):
     esccmd.RI()  # To 4
     esccmd.RI()  # Stay at 4 and scroll x down one line
     AssertEQ(GetCursorPosition(), Point(2, 4))
-    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), [NUL, "x"])
+    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), [empty(), "x"])
 
   @vtLevel(4)
   def test_RI_ScrollsInTopBottomRegionStartingWithin(self):
@@ -61,7 +61,7 @@ class RITests(object):
     esccmd.RI()  # To 4
     esccmd.RI()  # Stay at 4 and scroll x down one line
     AssertEQ(GetCursorPosition(), Point(2, 4))
-    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), [NUL, "x"])
+    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), [empty(), "x"])
 
   @vtLevel(4)
   def test_RI_MovesDoesNotScrollOutsideLeftRight(self):

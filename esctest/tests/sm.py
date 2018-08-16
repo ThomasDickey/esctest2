@@ -1,4 +1,4 @@
-from esc import NUL, LF, VT, FF
+from esc import empty, LF, VT, FF
 import esccmd
 import escio
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, vtLevel
@@ -24,9 +24,9 @@ class SMTests(object):
     escio.Write("b")
     esccmd.CUP(Point(1, 1))
     esccmd.SM(esccmd.IRM)
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [empty()])
     escio.Write("X")
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [empty()])
     esccmd.CUP(Point(size.width(), 1))
     escio.Write("YZ")
     AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), ["Z"])
@@ -46,7 +46,7 @@ class SMTests(object):
     escio.Write("X")
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    AssertScreenCharsInRectEqual(Rect(5, 1, 11, 1), ["abXcde" + NUL])
+    AssertScreenCharsInRectEqual(Rect(5, 1, 11, 1), ["abXcde" + empty()])
 
   def doLinefeedModeTest(self, code):
     esccmd.RM(esccmd.LNM)

@@ -1,4 +1,4 @@
-from esc import BS, CR, LF, NUL
+from esc import BS, CR, LF, empty
 import esccmd
 import escio
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, intentionalDeviationFromSpec, knownBug, vtLevel
@@ -80,10 +80,10 @@ class DECSTRTests(object):
     # Make sure the X was at 1, 1, implying origin mode was off.
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 3, 4), ["X" + NUL * 2,
-                                                    NUL * 3,
-                                                    NUL * 3,
-                                                    NUL * 3])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 3, 4), ["X" + empty() * 2,
+                                                    empty() * 3,
+                                                    empty() * 3,
+                                                    empty() * 3])
 
   @intentionalDeviationFromSpec(terminal="iTerm2",
                                 reason="For compatibility purposes, iTerm2 mimics xterm's behavior of turning on DECAWM by default.")
@@ -142,7 +142,7 @@ class DECSTRTests(object):
     esccmd.CUP(Point(1, 1))
     escio.Write("X")
     esccmd.DECSED(2)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [empty()])
 
   @vtLevel(4)
   def test_DECSTR_DECSASD(self):

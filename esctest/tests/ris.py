@@ -1,4 +1,4 @@
-from esc import NUL, TAB
+from esc import empty, TAB
 import esccmd
 import escio
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, GetIconTitle, GetWindowTitle, knownBug, vtLevel
@@ -11,7 +11,7 @@ class RISTests(object):
 
     esccmd.RIS()
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [empty()])
 
   def test_RIS_CursorToOrigin(self):
     esccmd.CUP(Point(5, 6))
@@ -58,7 +58,7 @@ class RISTests(object):
 
     esccmd.RIS()
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [empty()])
     esccmd.DECSET(esccmd.ALTBUF)
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["a"])
 

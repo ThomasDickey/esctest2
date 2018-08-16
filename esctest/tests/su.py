@@ -1,4 +1,4 @@
-from esc import NUL
+from esc import empty
 import esccmd
 import escio
 from esctypes import Point, Rect
@@ -35,7 +35,7 @@ class SUTests(object):
                       "klmno",
                       "pqrst",
                       "uvwxy",
-                      NUL * 5]
+                      empty() * 5]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -46,8 +46,8 @@ class SUTests(object):
     expected_lines = ["klmno",
                       "pqrst",
                       "uvwxy",
-                      NUL * 5,
-                      NUL * 5]
+                      empty() * 5,
+                      empty() * 5]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -60,7 +60,7 @@ class SUTests(object):
       y = i + 1
       esccmd.CUP(Point(1, y))
       escio.Write("%04d" % y)
-      expected_lines.append(NUL * 4)
+      expected_lines.append(empty() * 4)
 
     # Scroll by |height|
     esccmd.SU(height)
@@ -80,8 +80,8 @@ class SUTests(object):
 
     expected_lines = ["abcde",
                       "pqrst",
-                      NUL * 5,
-                      NUL * 5,
+                      empty() * 5,
+                      empty() * 5,
                       "uvwxy"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
@@ -97,8 +97,8 @@ class SUTests(object):
 
     expected_lines = ["abcde",
                       "pqrst",
-                      NUL * 5,
-                      NUL * 5,
+                      empty() * 5,
+                      empty() * 5,
                       "uvwxy"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
@@ -116,8 +116,8 @@ class SUTests(object):
     expected_lines = ["almne",
                       "fqrsj",
                       "kvwxo",
-                      "p" + NUL * 3 + "t",
-                      "u" + NUL * 3 + "y"]
+                      "p" + empty() * 3 + "t",
+                      "u" + empty() * 3 + "y"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -135,8 +135,8 @@ class SUTests(object):
     expected_lines = ["almne",
                       "fqrsj",
                       "kvwxo",
-                      "p" + NUL * 3 + "t",
-                      "u" + NUL * 3 + "y"]
+                      "p" + empty() * 3 + "t",
+                      "u" + empty() * 3 + "y"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
   @vtLevel(4)
@@ -154,8 +154,8 @@ class SUTests(object):
 
     expected_lines = ["abcde",
                       "fqrsj",
-                      "k" + NUL * 3 + "o",
-                      "p" + NUL * 3 + "t",
+                      "k" + empty() * 3 + "o",
+                      "p" + empty() * 3 + "t",
                       "uvwxy"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
@@ -172,8 +172,8 @@ class SUTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
 
     expected_lines = ["abcde",
-                      "f" + NUL * 3 + "j",
-                      "k" + NUL * 3 + "o",
-                      "p" + NUL * 3 + "t",
+                      "f" + empty() * 3 + "j",
+                      "k" + empty() * 3 + "o",
+                      "p" + empty() * 3 + "t",
                       "uvwxy"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)

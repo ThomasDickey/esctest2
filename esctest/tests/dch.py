@@ -1,4 +1,4 @@
-from esc import NUL
+from esc import empty
 import esccmd
 import escio
 from esctypes import Point, Rect
@@ -11,7 +11,7 @@ class DCHTests(object):
     escio.Write("abcd")
     esccmd.CUP(Point(2, 1))
     esccmd.DCH()
-    AssertScreenCharsInRectEqual(Rect(1, 1, 4, 1), ["acd" + NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 4, 1), ["acd" + empty()])
 
   @vtLevel(4)
   def test_DCH_ExplicitParam(self):
@@ -19,7 +19,7 @@ class DCHTests(object):
     escio.Write("abcd")
     esccmd.CUP(Point(2, 1))
     esccmd.DCH(2)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 4, 1), ["ad" + NUL * 2])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 4, 1), ["ad" + empty() * 2])
 
   @vtLevel(4)
   def test_DCH_RespectsMargins(self):
@@ -31,7 +31,7 @@ class DCHTests(object):
     esccmd.DCH()
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 1), ["abd" + NUL + "e"])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 1), ["abd" + empty() + "e"])
 
   @vtLevel(4)
   def test_DCH_DeleteAllWithMargins(self):
@@ -43,7 +43,7 @@ class DCHTests(object):
     esccmd.DCH(99)
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 1), ["ab" + NUL * 2 + "e"])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 1), ["ab" + empty() * 2 + "e"])
 
   @vtLevel(4)
   def test_DCH_DoesNothingOutsideLeftRightMargin(self):
@@ -67,4 +67,4 @@ class DCHTests(object):
     esccmd.DCH(99)
     esccmd.DECSTBM()
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 1), [NUL * 5])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 5, 1), [empty() * 5])

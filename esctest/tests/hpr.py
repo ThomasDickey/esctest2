@@ -1,4 +1,4 @@
-from esc import NUL
+from esc import empty
 import esccmd
 import escio
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, vtLevel
@@ -67,4 +67,4 @@ class HPRTests(object):
     esccmd.DECSTBM()
 
     # See what happened
-    AssertScreenCharsInRectEqual(Rect(5, 7, 9, 7), [NUL + "X" + NUL * 2 + "Y"])
+    AssertScreenCharsInRectEqual(Rect(5, 7, 9, 7), [empty() + "X" + empty() * 2 + "Y"])

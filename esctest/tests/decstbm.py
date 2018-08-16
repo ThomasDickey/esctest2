@@ -1,4 +1,4 @@
-from esc import CR, LF, NUL
+from esc import CR, LF, empty
 import esccmd
 import escio
 from escutil import AssertEQ, GetCursorPosition, GetScreenSize, AssertScreenCharsInRectEqual, vtLevel
@@ -16,7 +16,7 @@ class DECSTBMTests(object):
     escio.Write("2")
     AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), ["1", "2"])
     escio.Write(CR + LF)
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), ["2", NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), ["2", empty()])
     AssertEQ(GetCursorPosition().y(), 3)
 
   @vtLevel(4)
@@ -56,7 +56,7 @@ class DECSTBMTests(object):
       AssertScreenCharsInRectEqual(Rect(1, y, 4, y), ["%04d" % (i + 1)])
 
     y = size.height()
-    AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [NUL * 4])
+    AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [empty() * 4])
 
   @vtLevel(4)
   def test_DECSTBM_DefaultRestores(self):
@@ -104,7 +104,7 @@ class DECSTBMTests(object):
     escio.Write(CR + LF)
 
     # Verify that line 2 scrolled up to line 1.
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 2), ["x", NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 2), ["x", empty()])
 
     # Verify the cursor is at the last line on the page.
     AssertEQ(GetCursorPosition().y(), size.height())
@@ -136,7 +136,7 @@ class DECSTBMTests(object):
     escio.Write(CR + LF)
 
     # Verify that line 3 scrolled up to line 2.
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), ["x", NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), ["x", empty()])
 
     # Verify the cursor is at the last line on the page.
     AssertEQ(GetCursorPosition().y(), size.height())

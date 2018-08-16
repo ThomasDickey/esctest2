@@ -1,4 +1,4 @@
-from esc import NUL, ST, S7C1T, S8C1T
+from esc import empty, ST, S7C1T, S8C1T
 import escargs
 import esccmd
 import escio
@@ -15,7 +15,7 @@ class PMTests(object):
     escio.Write("A")
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
-                                 ["A" + NUL * 2])
+                                 ["A" + empty() * 2])
 
   @vtLevel(4)
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
@@ -31,4 +31,4 @@ class PMTests(object):
     escio.use8BitControls = False
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
-                                 ["A" + NUL * 2])
+                                 ["A" + empty() * 2])

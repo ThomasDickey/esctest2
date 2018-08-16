@@ -1,4 +1,4 @@
-from esc import NUL, S7C1T, S8C1T
+from esc import empty, S7C1T, S8C1T
 import escargs
 import esccmd
 import escio
@@ -31,12 +31,12 @@ class NELTests(object):
     # Move down, ensure no scroll yet.
     esccmd.NEL()
     AssertEQ(GetCursorPosition(), Point(1, height))
-    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), [NUL, "a", "b"])
+    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), [empty(), "a", "b"])
 
     # Move down, ensure scroll.
     esccmd.NEL()
     AssertEQ(GetCursorPosition(), Point(1, height))
-    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), ["a", "b", NUL])
+    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), ["a", "b", empty()])
 
   @vtLevel(4)
   def test_NEL_ScrollsInTopBottomRegionStartingAbove(self):
@@ -50,7 +50,7 @@ class NELTests(object):
     esccmd.NEL()  # To 5
     esccmd.NEL()  # Stay at 5 and scroll x up one line
     AssertEQ(GetCursorPosition(), Point(1, 5))
-    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", NUL])
+    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", empty()])
 
   @vtLevel(4)
   def test_NEL_ScrollsInTopBottomRegionStartingWithin(self):
@@ -63,7 +63,7 @@ class NELTests(object):
     esccmd.NEL()  # To 5
     esccmd.NEL()  # Stay at 5 and scroll x up one line
     AssertEQ(GetCursorPosition(), Point(1, 5))
-    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", NUL])
+    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", empty()])
 
   @vtLevel(4)
   def test_NEL_MovesDoesNotScrollOutsideLeftRight(self):
