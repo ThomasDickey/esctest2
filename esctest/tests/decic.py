@@ -1,4 +1,4 @@
-from esc import NUL, CR, LF, blank
+from esc import CR, LF, empty, blank
 import esccmd
 import escio
 from escutil import AssertEQ, GetCursorPosition, GetScreenSize, AssertScreenCharsInRectEqual, knownBug, vtLevel
@@ -60,10 +60,10 @@ class DECICTests(object):
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 9, 4),
-                                 ["abcdefg" + NUL * 2,
+                                 ["abcdefg" + empty() * 2,
                                   "A" + blank() * 2 + "BCDEFG",
                                   "z" + blank() * 2 + "yxwvut",
-                                  "ZYXWVUT" + NUL * 2])
+                                  "ZYXWVUT" + empty() * 2])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented", noop=True)
@@ -107,7 +107,7 @@ class DECICTests(object):
                                  ["a" + blank() + "bcdef",
                                   "A" + blank() + "BCDEF"])
     # Ensure there is no wrap-around.
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [NUL, NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [empty(), empty()])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")

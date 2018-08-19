@@ -1,4 +1,4 @@
-from esc import NUL
+from esc import empty
 import esccmd
 import escio
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, AssertTrue, GetCursorPosition, GetScreenSize, knownBug, vtLevel
@@ -70,7 +70,7 @@ class DECSCLTests(object):
     esccmd.CUP(Point(1, 1))
     escio.Write("1")
     esccmd.DECSET(esccmd.DECCOLM)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [empty()])
 
     # Make sure DECSLRM succeeds.
     esccmd.DECSET(esccmd.DECLRMM)
@@ -116,7 +116,7 @@ class DECSCLTests(object):
     esccmd.SM(esccmd.IRM)
 
     esccmd.DECSCL(61)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [empty()])
 
     # Ensure saved cursor position is the origin
     esccmd.DECRC()

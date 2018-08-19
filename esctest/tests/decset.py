@@ -1,4 +1,4 @@
-from esc import TAB, NUL, CR, LF, BS
+from esc import TAB, empty, CR, LF, BS
 from esctypes import Point, Rect
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, optionRequired, vtLevel
 import escargs
@@ -94,7 +94,7 @@ class DECSETTests(object):
     esccmd.DECSTBM()
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 2, 5, 3), ["Hello", "World"])
-    AssertScreenCharsInRectEqual(Rect(5, 5, 5, 5), [NUL])
+    AssertScreenCharsInRectEqual(Rect(5, 5, 5, 5), [empty()])
 
   @vtLevel(4)
   def test_DECSET_DECOM(self):
@@ -196,7 +196,7 @@ class DECSETTests(object):
     esccmd.DECSET(esccmd.DECAWM)
     escio.Write("abcdef")
 
-    AssertScreenCharsInRectEqual(Rect(5, 8, 9, 9), [NUL * 3 + "ab", "cdef" + NUL])
+    AssertScreenCharsInRectEqual(Rect(5, 8, 9, 9), [empty() * 3 + "ab", "cdef" + empty()])
 
   @vtLevel(4)
   def test_DECSET_DECAWM_OffRespectsLeftRightMargin(self):
@@ -209,7 +209,7 @@ class DECSETTests(object):
     escio.Write("abcdef")
 
     AssertEQ(GetCursorPosition().x(), 9)
-    AssertScreenCharsInRectEqual(Rect(5, 8, 9, 9), [NUL * 5, NUL * 3 + "af"])
+    AssertScreenCharsInRectEqual(Rect(5, 8, 9, 9), [empty() * 5, empty() * 3 + "af"])
 
   def test_DECSET_Allow80To132(self):
     """DECCOLM only has an effect if Allow80To132 is on."""
@@ -391,7 +391,7 @@ class DECSETTests(object):
     escio.Write("def" + CR +LF + "def")
 
     # Make sure abc is gone
-    AssertScreenCharsInRectEqual(Rect(1, 1, 3, 3), [NUL * 3, "def", "def"])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 3, 3), [empty() * 3, "def", "def"])
 
     # Switch to main. Cursor should not move.
     before = GetCursorPosition()
@@ -405,7 +405,7 @@ class DECSETTests(object):
       AssertEQ(before.y(), after.y())
 
     # def should be gone, abc should be back.
-    AssertScreenCharsInRectEqual(Rect(1, 1, 3, 3), ["abc", "abc", NUL * 3])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 3, 3), ["abc", "abc", empty() * 3])
 
     # Switch to alt
     before = GetCursorPosition()
@@ -417,9 +417,9 @@ class DECSETTests(object):
       AssertEQ(before.y(), after.y())
 
     if altGetsClearedBeforeToMain:
-      AssertScreenCharsInRectEqual(Rect(1, 1, 3, 3), [NUL * 3, NUL * 3, NUL * 3])
+      AssertScreenCharsInRectEqual(Rect(1, 1, 3, 3), [empty() * 3, empty() * 3, empty() * 3])
     else:
-      AssertScreenCharsInRectEqual(Rect(1, 1, 3, 3), [NUL * 3, "def", "def"])
+      AssertScreenCharsInRectEqual(Rect(1, 1, 3, 3), [empty() * 3, "def", "def"])
 
   @knownBug(terminal="iTerm2", reason="DECSET 1047 (OPT_ALTBUF) not implemented.")
   def test_DECSET_OPT_ALTBUF(self):
@@ -452,7 +452,7 @@ class DECSETTests(object):
     escio.Write("abcdefgh")
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 4, 3), ["abcd", NUL + "efg", NUL + "h" + NUL * 2])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 4, 3), ["abcd", empty() + "efg", empty() + "h" + empty() * 2])
 
     # Turn off margins.
     esccmd.CUP(Point(1, 1))
@@ -512,7 +512,7 @@ class DECSETTests(object):
     esccmd.CUP(Point(1, 1))
     escio.Write("3")
     esccmd.DECSET(esccmd.DECCOLM)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [empty()])
 
     # 4: Reset DECNCSM, Reset column mode.
     esccmd.DECSET(esccmd.DECCOLM)
@@ -520,7 +520,7 @@ class DECSETTests(object):
     esccmd.CUP(Point(1, 1))
     escio.Write("4")
     esccmd.DECRESET(esccmd.DECCOLM)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [empty()])
 
   @knownBug(terminal="iTerm2", reason="Save/restore cursor not implemented")
   def test_DECSET_SaveRestoreCursor(self):

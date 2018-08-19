@@ -1,4 +1,4 @@
-from esc import NUL, blank
+from esc import empty, blank
 import esccmd
 import escio
 from escutil import AssertEQ, GetCursorPosition, GetScreenSize, AssertScreenCharsInRectEqual, vtLevel
@@ -67,7 +67,7 @@ class ICHTests(object):
     AssertScreenCharsInRectEqual(Rect(startX, 1, width, 1),
                                  ["a" + blank() + "bcdef"])
     # Ensure there is no wrap-around.
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [empty()])
 
   @vtLevel(4)
   def test_ICH_ScrollEntirelyOffRightEdge(self):
@@ -83,7 +83,7 @@ class ICHTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, width, 1),
                                  [expectedLine])
     # Ensure there is no wrap-around.
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [empty()])
 
   @vtLevel(4)
   def test_ICH_ScrollOffRightMarginInScrollRegion(self):

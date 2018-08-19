@@ -14,7 +14,7 @@ Only that portion of the display between the top, bottom, left, and right
 margins is affected.  DECDC is ignored if the active position is outside the
 Scroll Area.
 """
-from esc import NUL, CR, LF
+from esc import empty, CR, LF
 import esccmd
 import escio
 from escutil import AssertEQ, GetCursorPosition, GetScreenSize, AssertScreenCharsInRectEqual, knownBug, vtLevel
@@ -33,8 +33,8 @@ class DECDCTests(object):
     esccmd.DECDC()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 7, 2),
-                                 ["acdefg" + NUL,
-                                  "ACDEFG" + NUL])
+                                 ["acdefg" + empty(),
+                                  "ACDEFG" + empty()])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -49,9 +49,9 @@ class DECDCTests(object):
     esccmd.DECDC(2)
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 7, 3),
-                                 ["adefg" + NUL * 2,
-                                  "ADEFG" + NUL * 2,
-                                  "zwvut" + NUL * 2])
+                                 ["adefg" + empty() * 2,
+                                  "ADEFG" + empty() * 2,
+                                  "zwvut" + empty() * 2])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -76,8 +76,8 @@ class DECDCTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 7, 4),
                                  ["abcdefg",
-                                  "ADEFG" + NUL * 2,
-                                  "zwvut" + NUL * 2,
+                                  "ADEFG" + empty() * 2,
+                                  "zwvut" + empty() * 2,
                                   "ZYXWVUT"])
 
   @vtLevel(4)
@@ -123,10 +123,10 @@ class DECDCTests(object):
     esccmd.DECDC(width + 10)
 
     AssertScreenCharsInRectEqual(Rect(startX, 1, width, 2),
-                                 ["a" + NUL * 6,
-                                  "A" + NUL * 6])
+                                 ["a" + empty() * 6,
+                                  "A" + empty() * 6])
     # Ensure there is no wrap-around.
-    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [NUL, NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [empty(), empty()])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
@@ -151,8 +151,8 @@ class DECDCTests(object):
     # Ensure the 'e' gets dropped.
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 7, 2),
-                                 ["abde" + NUL + "fg",
-                                  "ABDE" + NUL + "FG"])
+                                 ["abde" + empty() + "fg",
+                                  "ABDE" + empty() + "FG"])
 
 
   @vtLevel(4)
@@ -177,7 +177,7 @@ class DECDCTests(object):
 
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 7, 2),
-                                 ["ab" + NUL * 3 + "fg",
-                                  "AB" + NUL * 3 + "FG"])
+                                 ["ab" + empty() * 3 + "fg",
+                                  "AB" + empty() * 3 + "FG"])
 
 

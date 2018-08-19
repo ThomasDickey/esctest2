@@ -1,4 +1,4 @@
-from esc import NUL
+from esc import empty
 import esccmd
 import escio
 from esctypes import Point, Rect
@@ -48,7 +48,7 @@ class ILTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 4),
                                  ["abcde",
                                   "fghij",
-                                  NUL * 5,
+                                  empty() * 5,
                                   "klmno"])
 
   @vtLevel(4)
@@ -59,8 +59,8 @@ class ILTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5),
                                  ["abcde",
                                   "fghij",
-                                  NUL * 5,
-                                  NUL * 5,
+                                  empty() * 5,
+                                  empty() * 5,
                                   "klmno"])
 
   @vtLevel(4)
@@ -77,7 +77,7 @@ class ILTests(object):
     for i in xrange(height):
       y = i + 1
       if y == 2:
-        AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [NUL * 4])
+        AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [empty() * 4])
       else:
         AssertScreenCharsInRectEqual(Rect(1, y, 4, y), ["%04d" % expected])
         expected += 1
@@ -95,7 +95,7 @@ class ILTests(object):
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5),
                                  ["abcde",
-                                  "f" + NUL * 3 + "j",
+                                  "f" + empty() * 3 + "j",
                                   "kGHIo",
                                   "pLMNt",
                                   "uvwxy"])
@@ -111,9 +111,9 @@ class ILTests(object):
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5),
                                  ["abcde",
-                                  "f" + NUL * 3 + "j",
-                                  "k" + NUL * 3 + "o",
-                                  "p" + NUL * 3 + "t",
+                                  "f" + empty() * 3 + "j",
+                                  "k" + empty() * 3 + "o",
+                                  "p" + empty() * 3 + "t",
                                   "uvwxy"])
 
   @vtLevel(4)

@@ -1,4 +1,4 @@
-from esc import NUL, blank
+from esc import empty, blank
 import esccmd
 import escio
 from esctypes import Point, Rect
@@ -18,7 +18,7 @@ class ELTests(object):
     self.prepare()
     esccmd.EL()
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 ["abcd" + 6 * NUL])
+                                 ["abcd" + 6 * empty()])
 
   @vtLevel(4)
   def test_EL_0(self):
@@ -26,7 +26,7 @@ class ELTests(object):
     self.prepare()
     esccmd.EL(0)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 ["abcd" + 6 * NUL])
+                                 ["abcd" + 6 * empty()])
 
   @vtLevel(4)
   def test_EL_1(self):
@@ -42,7 +42,7 @@ class ELTests(object):
     self.prepare()
     esccmd.EL(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [10 * NUL])
+                                 [10 * empty()])
 
   @vtLevel(4)
   def test_EL_IgnoresScrollRegion(self):
@@ -54,7 +54,7 @@ class ELTests(object):
     esccmd.EL(2)
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
-                                 [10 * NUL])
+                                 [10 * empty()])
 
   @vtLevel(4)
   def test_EL_doesNotRespectDECProtection(self):
@@ -67,7 +67,7 @@ class ELTests(object):
     esccmd.CUP(Point(1, 1))
     esccmd.EL(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
-                                 [NUL * 3])
+                                 [empty() * 3])
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2",

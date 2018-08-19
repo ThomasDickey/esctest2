@@ -387,8 +387,6 @@ def DECRC():
 def DECRQCRA(Pid, Pp=None, rect=None):
   """Compute the checksum (16-bit sum of ordinals) in a rectangle."""
   AssertVTLevel(4, "DECRQCRA")
-  if escargs.args.expected_terminal == "xterm":
-    Pid, Pp = Pp, Pid
 
   params = [Pid]
 

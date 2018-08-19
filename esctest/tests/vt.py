@@ -1,4 +1,4 @@
-from esc import VT, NUL
+from esc import VT, empty
 import esccmd
 import escio
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, vtLevel
@@ -32,12 +32,12 @@ class VTTests(object):
     # Move down, ensure no scroll yet.
     escio.Write(VT)
     AssertEQ(GetCursorPosition().y(), height)
-    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), [NUL, "a", "b"])
+    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), [empty(), "a", "b"])
 
     # Move down, ensure scroll.
     escio.Write(VT)
     AssertEQ(GetCursorPosition().y(), height)
-    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), ["a", "b", NUL])
+    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), ["a", "b", empty()])
 
   @vtLevel(4)
   def test_VT_ScrollsInTopBottomRegionStartingAbove(self):
@@ -51,7 +51,7 @@ class VTTests(object):
     escio.Write(VT)
     escio.Write(VT)
     AssertEQ(GetCursorPosition(), Point(2, 5))
-    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", NUL])
+    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", empty()])
 
   @vtLevel(4)
   def test_VT_ScrollsInTopBottomRegionStartingWithin(self):
@@ -64,7 +64,7 @@ class VTTests(object):
     escio.Write(VT)
     escio.Write(VT)
     AssertEQ(GetCursorPosition(), Point(2, 5))
-    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", NUL])
+    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", empty()])
 
   @vtLevel(4)
   def test_VT_MovesDoesNotScrollOutsideLeftRight(self):

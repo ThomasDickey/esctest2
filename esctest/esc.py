@@ -18,6 +18,19 @@ ST = ESC + "\\"
 # VT x00 level. vtLevel may be 1, 2, 3, 4, or 5.
 vtLevel = 1
 
+# xterm distinguishes "blanks" (cells where a space was written) from empty
+# space (after an erase) to use that in selection.  DEC's documentation does
+# not have anything analogous.  These scripts use DECRQCRA to guess what a
+# given cell contains, and make the assumption that a NUL corresponds to the
+# latter.  However, xterm patch #334 changes DECRQCRA for better consistency
+# with the documentation, and computes empty and blank cells as if both hold
+# a space.
+def empty():
+  if escargs.args.expected_terminal == "xterm":
+    return ' '
+  else:
+    return NUL
+
 def blank():
   if escargs.args.expected_terminal == "xterm":
     return ' '

@@ -23,6 +23,7 @@ import esc
 import esccmd
 import escargs
 import escio
+from esc import empty
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, Rect, knownBug, vtLevel
 from esctypes import Point
 
@@ -187,4 +188,4 @@ class SaveRestoreCursorTests(object):
     escio.Write("a")
     esccmd.CUP(Point(1, 1))
     escio.Write("b")
-    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), ["b" + esc.NUL])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), ["b" + empty()])

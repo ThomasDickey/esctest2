@@ -1,4 +1,4 @@
-from esc import LF, NUL
+from esc import LF, empty
 import esccmd
 import escio
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, vtLevel
@@ -32,12 +32,12 @@ class LFTests(object):
     # Move down, ensure no scroll yet.
     escio.Write(LF)
     AssertEQ(GetCursorPosition().y(), height)
-    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), [NUL, "a", "b"])
+    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), [empty(), "a", "b"])
 
     # Move down, ensure scroll.
     escio.Write(LF)
     AssertEQ(GetCursorPosition().y(), height)
-    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), ["a", "b", NUL])
+    AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), ["a", "b", empty()])
 
   @vtLevel(4)
   def test_LF_ScrollsInTopBottomRegionStartingAbove(self):
@@ -51,7 +51,7 @@ class LFTests(object):
     escio.Write(LF)
     escio.Write(LF)
     AssertEQ(GetCursorPosition(), Point(2, 5))
-    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", NUL])
+    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", empty()])
 
   @vtLevel(4)
   def test_LF_ScrollsInTopBottomRegionStartingWithin(self):
@@ -64,7 +64,7 @@ class LFTests(object):
     escio.Write(LF)
     escio.Write(LF)
     AssertEQ(GetCursorPosition(), Point(2, 5))
-    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", NUL])
+    AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", empty()])
 
   @vtLevel(4)
   def test_LF_MovesDoesNotScrollOutsideLeftRight(self):

@@ -1,4 +1,4 @@
-from esc import NUL
+from esc import empty
 import esccmd
 import escio
 from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, vtLevel
@@ -63,7 +63,7 @@ class VPRTests(object):
     esccmd.DECSTBM()
 
     # See what happened
-    AssertScreenCharsInRectEqual(Rect(6, 7, 7, 9), ['X' + NUL,
-                                                    NUL * 2,
-                                                    NUL + 'Y'])
+    AssertScreenCharsInRectEqual(Rect(6, 7, 7, 9), ['X' + empty(),
+                                                    empty() * 2,
+                                                    empty() + 'Y'])
 
