@@ -40,6 +40,10 @@ parser.add_argument("--max-vt-level",
 parser.add_argument("--logfile",
                     help="Log file to write output to",
                     default="/tmp/esctest.log")
+parser.add_argument("--xterm-checksum",
+                    help="Specify version-specific xterm checksum calculation.",
+                    type=int,
+                    default=0)
 parser.add_argument("--v",
                     help="Verbosity level. 1=errors, 2=errors and info, 3=debug, errors, and info",
                     default=2,

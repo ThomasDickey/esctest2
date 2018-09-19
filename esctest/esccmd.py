@@ -1,6 +1,5 @@
 from esc import ESC
 from escutil import AssertVTLevel
-import escargs
 import escio
 
 # DECSET/DECRESET

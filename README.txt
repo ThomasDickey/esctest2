@@ -145,6 +145,24 @@ The logs are written to "file", which defaults to "/tmp/esctest.log".
 --timeout=timeout
 The number of seconds to wait for a response from the terminal. Defaults to 1.
 
+--xterm-checksum[=patchnumber]
+  The patch numbers are part of $XTERM_VERSION, allowing them to be scripted.
+  Xterm #279 implemented DECRQCRA; DEC's documentation omits details.
+  Xterm #334 modified the checksum calculation to treat all blanks equally.
+  Xterm #336 changed the default behavior for DECRQCRA to match DEC's actual
+  calculation, as well as providing a resource setting checksumExtension which
+  makes xterm match the earlier versions.  These options adjust the calculation
+  in esctest to correspond with those versions.  If neither is set, and the
+  expected-term is "xterm", esctest should expect DEC's calculation.  By
+  coincidence, DEC's terminals treat blanks similarly to xterm #279, but there
+  are additional complications.
+  To make xterm match the calculation for xterm #334,
+  set the following resource:
+    xterm*checksumExtension: 23
+  To make xterm match the calculation for xterm #279,
+  set the following resource:
+    xterm*checksumExtension: 31
+
 --v=verbosity
 Verbosity level for logging. The following levels are defined:
 * 1: Errors only.

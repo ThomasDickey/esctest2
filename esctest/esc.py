@@ -20,13 +20,18 @@ vtLevel = 1
 
 # xterm distinguishes "blanks" (cells where a space was written) from empty
 # space (after an erase) to use that in selection.  DEC's documentation does
-# not have anything analogous.  These scripts use DECRQCRA to guess what a
-# given cell contains, and make the assumption that a NUL corresponds to the
-# latter.  However, xterm patch #334 changes DECRQCRA for better consistency
-# with the documentation, and computes empty and blank cells as if both hold
-# a space.
+# not have anything analogous (although screenshots demonstrate that it gives a
+# similar result).  These scripts use DECRQCRA to guess what a given cell
+# contains, and make the assumption that a NUL corresponds to the latter. 
+#
+# The checksum computation in xterm patch #279 kept the distinction, returning
+# zero for cells which were empty.  xterm patch #334 changed DECRQCRA for
+# better consistency with the existing documentation, and computed empty
+# and blank cells as if both hold a space.  This function assumes that the
+# terminal has been set up to use that convention if the --xterm-checksum=334
+# option was given.
 def empty():
-  if escargs.args.expected_terminal == "xterm":
+  if escargs.args.xterm_checksum >= 334:
     return ' '
   else:
     return NUL

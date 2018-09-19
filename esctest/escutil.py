@@ -239,6 +239,14 @@ def AssertScreenCharsInRectEqual(rect, expected_lines):
                                              top=point.y(),
                                              right=point.x(),
                                              bottom=point.y()))
+    # esctest is only asking for one cell at a time, which simplifies things.
+    if escargs.args.expected_terminal == "xterm":
+      if escargs.args.xterm_checksum < 279:
+        actual_checksum = 0x10000 - actual_checksum
+        # DEC terminals trim trailing blanks
+        if expected_checksum == 0 and actual_checksum == 32:
+          actual_checksum = 0
+
     if len(actual) <= y:
       actual.append("")
     if actual_checksum == 0:

@@ -1,4 +1,4 @@
-from esc import ESC, ST
+from esc import ESC, BEL, ST
 import escargs
 from esclog import LogDebug
 import esctypes
@@ -59,8 +59,6 @@ def DCS():
 def WriteOSC(params, bel=False, requestsReport=False):
   str_params = map(str, params)
   joined_params = ";".join(str_params)
-  ST = ESC + "\\"
-  BEL = chr(7)
   if bel:
     terminator = BEL
   else:
