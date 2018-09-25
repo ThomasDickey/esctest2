@@ -3,7 +3,7 @@ Automatic unit tests for terminal emulation
 George Nachman
 
 esctest is a suite of unit tests that test a terminal emulator's similarity to a
-theoretical ideal. That ideal is defined as "xterm, but without bugs in George's 
+theoretical ideal. That ideal is defined as "xterm, but without bugs in George's
 opinion."
 
 The tested set of control sequences are documented somewhat tersely at this URL:
@@ -19,7 +19,7 @@ DEC's standard for video terminals is here:
 http://www.bitsavers.org/pdf/dec/standards/EL-SM070-00_DEC_STD_070_Video_Systems_Reference_Manual_Dec91.pdf
 
 Some of the later programmer reference manuals do not agree with the standard in
-what appears to be an editorial blunder, as noted in the xterm control sequences 
+what appears to be an editorial blunder, as noted in the xterm control sequences
 document. In cases where programmer manuals differ from with the video standards
 document, the latter is used.
 
@@ -146,22 +146,20 @@ The logs are written to "file", which defaults to "/tmp/esctest.log".
 The number of seconds to wait for a response from the terminal. Defaults to 1.
 
 --xterm-checksum[=patchnumber]
-  The patch numbers are part of $XTERM_VERSION, allowing them to be scripted.
-  Xterm #279 implemented DECRQCRA; DEC's documentation omits details.
-  Xterm #334 modified the checksum calculation to treat all blanks equally.
-  Xterm #336 changed the default behavior for DECRQCRA to match DEC's actual
-  calculation, as well as providing a resource setting checksumExtension which
-  makes xterm match the earlier versions.  These options adjust the calculation
-  in esctest to correspond with those versions.  If neither is set, and the
-  expected-term is "xterm", esctest should expect DEC's calculation.  By
-  coincidence, DEC's terminals treat blanks similarly to xterm #279, but there
-  are additional complications.
-  To make xterm match the calculation for xterm #334,
-  set the following resource:
-    xterm*checksumExtension: 23
-  To make xterm match the calculation for xterm #279,
-  set the following resource:
-    xterm*checksumExtension: 31
+The patch numbers are part of $XTERM_VERSION, allowing them to be scripted.
+ * Xterm #279 implemented DECRQCRA; DEC's documentation omits details.
+ * Xterm #334 modified the checksum calculation to treat all blanks equally.
+ * Xterm #336 changed the default behavior for DECRQCRA to exactly match the DEC
+   VT520's actual calculation. It also provides a resource setting to make xterm
+   match the earlier versions' behavior (checksumExtension).
+This option adjusts the calculation in esctest to correspond with those versions.
+If no patchnumber is set and the expected-term is "xterm", esctest expects DEC's
+calculation algorithm. By coincidence, DEC's terminals treat blanks in a similar
+way to xterm #279, but there are additional complications: to force xterm to use
+the calculation from #334, set the following resource:
+  xterm*checksumExtension: 23
+To force xterm to use the calculation from #279, set the following resource:
+  xterm*checksumExtension: 31
 
 --v=verbosity
 Verbosity level for logging. The following levels are defined:
