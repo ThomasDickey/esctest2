@@ -9,8 +9,8 @@ opinion."
 The tested set of control sequences are documented somewhat tersely at this URL:
 http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
 
-In its references section, the xterm control sequences summary lists several
-more extensive documents, with which developers are expected to be familiar.
+The xterm control sequences summary document lists other documents that go in to
+more detail. Developers should familiarize themselves with them.
 
 Among those are manuals for VT100 through VT420 and VT510, for example:
 http://www.vt100.net/docs/vt510-rm/
