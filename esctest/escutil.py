@@ -189,6 +189,9 @@ def GetDisplaySize():
   params = escio.ReadCSI("t")
   return Size(params[2], params[1])
 
+def GetIndexedColors():
+  return 16
+
 def AssertVTLevel(minimum, reason):
   """Checks that the vtLevel is at least minimum.
 

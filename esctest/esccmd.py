@@ -1,5 +1,6 @@
 from esc import ESC
 from escutil import AssertVTLevel
+from escutil import GetIndexedColors
 import escio
 
 # DECSET/DECRESET
@@ -171,6 +172,27 @@ def ChangeDynamicColor(*args):
   escio.WriteOSC(params, requestsReport=isQuery)
 
 def ChangeSpecialColor(*args):
+  if len(args) > 0 and int(args[0]) >= 10:
+    params = []
+  else:
+    params = [4]
+  isQuery = True
+  try:
+    params.index("?")
+  except:
+    isQuery = False
+  params.extend(args)
+  for p in range(1, len(params)):
+    isNumber = True
+    try:
+      q = int(params[p])
+      if q < 9:
+	params[p] = str(q + GetIndexedColors())
+    except:
+      isNumber = False
+  escio.WriteOSC(params, requestsReport=isQuery)
+
+def ChangeSpecialColor2(*args):
   if len(args) > 0 and int(args[0]) >= 10:
     params = []
   else:

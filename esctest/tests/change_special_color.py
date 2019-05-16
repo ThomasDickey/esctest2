@@ -1,7 +1,8 @@
 import esccmd
 import escio
 from esclog import LogInfo
-from escutil import AssertTrue, knownBug
+from escutil import AssertEQ, AssertTrue, knownBug
+from escutil import GetIndexedColors
 
 class ChangeSpecialColorTests(object):
   """Color reporting is documented for special colors in two ways: using mode
@@ -12,30 +13,63 @@ class ChangeSpecialColorTests(object):
 
   @knownBug(terminal="iTerm2", reason="Color reporting not implemented.", shouldTry=False)
   def test_ChangeSpecialColor_Multiple(self):
-    """OSC 5 ; c1 ; spec1 ; s2 ; spec2 ; ST"""
+    """OSC 4 ; c1 ; spec1 ; s2 ; spec2 ; ST"""
+    offset = GetIndexedColors()
     esccmd.ChangeSpecialColor("0",
                               "rgb:f0f0/f0f0/f0f0",
                               "1",
                               "rgb:f0f0/0000/0000")
     esccmd.ChangeSpecialColor("0", "?", "1", "?")
-    AssertTrue(escio.ReadOSC("5") in [";0;rgb:f0f0/f0f0/f0f0"])
-    AssertTrue(escio.ReadOSC("5") in [";1;rgb:f0f0/0000/0000"])
+    AssertEQ(escio.ReadOSC("4"), ";" + str(offset) + ";rgb:f0f0/f0f0/f0f0")
+    AssertEQ(escio.ReadOSC("4"), ";" + str(offset + 1) + ";rgb:f0f0/0000/0000")
 
     esccmd.ChangeSpecialColor("0",
                               "rgb:8080/8080/8080",
                               "1",
                               "rgb:8080/0000/0000")
     esccmd.ChangeSpecialColor("0", "?", "1", "?")
+    AssertEQ(escio.ReadOSC("4"), ";" + str(offset) + ";rgb:8080/8080/8080")
+    s = escio.ReadOSC("4")
+    LogInfo("Read: " + s)
+    AssertEQ(s, ";" + str(offset + 1) + ";rgb:8080/0000/0000")
+
+  @knownBug(terminal="iTerm2", reason="Color reporting not implemented.", shouldTry=False)
+  def test_ChangeSpecialColor_Multiple2(self):
+    """OSC 5 ; c1 ; spec1 ; s2 ; spec2 ; ST"""
+    esccmd.ChangeSpecialColor2("0",
+                              "rgb:f0f0/f0f0/f0f0",
+                              "1",
+                              "rgb:f0f0/0000/0000")
+    esccmd.ChangeSpecialColor2("0", "?", "1", "?")
+    AssertTrue(escio.ReadOSC("5") in [";0;rgb:f0f0/f0f0/f0f0"])
+    AssertTrue(escio.ReadOSC("5") in [";1;rgb:f0f0/0000/0000"])
+
+    esccmd.ChangeSpecialColor2("0",
+                              "rgb:8080/8080/8080",
+                              "1",
+                              "rgb:8080/0000/0000")
+    esccmd.ChangeSpecialColor2("0", "?", "1", "?")
     AssertTrue(escio.ReadOSC("5") in [";0;rgb:8080/8080/8080"])
     s = escio.ReadOSC("5")
     LogInfo("Read: " + s)
     AssertTrue(s in [";1;rgb:8080/0000/0000"])
 
   def doChangeSpecialColorTest(self, c, value, rgb):
+    offset = GetIndexedColors()
     esccmd.ChangeSpecialColor(c, value)
     esccmd.ChangeSpecialColor(c, "?")
+    s = escio.ReadOSC("4")
+    AssertEQ(s, ";" + str(int(c) + offset) + ";rgb:" + rgb)
+
+  def doChangeSpecialColorTest2(self, c, value, rgb):
+    esccmd.ChangeSpecialColor2(c, value)
+    esccmd.ChangeSpecialColor2(c, "?")
     s = escio.ReadOSC("5")
     AssertTrue(s in [";" + str(int(c)) + ";rgb:" + rgb])
+
+  def doChangeSpecialColorTests(self, *args):
+    self.doChangeSpecialColorTest(*args)
+    self.doChangeSpecialColorTest2(*args)
 
   @knownBug(terminal="iTerm2", reason="Color reporting not implemented.", shouldTry=False)
   def test_ChangeSpecialColor_RGB(self):
