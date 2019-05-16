@@ -314,7 +314,7 @@ class DECSETTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 5, 1, 5), ["2"])
 
   def test_DECSET_ReverseWraparound_BS(self):
-    """xerm supports DECSET 45 to toggle 'reverse wraparound'. Both DECAWM and
+    """xterm supports DECSET 45 to toggle 'reverse wraparound'. Both DECAWM and
     45 must be set."""
     # iTerm2 turns reverse wraparound on by default, while xterm does not.
     esccmd.DECSET(esccmd.ReverseWraparound)

@@ -20,7 +20,7 @@ http://www.bitsavers.org/pdf/dec/standards/EL-SM070-00_DEC_STD_070_Video_Systems
 
 Some of the later programmer reference manuals do not agree with the standard in
 what appears to be an editorial blunder, as noted in the xterm control sequences
-document. In cases where programmer manuals differ from with the video standards
+document. In cases where programmer manuals differ from the video standards
 document, the latter is used.
 
 All tests are automatic; no user interaction is required. As a consequence, some
