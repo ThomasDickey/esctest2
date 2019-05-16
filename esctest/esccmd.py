@@ -187,7 +187,7 @@ def ChangeSpecialColor(*args):
     try:
       q = int(params[p])
       if q < 9:
-	params[p] = str(q + GetIndexedColors())
+        params[p] = str(q + GetIndexedColors())
     except:
       isNumber = False
   escio.WriteOSC(params, requestsReport=isQuery)

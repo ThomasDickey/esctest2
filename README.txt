@@ -31,16 +31,12 @@ cursor position; these form the bulk of the tests.
 
 Notes on xterm
 --------------
-These tests are sensitive to whether xterm was compiled with Unicode support and
-if it supports more than 16 colors. As of xterm patch 332, there are two sets of
-configuration options:
+These tests are sensitive to whether xterm was compiled with Unicode support.
+As of xterm patch 345, there are two sets of configuration options:
 
 Use these options when testing without Unicode:
 
 	--enable-dec-locator
-	--disable-256-color
-	--disable-direct-color
-	--disable-88-color
 	--disable-luit
 	--disable-wide-chars
 	--disable-mini-luit
@@ -48,9 +44,16 @@ Use these options when testing without Unicode:
 Use these options when testing with Unicode:
 
 	--enable-dec-locator
+
+In either case, enabling/disabling the direct-, 256-, or 88-color options
+should work, e.g., any combination of these:
+
 	--disable-256-color
-	--disable-direct-color
 	--disable-88-color
+	--disable-direct-color
+	--enable-256-color
+	--enable-88-color
+	--enable-direct-color
 
 Most other configuration settings are not tested and may or may not cause
 problems.

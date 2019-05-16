@@ -58,7 +58,7 @@ def reset():
   esccmd.ED(2)
 
   # Pop the title stack just in case something got left on there
-  for i in xrange(5):
+  for _ in xrange(5):
     esccmd.XTERM_WINOPS(esccmd.WINOP_POP_TITLE,
                         esccmd.WINOP_PUSH_TITLE_ICON_AND_WINDOW)
 

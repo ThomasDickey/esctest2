@@ -50,7 +50,7 @@ class DLTests(object):
     height = GetScreenSize().height()
     y = 1
     expected_lines = []
-    for i in xrange(height):
+    for _ in xrange(height):
       if y != 2:
         expected_lines.append("%04d" % y)
       y += 1
@@ -72,7 +72,7 @@ class DLTests(object):
     height = GetScreenSize().height()
     y = 1
     expected_lines = []
-    for i in xrange(height):
+    for _ in xrange(height):
       if y < 2 or y > 3:
         expected_lines.append("%04d" % y)
       y += 1
@@ -96,7 +96,7 @@ class DLTests(object):
     # Build an array of 0001 followed by height-1 empty lines.
     y = 1
     expected_lines = ["0001"]
-    for i in xrange(height - 1):
+    for _ in xrange(height - 1):
       expected_lines.append(empty() * 4)
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines)

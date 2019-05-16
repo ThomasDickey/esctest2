@@ -174,7 +174,7 @@ def read(n):
   second to read any given byte."""
   s = ""
   f = sys.stdin.fileno()
-  for i in xrange(n):
+  for _ in xrange(n):
     r, w, e = select.select([f], [], [], escargs.args.timeout)
     if f not in r:
       raise esctypes.InternalError("Timeout waiting to read.")

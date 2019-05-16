@@ -114,7 +114,7 @@ class INDTests(object):
 
     # Move it down by a lot
     height = GetScreenSize().height()
-    for i in xrange(height):
+    for _ in xrange(height):
       esccmd.IND()
 
     # Ensure it stopped at the bottom of the screen

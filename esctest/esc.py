@@ -22,7 +22,7 @@ vtLevel = 1
 # space (after an erase) to use that in selection.  DEC's documentation does
 # not have anything analogous (although screenshots demonstrate that it gives a
 # similar result).  These scripts use DECRQCRA to guess what a given cell
-# contains, and make the assumption that a NUL corresponds to the latter. 
+# contains, and make the assumption that a NUL corresponds to the latter.
 #
 # The checksum computation in xterm patch #279 kept the distinction, returning
 # zero for cells which were empty.  xterm patch #334 changed DECRQCRA for

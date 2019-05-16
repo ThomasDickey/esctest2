@@ -120,7 +120,7 @@ class FFTests(object):
 
     # Move it down by a lot
     height = GetScreenSize().height()
-    for i in xrange(height):
+    for _ in xrange(height):
       escio.Write(FF)
 
     # Ensure it stopped at the bottom of the screen

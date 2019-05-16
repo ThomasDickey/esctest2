@@ -37,17 +37,17 @@ class ChangeSpecialColorTests(object):
   def test_ChangeSpecialColor_Multiple2(self):
     """OSC 5 ; c1 ; spec1 ; s2 ; spec2 ; ST"""
     esccmd.ChangeSpecialColor2("0",
-                              "rgb:f0f0/f0f0/f0f0",
-                              "1",
-                              "rgb:f0f0/0000/0000")
+                               "rgb:f0f0/f0f0/f0f0",
+                               "1",
+                               "rgb:f0f0/0000/0000")
     esccmd.ChangeSpecialColor2("0", "?", "1", "?")
     AssertTrue(escio.ReadOSC("5") in [";0;rgb:f0f0/f0f0/f0f0"])
     AssertTrue(escio.ReadOSC("5") in [";1;rgb:f0f0/0000/0000"])
 
     esccmd.ChangeSpecialColor2("0",
-                              "rgb:8080/8080/8080",
-                              "1",
-                              "rgb:8080/0000/0000")
+                               "rgb:8080/8080/8080",
+                               "1",
+                               "rgb:8080/0000/0000")
     esccmd.ChangeSpecialColor2("0", "?", "1", "?")
     AssertTrue(escio.ReadOSC("5") in [";0;rgb:8080/8080/8080"])
     s = escio.ReadOSC("5")

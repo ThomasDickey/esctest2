@@ -17,6 +17,8 @@ gFrameSizePixels = Size(0, 0)
 gScreenSizePixels = Size(0, 0)
 gCanQueryShellSize = -1
 
+gNumIndexedColors = -1
+
 KNOWN_BUG_TERMINALS = "known_bug_terminals"
 
 def Raise(e):
@@ -190,7 +192,26 @@ def GetDisplaySize():
   return Size(params[2], params[1])
 
 def GetIndexedColors():
-  return 16
+  global gNumIndexedColors
+  if gNumIndexedColors <= 0:
+    try:
+      gNumIndexedColors = 16
+      hexname = "436F"      # "Co", in hexadecimal
+      escio.WriteDCS("+q", hexname)
+      check = escio.ReadDCS()
+      myprefix = "1+r" + hexname + "="
+      trimmed = check.replace(myprefix, "")
+      if trimmed != check:
+        hexvalue = trimmed
+        strvalue = bytearray.fromhex(hexvalue).decode(encoding="Latin1")
+        gNumIndexedColors = int(strvalue)
+      if gNumIndexedColors < 8:
+        gNumIndexedColors = 8
+      if gNumIndexedColors > 256:
+        gNumIndexedColors = 256
+    except Exception, e:
+      gNumIndexedColors = 16
+  return gNumIndexedColors
 
 def AssertVTLevel(minimum, reason):
   """Checks that the vtLevel is at least minimum.
