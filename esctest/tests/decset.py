@@ -469,13 +469,14 @@ class DECSETTests(object):
     AssertEQ(GetCursorPosition().x(), 6)
 
   @vtLevel(4)
-  def test_DECSET_DECLRMM_ModeNotResetByDECSTR(self):
+  def test_DECSET_DECLRMM_ModeResetByDECSTR(self):
+    """ DEC STD 070 says DECSTR resets left/right mode."""
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSTR()
     esccmd.DECSLRM(2, 4)
     esccmd.CUP(Point(3, 3))
     escio.Write("abc")
-    AssertEQ(GetCursorPosition().x(), 3)
+    AssertEQ(GetCursorPosition().x(), 6)
 
   @vtLevel(5)
   @knownBug(terminal="iTerm2", reason="DECNCSM not implemented")
