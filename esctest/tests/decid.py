@@ -12,7 +12,7 @@ class DECIDTests(object):
     AssertTrue(len(params) > 0)
 
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
-  @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")
+  @knownBug(terminal="iTerm2", reason="DECID not implemented.")
   def test_DECID_8bit(self):
     escio.use8BitControls = True
     escio.Write(S8C1T)

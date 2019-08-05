@@ -124,7 +124,7 @@ class INDTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 6, 1, 6), ["x"])
 
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
-  @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")
+  @optionRequired(terminal="iTerm2", option=escargs.DISABLE_WIDE_CHARS)
   def test_IND_8bit(self):
     esccmd.CUP(Point(5, 3))
 

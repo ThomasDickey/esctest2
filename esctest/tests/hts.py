@@ -21,7 +21,7 @@ class HTSTests(object):
     AssertEQ(GetCursorPosition().x(), 20)
 
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
-  @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")
+  @optionRequired(terminal="iTerm2", option=escargs.DISABLE_WIDE_CHARS)
   def test_HTS_8bit(self):
     # Remove tabs
     esccmd.TBC(3)

@@ -17,8 +17,8 @@ class APCTests(object):
                                  ["A" + empty() * 2])
 
   @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
+  @optionRequired(terminal="iTerm2", option=escargs.DISABLE_WIDE_CHARS)
   def test_APC_8bit(self):
     escio.use8BitControls = True
     escio.Write(S8C1T)
