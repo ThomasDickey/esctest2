@@ -14,21 +14,18 @@ from esctypes import Point, Rect
 
 class REPTests(object):
   @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_REP_DefaultParam(self):
     escio.Write("a")
     esccmd.REP()
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1), ["aa" + empty()])
 
   @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_REP_ExplicitParam(self):
     escio.Write("a")
     esccmd.REP(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 4, 1), ["aaa" + empty()])
 
   @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_REP_RespectsLeftRightMargins(self):
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(2, 4)
@@ -42,7 +39,6 @@ class REPTests(object):
                                   empty() + "a" + empty() * 3])
 
   @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_REP_RespectsTopBottomMargins(self):
     width = GetScreenSize().width()
     esccmd.DECSTBM(2, 4)
