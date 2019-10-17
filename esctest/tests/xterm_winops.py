@@ -495,8 +495,6 @@ class XtermWinopsTests(object):
 
     self.CheckForShrinkage(original_size, GetScreenSize())
 
-  @knownBug(terminal="iTerm2",
-            reason="iTerm2 seems to report the window label instead of the icon label")
   def test_XtermWinops_ReportIconLabel(self):
     string = "test " + str(time.time())
     esccmd.ChangeIconTitle(string)
@@ -593,8 +591,6 @@ class XtermWinopsTests(object):
     AssertEQ(GetWindowTitle(), string)
     AssertEQ(GetIconTitle(), "x")
 
-  @knownBug(terminal="iTerm2",
-            reason="iTerm2 pops twice while xterm pops only once for POP_TITLE_ICON_AND_WINDOW")
   def test_XtermWinops_PushIcon_PopIcon(self):
     """Push icon title and then pop it."""
     # Generate a uniqueish string
@@ -615,8 +611,6 @@ class XtermWinopsTests(object):
     AssertEQ(GetWindowTitle(), "x")
     AssertEQ(GetIconTitle(), string)
 
-  @knownBug(terminal="iTerm2",
-            reason="POP_TITLE_WINDOW incorrectly changes the icon title.")
   def test_XtermWinops_PushWindow_PopWindow(self):
     """Push window title and then pop it."""
     # Generate a uniqueish string
@@ -637,8 +631,6 @@ class XtermWinopsTests(object):
     AssertEQ(GetIconTitle(), "x")
     AssertEQ(GetWindowTitle(), string)
 
-  @knownBug(terminal="iTerm2",
-            reason="iTerm2 pops twice while xterm pops only once for POP_TITLE_ICON_AND_WINDOW")
   def test_XtermWinops_PushIconThenWindowThenPopBoth(self):
     """Push icon, then push window, then pop both."""
     # Generate a uniqueish string
@@ -665,8 +657,6 @@ class XtermWinopsTests(object):
     AssertEQ(GetWindowTitle(), string1)
     AssertEQ(GetIconTitle(), string2)
 
-  @knownBug(terminal="iTerm2",
-            reason="iTerm2 incorrectly reports the window's title when the icon's title is requested.")
   def test_XtermWinops_PushMultiplePopMultiple_Icon(self):
     """Push two titles and pop twice."""
     # Generate a uniqueish string

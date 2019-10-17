@@ -19,7 +19,7 @@ class SOSTests(object):
 
   @vtLevel(4)
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
-  @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")
+  @knownBug(terminal="iTerm2", reason="SOS not implemented.")
   def test_SOS_8bit(self):
     escio.use8BitControls = True
     escio.Write(S8C1T)

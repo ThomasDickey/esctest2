@@ -121,7 +121,7 @@ class RITests(object):
     AssertScreenCharsInRectEqual(Rect(1, 3, 1, 3), ["x"])
 
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
-  @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")
+  @optionRequired(terminal="iTerm2", option=escargs.DISABLE_WIDE_CHARS)
   def test_RI_8bit(self):
     esccmd.CUP(Point(5, 3))
 

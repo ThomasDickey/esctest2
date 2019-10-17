@@ -19,7 +19,7 @@ class PMTests(object):
 
   @vtLevel(4)
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
-  @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")
+  @knownBug(terminal="iTerm2", reason="PM not implemented.")
   def test_PM_8bit(self):
     escio.use8BitControls = True
     escio.Write(S8C1T)

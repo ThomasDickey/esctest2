@@ -51,13 +51,7 @@ class DECRQMTests(object):
   # Modifiable ANSI modes ----------------------------------------------------
 
   @vtLevel(3)
-  @knownBug(terminal="iTerm2", reason="DECRQM not supported.")
   def test_DECRQM(self):
-    """See if DECRQM works at all. Unlike all the other tests, this one should
-    never have shouldTry=False set. That way if a terminal with a knownBug
-    begins supporting DECRQM, this will cease to fail, which is your sign to
-    remove the 'DECRQM not supported' knownBug from other tests for that
-    terminal."""
     AssertEQ(len(self.requestAnsiMode(esccmd.IRM)), 2)
 
   @vtLevel(3)
