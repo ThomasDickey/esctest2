@@ -46,8 +46,6 @@ class ECHTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, 7, 1), [blank() * 4 + "efg"])
 
   @vtLevel(4)
-  @knownBug(terminal="xterm",
-            reason="ECH respects DEC protection, which is questionable at best given the description of DECSCA 'The selective erase control functions (DECSED and DECSEL) can only erase characters defined as erasable'.")
   def test_ECH_doesNotRespectDECPRotection(self):
     """ECH should not respect DECSCA."""
     escio.Write("a")
