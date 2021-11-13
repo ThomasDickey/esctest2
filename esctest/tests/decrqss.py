@@ -13,7 +13,7 @@ class DECRQSSTests(object):
     AssertEQ(result, '1$r1"q')
 
   @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="Not implemented.")
+  @knownBug(terminal="iTerm2", reason="VT400 not implemented yet (will report a lower value).")
   def test_DECRQSS_DECSCL(self):
     esccmd.DECSCL(65, 1)
     esccmd.DECRQSS('"p')
@@ -29,7 +29,6 @@ class DECRQSSTests(object):
     AssertEQ(result, "1$r5;6r")
 
   @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECRQSS_SGR(self):
     esccmd.SGR(1)
     esccmd.DECRQSS("m")
@@ -53,3 +52,11 @@ class DECRQSSTests(object):
     esccmd.DECRQSS("s")
     result = escio.ReadDCS()
     AssertEQ(result, "1$r3;4s")
+
+  @vtLevel(4)
+  @knownBug(terminal="iTerm2", reason="Not implemented.")
+  def test_DECRQSS_DECSLPP(self):
+    esccmd.XTERM_WINOPS(27)
+    esccmd.DECRQSS("t")
+    result = escio.ReadDCS()
+    AssertEQ(result, "1$r27t")

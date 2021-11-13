@@ -12,7 +12,6 @@ class DECBITests(object):
     esccmd.DECBI()
     AssertEQ(GetCursorPosition(), Point(4, 6))
 
-  @knownBug(terminal="iTerm2", reason="Not implemented.", noop=True)
   @vtLevel(4)
   def test_DECBI_NoWrapOnLeftEdge(self):
     esccmd.CUP(Point(1, 2))

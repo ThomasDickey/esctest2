@@ -39,7 +39,7 @@ class XtermWinopsTests(object):
     """Returns a Size denoting the expected error limit for character-
     based resizing tests."""
     if escargs.args.expected_terminal == "xterm":
-      return Size(1, 1)
+      return Size(2, 2)
     else:
       return Size(0, 0)
 
@@ -86,7 +86,7 @@ class XtermWinopsTests(object):
                  abs(actual_size.height() - desired_size.height()))
     self.DebugSize("error limit  ", limit)
     self.DebugSize("actual error ", error)
-    AssertTrue(error.width() <= (limit.width()))
+    AssertTrue(error.width() <= (limit.width()), "actual size=%s, desired size=%s, error limit=%s, actual error=%s" % (str(actual_size), str(desired_size), str(limit), str(error)))
     AssertTrue(error.height() <= (limit.height()), "actual size=%s, desired size=%s, error limit=%s, actual error=%s" % (str(actual_size), str(desired_size), str(limit), str(error)))
 
   def CheckActualSizePixels(self, desired_size):
@@ -452,13 +452,14 @@ class XtermWinopsTests(object):
     esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_V)
     self.DelayAfterResize()
     actual_size = GetScreenSize()
+
     esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_EXIT)
     self.DelayAfterResize()
     if escargs.args.expected_terminal == "xterm":
       error_limit = Size(0, 5)
     else:
       error_limit = Size(0, 0)
-    self.CheckAnySize(desired_size, actual_size, Size(0, 5))
+    self.CheckAnySize(desired_size, actual_size, error_limit)
 
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_XtermWinops_Fullscreen(self):

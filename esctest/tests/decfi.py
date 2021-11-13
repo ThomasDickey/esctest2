@@ -33,7 +33,6 @@ class DECFITests(object):
     esccmd.DECFI()
     AssertEQ(GetCursorPosition(), Point(6, 6))
 
-  @knownBug(terminal="iTerm2", reason="Not implemented.", noop=True)
   @vtLevel(4)
   def test_DECFI_NoWrapOnRightEdge(self):
     size = GetScreenSize()
