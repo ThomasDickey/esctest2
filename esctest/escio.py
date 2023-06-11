@@ -17,8 +17,8 @@ def Init():
   global stdout_fd
   global stdin_fd
 
-  stdout_fd = os.fdopen(sys.stdout.fileno(), 'w', 0)
-  stdin_fd = os.fdopen(sys.stdin.fileno(), 'r', 0)
+  stdout_fd = os.fdopen(sys.stdout.fileno(), 'wb', 0)
+  stdin_fd = os.fdopen(sys.stdin.fileno(), 'rb', 0)
   tty.setraw(stdin_fd)
 
 def Shutdown():
@@ -55,7 +55,7 @@ def DCS():
   return ESC + "P"
 
 def WriteOSC(params, bel=False, requestsReport=False):
-  str_params = map(str, params)
+  str_params = list(map(str, params))
   joined_params = ";".join(str_params)
   if bel:
     terminator = BEL
@@ -75,7 +75,7 @@ def WriteCSI(prefix="", params=[], intermediate="", final="", requestsReport=Fal
     if p is None:
       return ""
     return str(p)
-  str_params = map(StringifyCSIParam, params)
+  str_params = list(map(StringifyCSIParam, params))
 
   # Remove trailing empty args
   while len(str_params) > 0 and str_params[-1] == "":

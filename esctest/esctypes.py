@@ -1,7 +1,7 @@
 class ChecksumException(Exception):
   def __init__(self, points, actual, expected):
     message = "Checksum failed at the following locations:\n%s\nActual:\n%s\n\nExpected:\n%s" % (
-        "\n".join(map(str, points)),
+        "\n".join(list(map(str, points))),
         "\n".join(actual),
         "\n".join(expected))
     super(ChecksumException, self).__init__(message)

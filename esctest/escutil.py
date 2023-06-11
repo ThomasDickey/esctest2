@@ -355,7 +355,7 @@ def optionRejects(terminal, option):
             raise
           tb = traceback.format_exc()
           lines = tb.split("\n")
-          lines = map(lambda x: "EXPECTED FAILURE (MISSING OPTION): " + x, lines)
+          lines = list(map(lambda x: "EXPECTED FAILURE (MISSING OPTION): " + x, lines))
           raise esctypes.KnownBug(reason + "\n\n" + "\n".join(lines))
 
         # Got here because test passed. If the option is set, that's
@@ -385,7 +385,7 @@ def optionRequired(terminal, option, allowPassWithoutOption=False):
             raise
           tb = traceback.format_exc()
           lines = tb.split("\n")
-          lines = map(lambda x: "EXPECTED FAILURE (MISSING OPTION): " + x, lines)
+          lines = list(map(lambda x: "EXPECTED FAILURE (MISSING OPTION): " + x, lines))
           raise esctypes.KnownBug(reason + "\n\n" + "\n".join(lines))
 
         # Got here because test passed. If the option isn't set, that's
@@ -414,7 +414,7 @@ def knownBug(terminal, reason, noop=False, shouldTry=True):
         except Exception:
           tb = traceback.format_exc()
           lines = tb.split("\n")
-          lines = map(lambda x: "KNOWN BUG: " + x, lines)
+          lines = list(map(lambda x: "KNOWN BUG: " + x, lines))
           raise esctypes.KnownBug(reason + "\n" + "\n".join(lines))
 
         # Shouldn't get here because the test should have failed. If 'force' is on then
@@ -426,11 +426,11 @@ def knownBug(terminal, reason, noop=False, shouldTry=True):
 
     # Add the terminal name to the list of terminals in "func_wrapper"'s
     # func_dict["known_bug_terminals"] so --action=list-known-bugs can work.
-    if KNOWN_BUG_TERMINALS in func_wrapper.func_dict:
-      kbt = func_wrapper.func_dict.get(KNOWN_BUG_TERMINALS)
+    if KNOWN_BUG_TERMINALS in func_wrapper.__dict__:
+      kbt = func_wrapper.__dict__.get(KNOWN_BUG_TERMINALS)
     else:
       kbt = {}
-      func_wrapper.func_dict[KNOWN_BUG_TERMINALS] = kbt
+      func_wrapper.__dict__[KNOWN_BUG_TERMINALS] = kbt
     kbt[terminal] = reason
 
     return func_wrapper
@@ -438,8 +438,8 @@ def knownBug(terminal, reason, noop=False, shouldTry=True):
   return decorator
 
 def ReasonForKnownBugInMethod(method):
-  if KNOWN_BUG_TERMINALS in method.func_dict:
-    kbt = method.func_dict.get(KNOWN_BUG_TERMINALS)
+  if KNOWN_BUG_TERMINALS in method.__dict__:
+    kbt = method.__dict__.get(KNOWN_BUG_TERMINALS)
     term = escargs.args.expected_terminal
     if term in kbt:
       return kbt[term]
