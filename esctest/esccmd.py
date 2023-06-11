@@ -2,6 +2,7 @@ from esc import ESC
 from escutil import AssertVTLevel
 from escutil import GetIndexedColors
 import escio
+import escoding
 
 # DECSET/DECRESET
 Allow80To132 = 40  # Allow 80->132 Mode
@@ -638,7 +639,7 @@ def IND():
 def ManipulateSelectionData(Pc="", Pd=None):
   params = ["52", Pc]
   if Pd is not None:
-    params.append(Pd)
+    params.append(escoding.strip_binary(Pd))
   escio.WriteOSC(params)
 
 def NEL():

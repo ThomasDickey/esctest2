@@ -1,7 +1,11 @@
 from esc import FF, empty
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, vtLevel
+from escutil import AssertEQ
+from escutil import AssertScreenCharsInRectEqual
+from escutil import GetCursorPosition
+from escutil import GetScreenSize
+from escutil import vtLevel
 from esctypes import Point, Rect
 
 class FFTests(object):

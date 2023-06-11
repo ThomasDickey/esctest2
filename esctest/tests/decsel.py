@@ -152,7 +152,8 @@ class DECSELTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="xterm",
-            reason="DECSEL respects ISO protection for backward compatibility reasons, per email from Thomas")
+            reason="DECSEL respects ISO protection for backward compatibility,"
+            + " per email from Thomas")
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSEL_doesNotRespectISOProtect(self):
     """DECSEL does not respect ISO protection."""

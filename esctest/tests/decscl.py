@@ -1,7 +1,13 @@
 from esc import empty
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, AssertTrue, GetCursorPosition, GetScreenSize, knownBug, vtLevel
+from escutil import AssertEQ
+from escutil import AssertScreenCharsInRectEqual
+from escutil import AssertTrue
+from escutil import GetCursorPosition
+from escutil import GetScreenSize
+from escutil import knownBug
+from escutil import vtLevel
 from esctypes import InternalError, Point, Rect
 
 """ level 1, 2, 3, 4

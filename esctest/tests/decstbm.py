@@ -1,7 +1,11 @@
 from esc import CR, LF, empty
 import esccmd
 import escio
-from escutil import AssertEQ, GetCursorPosition, GetScreenSize, AssertScreenCharsInRectEqual, vtLevel
+from escutil import AssertEQ
+from escutil import GetCursorPosition
+from escutil import GetScreenSize
+from escutil import AssertScreenCharsInRectEqual
+from escutil import vtLevel
 from esctypes import Point, Rect
 
 class DECSTBMTests(object):

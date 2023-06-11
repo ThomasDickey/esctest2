@@ -1,7 +1,13 @@
 from esc import blank
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, Point, Rect, knownBug, vtLevel
+from escutil import AssertEQ
+from escutil import AssertScreenCharsInRectEqual
+from escutil import GetCursorPosition
+from escutil import Point
+from escutil import Rect
+from escutil import knownBug
+from escutil import vtLevel
 
 class DECBITests(object):
   """Move cursor back or scroll data within margins right."""

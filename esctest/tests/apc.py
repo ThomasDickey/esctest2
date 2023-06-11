@@ -1,6 +1,5 @@
-from esc import empty, ST, S7C1T, S8C1T
+from esc import empty, S7C1T, S8C1T
 import escargs
-import esccmd
 import escio
 from escutil import AssertScreenCharsInRectEqual, optionRequired, vtLevel
 from esctypes import Rect
@@ -8,9 +7,7 @@ from esctypes import Rect
 class APCTests(object):
   @vtLevel(4)
   def test_APC_Basic(self):
-    esccmd.APC()
-    escio.Write("xyz")
-    escio.Write(ST)
+    escio.WriteAPC("xyz")
     escio.Write("A")
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
@@ -23,9 +20,7 @@ class APCTests(object):
     escio.use8BitControls = True
     escio.Write(S8C1T)
 
-    esccmd.APC()
-    escio.Write("xyz")
-    escio.Write(ST)
+    escio.WriteAPC("xyz")
     escio.Write("A")
 
     escio.Write(S7C1T)

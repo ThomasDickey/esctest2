@@ -86,8 +86,12 @@ class XtermWinopsTests(object):
                  abs(actual_size.height() - desired_size.height()))
     self.DebugSize("error limit  ", limit)
     self.DebugSize("actual error ", error)
-    AssertTrue(error.width() <= (limit.width()), "actual size=%s, desired size=%s, error limit=%s, actual error=%s" % (str(actual_size), str(desired_size), str(limit), str(error)))
-    AssertTrue(error.height() <= (limit.height()), "actual size=%s, desired size=%s, error limit=%s, actual error=%s" % (str(actual_size), str(desired_size), str(limit), str(error)))
+    AssertTrue(error.width() <= (limit.width()),
+               "actual size=%s, desired size=%s, error limit=%s, actual error=%s"
+               % (str(actual_size), str(desired_size), str(limit), str(error)))
+    AssertTrue(error.height() <= (limit.height()),
+               "actual size=%s, desired size=%s, error limit=%s, actual error=%s"
+               % (str(actual_size), str(desired_size), str(limit), str(error)))
 
   def CheckActualSizePixels(self, desired_size):
     """After resizing an xterm window using pixel-units, check if it is close
@@ -97,7 +101,8 @@ class XtermWinopsTests(object):
                       self.GetPixelErrorLimit())
 
   def CheckActualSizeChars(self, desired_size, limit):
-    """After resizing an xterm window using character-units, check if it is close enough to pass the test."""
+    """After resizing an xterm window using character-units, check if it is
+       close enough to pass the test."""
     self.CheckAnySize(desired_size, GetScreenSize(), limit)
 
   def CheckForShrinkage(self, original_size, actual_size):
@@ -530,7 +535,9 @@ class XtermWinopsTests(object):
     AssertEQ(GetWindowTitle(), string)
     AssertEQ(GetIconTitle(), string)
 
-  @knownBug(terminal="iTerm2", reason="The window title incorrectly changes when popping the icon title.")
+  @knownBug(terminal="iTerm2",
+            reason="The window title incorrectly changes"
+            + "when popping the icon title.")
   def test_XtermWinops_PushIconAndWindow_PopIcon(self):
     """Push an icon & window title and pop just the icon title."""
     # Generate a uniqueish string
@@ -561,7 +568,9 @@ class XtermWinopsTests(object):
     AssertEQ(GetWindowTitle(), "x")
     AssertEQ(GetIconTitle(), string)
 
-  @knownBug(terminal="iTerm2", reason="The window title incorrectly changes when popping the icon title.")
+  @knownBug(terminal="iTerm2",
+            reason="The window title incorrectly changes"
+            + "when popping the icon title.")
   def test_XtermWinops_PushIconAndWindow_PopWindow(self):
     """Push an icon & window title and pop just the window title."""
     # Generate a uniqueish string

@@ -376,7 +376,8 @@ class DECSEDTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="xterm",
-            reason="DECSED respects ISO protection for backward compatibility reasons, per email from Thomas")
+            reason="DECSED respects ISO protection for backward compatibility,"
+            + " per email from Thomas")
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
   def test_DECSED_doesNotRespectISOProtect(self):
     """DECSED does not respect ISO protection."""

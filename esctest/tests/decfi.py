@@ -22,7 +22,14 @@ was at the right edge of the page, the command is ignored.
 from esc import empty
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, Point, Rect, knownBug, vtLevel
+from escutil import AssertEQ
+from escutil import AssertScreenCharsInRectEqual
+from escutil import GetCursorPosition
+from escutil import GetScreenSize
+from escutil import Point
+from escutil import Rect
+from escutil import knownBug
+from escutil import vtLevel
 
 class DECFITests(object):
   """Move cursor forward or scroll data within margins right."""

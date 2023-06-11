@@ -8,7 +8,8 @@
 # Set pointer mode: CSI > Ps p
 # Load LEDs (DECLL): CSI Ps q
 # Set cursor style (DECSCUSR): CIS Ps SP q
-# Select character protection attribute (DECSCA): CSI Ps " q   [This is already tested by DECSED and DECSEL]
+# Select character protection attribute (DECSCA): CSI Ps " q
+#                                  [This is already tested by DECSED and DECSEL]
 # Window manipulation: CSI Ps; Ps; Ps t
 # Reverse Attributes in Rectangular Area (DECRARA): CSI Pt ; Pl ; Pb ; Pr ; Ps $ t
 # Set warning bell volume (DECSWBV): CSI Ps SP t
@@ -78,158 +79,158 @@
 #           Ps = 5 1  -> reserved for Emacs shell.
 
 
-import tests.ansirc
-import tests.apc
-import tests.bs
-import tests.cbt
-import tests.cha
-import tests.change_color
-import tests.change_special_color
-import tests.change_dynamic_color
-import tests.cht
-import tests.cnl
-import tests.cpl
-import tests.cr
-import tests.cub
-import tests.cud
-import tests.cuf
-import tests.cup
-import tests.cuu
-import tests.da
-import tests.da2
-import tests.dch
-import tests.dcs
-import tests.decaln
-import tests.decbi
-import tests.deccra
-import tests.decdc
-import tests.decdsr
-import tests.decera
-import tests.decfra
-import tests.decfi
-import tests.decic
-import tests.decid
-import tests.decrc
-import tests.decrqm
-import tests.decrqss
-import tests.decscl
-import tests.decsed
-import tests.decsel
-import tests.decsera
-import tests.decset
-import tests.decset_tite_inhibit
-import tests.decstbm
-import tests.decstr
-import tests.dl
-import tests.ech
-import tests.ed
-import tests.el
-import tests.ff
-import tests.hpa
-import tests.hpr
-import tests.hts
-import tests.hvp
-import tests.ich
-import tests.il
-import tests.ind
-import tests.lf
-import tests.manipulate_selection_data
-import tests.nel
-import tests.pm
-import tests.rep
-import tests.reset_color
-import tests.reset_special_color
-import tests.ri
-import tests.ris
-import tests.rm
-import tests.s8c1t
-import tests.sd
-import tests.sm
-import tests.sm_title
-import tests.sos
-import tests.su
-import tests.tbc
-import tests.vpa
-import tests.vpr
-import tests.vt
-import tests.xterm_save
-import tests.xterm_winops
+from tests.ansirc import ANSIRCTests
+from tests.apc import APCTests
+from tests.bs import BSTests
+from tests.cbt import CBTTests
+from tests.cha import CHATests
+from tests.change_color import ChangeColorTests
+from tests.change_dynamic_color import ChangeDynamicColorTests
+from tests.change_special_color import ChangeSpecialColorTests
+from tests.cht import CHTTests
+from tests.cnl import CNLTests
+from tests.cpl import CPLTests
+from tests.cr import CRTests
+from tests.cub import CUBTests
+from tests.cud import CUDTests
+from tests.cuf import CUFTests
+from tests.cup import CUPTests
+from tests.cuu import CUUTests
+from tests.da import DATests
+from tests.da2 import DA2Tests
+from tests.dch import DCHTests
+from tests.dcs import DCSTests
+from tests.decaln import DECALNTests
+from tests.decbi import DECBITests
+from tests.deccra import DECCRATests
+from tests.decdc import DECDCTests
+from tests.decdsr import DECDSRTests
+from tests.decera import DECERATests
+from tests.decfi import DECFITests
+from tests.decfra import DECFRATests
+from tests.decic import DECICTests
+from tests.decid import DECIDTests
+from tests.decrc import DECRCTests
+from tests.decrqm import DECRQMTests
+from tests.decrqss import DECRQSSTests
+from tests.decscl import DECSCLTests
+from tests.decsed import DECSEDTests
+from tests.decsel import DECSELTests
+from tests.decsera import DECSERATests
+from tests.decset import DECSETTests
+from tests.decset_tite_inhibit import DECSETTiteInhibitTests
+from tests.decstbm import DECSTBMTests
+from tests.decstr import DECSTRTests
+from tests.dl import DLTests
+from tests.ech import ECHTests
+from tests.ed import EDTests
+from tests.el import ELTests
+from tests.ff import FFTests
+from tests.hpa import HPATests
+from tests.hpr import HPRTests
+from tests.hts import HTSTests
+from tests.hvp import HVPTests
+from tests.ich import ICHTests
+from tests.il import ILTests
+from tests.ind import INDTests
+from tests.lf import LFTests
+from tests.manipulate_selection_data import ManipulateSelectionDataTests
+from tests.nel import NELTests
+from tests.pm import PMTests
+from tests.rep import REPTests
+from tests.reset_color import ResetColorTests
+from tests.reset_special_color import ResetSpecialColorTests
+from tests.ri import RITests
+from tests.ris import RISTests
+from tests.rm import RMTests
+from tests.s8c1t import S8C1TTests
+from tests.sd import SDTests
+from tests.sm import SMTests
+from tests.sm_title import SMTitleTests
+from tests.sos import SOSTests
+from tests.su import SUTests
+from tests.tbc import TBCTests
+from tests.vpa import VPATests
+from tests.vpr import VPRTests
+from tests.vt import VTTests
+from tests.xterm_save import XtermSaveTests
+from tests.xterm_winops import XtermWinopsTests
 
 tests = [
-    ansirc.ANSIRCTests,
-    apc.APCTests,
-    bs.BSTests,
-    cbt.CBTTests,
-    cha.CHATests,
-    change_color.ChangeColorTests,
-    change_special_color.ChangeSpecialColorTests,
-    change_dynamic_color.ChangeDynamicColorTests,
-    cht.CHTTests,
-    cnl.CNLTests,
-    cpl.CPLTests,
-    cr.CRTests,
-    cub.CUBTests,
-    cud.CUDTests,
-    cuf.CUFTests,
-    cup.CUPTests,
-    cuu.CUUTests,
-    da.DATests,
-    da2.DA2Tests,
-    dch.DCHTests,
-    dcs.DCSTests,
-    decaln.DECALNTests,
-    decbi.DECBITests,
-    deccra.DECCRATests,
-    decdc.DECDCTests,
-    decdsr.DECDSRTests,
-    decera.DECERATests,
-    decfra.DECFRATests,
-    decfi.DECFITests,
-    decic.DECICTests,
-    decid.DECIDTests,
-    decrc.DECRCTests,
-    decrqm.DECRQMTests,
-    decrqss.DECRQSSTests,
-    decscl.DECSCLTests,
-    decsed.DECSEDTests,
-    decsel.DECSELTests,
-    decsera.DECSERATests,
-    decset.DECSETTests,
-    decset_tite_inhibit.DECSETTiteInhibitTests,
-    decstbm.DECSTBMTests,
-    decstr.DECSTRTests,
-    dl.DLTests,
-    ech.ECHTests,
-    ed.EDTests,
-    el.ELTests,
-    ff.FFTests,
-    hpa.HPATests,
-    hpr.HPRTests,
-    hts.HTSTests,
-    hvp.HVPTests,
-    ich.ICHTests,
-    il.ILTests,
-    ind.INDTests,
-    lf.LFTests,
-    manipulate_selection_data.ManipulateSelectionDataTests,
-    nel.NELTests,
-    pm.PMTests,
-    rep.REPTests,
-    reset_color.ResetColorTests,
-    reset_special_color.ResetSpecialColorTests,
-    ri.RITests,
-    ris.RISTests,
-    rm.RMTests,
-    s8c1t.S8C1TTests,
-    sd.SDTests,
-    sm.SMTests,
-    sm_title.SMTitleTests,
-    sos.SOSTests,
-    su.SUTests,
-    tbc.TBCTests,
-    vpa.VPATests,
-    vpr.VPRTests,
-    vt.VTTests,
-    xterm_save.XtermSaveTests,
-    xterm_winops.XtermWinopsTests,
+    ANSIRCTests,
+    APCTests,
+    BSTests,
+    CBTTests,
+    CHATests,
+    CHTTests,
+    CNLTests,
+    CPLTests,
+    CRTests,
+    CUBTests,
+    CUDTests,
+    CUFTests,
+    CUPTests,
+    CUUTests,
+    ChangeColorTests,
+    ChangeDynamicColorTests,
+    ChangeSpecialColorTests,
+    DA2Tests,
+    DATests,
+    DCHTests,
+    DCSTests,
+    DECALNTests,
+    DECBITests,
+    DECCRATests,
+    DECDCTests,
+    DECDSRTests,
+    DECERATests,
+    DECFITests,
+    DECFRATests,
+    DECICTests,
+    DECIDTests,
+    DECRCTests,
+    DECRQMTests,
+    DECRQSSTests,
+    DECSCLTests,
+    DECSEDTests,
+    DECSELTests,
+    DECSERATests,
+    DECSETTests,
+    DECSETTiteInhibitTests,
+    DECSTBMTests,
+    DECSTRTests,
+    DLTests,
+    ECHTests,
+    EDTests,
+    ELTests,
+    FFTests,
+    HPATests,
+    HPRTests,
+    HTSTests,
+    HVPTests,
+    ICHTests,
+    ILTests,
+    INDTests,
+    LFTests,
+    ManipulateSelectionDataTests,
+    NELTests,
+    PMTests,
+    REPTests,
+    RISTests,
+    RITests,
+    RMTests,
+    ResetColorTests,
+    ResetSpecialColorTests,
+    S8C1TTests,
+    SDTests,
+    SMTests,
+    SMTitleTests,
+    SOSTests,
+    SUTests,
+    TBCTests,
+    VPATests,
+    VPRTests,
+    VTTests,
+    XtermSaveTests,
+    XtermWinopsTests,
     ]

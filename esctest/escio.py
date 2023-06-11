@@ -38,7 +38,12 @@ def SetSideChannel(filename):
       gSideChannel.close()
       gSideChannel = None
   else:
-    gSideChannel = open(filename, "w")
+    gSideChannel = open(filename, "wb")
+
+def APC():
+  if use8BitControls:
+    return chr(0x9f)
+  return ESC + "_"
 
 def OSC():
   if use8BitControls:
@@ -54,6 +59,16 @@ def DCS():
   if use8BitControls:
     return chr(0x90)
   return ESC + "P"
+
+def WriteAPC(params, bel=False, requestsReport=False):
+  str_params = list(map(str, params))
+  if bel:
+    terminator = BEL
+  else:
+    terminator = ST
+  sequence = APC() + "".join(str_params) + terminator
+  LogDebug("Send sequence: " + sequence.replace(ESC, "<ESC>"))
+  Write(sequence, sideChannelOk=not requestsReport)
 
 def WriteOSC(params, bel=False, requestsReport=False):
   str_params = list(map(str, params))

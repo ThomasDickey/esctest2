@@ -2,7 +2,12 @@ from esc import empty, S7C1T, S8C1T
 import escargs
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, optionRequired, vtLevel
+from escutil import AssertEQ
+from escutil import AssertScreenCharsInRectEqual
+from escutil import GetCursorPosition
+from escutil import GetScreenSize
+from escutil import optionRequired
+from escutil import vtLevel
 from esctypes import Point, Rect
 
 class INDTests(object):

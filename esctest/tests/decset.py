@@ -1,6 +1,12 @@
 from esc import TAB, empty, CR, LF, BS
 from esctypes import Point, Rect
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, optionRequired, vtLevel
+from escutil import AssertEQ
+from escutil import AssertScreenCharsInRectEqual
+from escutil import GetCursorPosition
+from escutil import GetScreenSize
+from escutil import knownBug
+from escutil import optionRequired
+from escutil import vtLevel
 import escargs
 import esccmd
 import escio
@@ -19,17 +25,20 @@ import escio
 # DECPEX - no way to examine output to printer
 # DECTCEM - no way to tell if the cursor is visible
 # Show Scrollbar (30) - no way to tell if scroll bar is visible
-# Enable font-shifting (35) - I think this enables/disables a keyboard shortcut to grow or shrink the font. Not testable because user interaction is required.
-# DECTEK - Tektronix is out of scope for now (and probably not introspectable, I guess).
+# Enable font-shifting (35) - this enables/disables a keyboard shortcut to grow or shrink the font.
+#                             Not testable because user interaction is required.
+# DECTEK - Tektronix is out of scope for now (and not introspectable).
 # DECNRCM - Can't introspect character sets
 # Margin Bell (44) - Can't tell if bell is ringing
 # Allow Logging (46) - Not on by default
 # DECNKM - Requires user interaction to detect app keypad
 # DECBKM - Requires user interaction to see what back arrow key sends
-# Mouse tracking (1000, 1001, 1002, 1003, 1005, 1006, 1007, 1015) - Requires user interaction with mouse
+# Mouse tracking (1000, 1001, 1002, 1003, 1005, 1006, 1007, 1015)
+#                                         - Requires user interaction with mouse
 # Focus In/Out (1004) - Requires user interaction
 # Scroll to bottom on tty output (1010) - Can't introspect scroll position
-# Scroll to bottom on tty output (1011) - Can't introspect scroll position and requires user interaction with keyboard
+# Scroll to bottom on tty output (1011) - Can't introspect scroll position
+#                                    and requires user interaction with keyboard
 # Interpret meta key sets 8th bit - Requires user interaction with keyboard
 # Enable special modifiers for Alt and NumLock keys - Requires user interaction with keyboard
 # Send ESC when Meta modifies a key - Requires user interaction with keyboard
@@ -452,7 +461,10 @@ class DECSETTests(object):
     escio.Write("abcdefgh")
     esccmd.DECRESET(esccmd.DECLRMM)
 
-    AssertScreenCharsInRectEqual(Rect(1, 1, 4, 3), ["abcd", empty() + "efg", empty() + "h" + empty() * 2])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 4, 3),
+                                 ["abcd",
+                                  empty() + "efg",
+                                  empty() + "h" + empty() * 2])
 
     # Turn off margins.
     esccmd.CUP(Point(1, 1))

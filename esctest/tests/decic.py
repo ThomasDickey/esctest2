@@ -1,7 +1,12 @@
 from esc import CR, LF, empty, blank
 import esccmd
 import escio
-from escutil import AssertEQ, GetCursorPosition, GetScreenSize, AssertScreenCharsInRectEqual, knownBug, vtLevel
+from escutil import AssertEQ
+from escutil import GetCursorPosition
+from escutil import GetScreenSize
+from escutil import AssertScreenCharsInRectEqual
+from escutil import knownBug
+from escutil import vtLevel
 from esctypes import Point, Rect
 
 class DECICTests(object):

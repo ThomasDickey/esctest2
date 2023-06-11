@@ -24,7 +24,13 @@ import esccmd
 import escargs
 import escio
 from esc import empty
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, Rect, knownBug, vtLevel
+from escutil import AssertEQ
+from escutil import AssertScreenCharsInRectEqual
+from escutil import GetCursorPosition
+from escutil import GetScreenSize
+from escutil import Rect
+from escutil import knownBug
+from escutil import vtLevel
 from esctypes import Point
 
 class SaveRestoreCursorTests(object):

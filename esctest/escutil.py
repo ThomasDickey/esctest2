@@ -42,7 +42,7 @@ def AssertTrue(value, details=None):
     return
   global gHaveAsserted
   gHaveAsserted = True
-  if value != True:
+  if value is not True:
     Raise(esctypes.TestFailure(value, True, details))
 
 def GetIconTitle():
@@ -119,7 +119,9 @@ def GetScreenSizePixels():
     else:
       # iTerm2 doesn't support esccmd.WINOP_REPORT_SCREEN_SIZE_PIXELS so just fake it.
       gScreenSizePixels = Size(1024, 768)
-    LogDebug("size of SCREEN " + str(gScreenSizePixels.height()) + "x" + str(gScreenSizePixels.width()))
+    LogDebug("size of SCREEN "
+             + str(gScreenSizePixels.height()) + "x"
+             + str(gScreenSizePixels.width()))
   return gScreenSizePixels
 
 def GetFrameSizePixels():
@@ -135,7 +137,9 @@ def GetFrameSizePixels():
     inner = GetScreenSize()
     gFrameSizePixels = Size(outer.height() - (inner.height() * gCharSizePixels.height()),
                             outer.width() - (inner.width() * gCharSizePixels.width()))
-    LogDebug("size of FRAME " + str(gFrameSizePixels.height()) + "x" + str(gFrameSizePixels.width()))
+    LogDebug("size of FRAME "
+             + str(gFrameSizePixels.height()) + "x"
+             + str(gFrameSizePixels.width()))
   return gFrameSizePixels
 
 def GetCharSizePixels():
@@ -224,6 +228,9 @@ def AssertVTLevel(minimum, reason):
       LogInfo("BUG: " + reason + " feature is not supported at this level")
     raise esctypes.InsufficientVTLevel(esc.vtLevel, minimum)
 
+def PrintableChar(c):
+  return c if ord(' ') <= c <= ord('~') else '?'
+
 def AssertScreenCharsInRectEqual(rect, expected_lines):
   global gHaveAsserted
   gHaveAsserted = True
@@ -275,22 +282,22 @@ def AssertScreenCharsInRectEqual(rect, expected_lines):
       actual.append("")
     if actual_checksum == 0:
       actual[y] += '.'
-    else:
+    elif actual_checksum < 256:
       actual[y] += chr(actual_checksum)
 
     if len(expected) <= y:
       expected.append("")
     if expected_checksum == 0:
       expected[y] += '.'
-    else:
+    elif expected_checksum < 256:
       expected[y] += chr(expected_checksum)
 
     if expected_checksum != actual_checksum:
       errorLocations.append("At %s expected '%c' (0x%02x) but got '%c' (0x%02x)" % (
           str(point),
-          chr(expected_checksum),
+          PrintableChar(expected_checksum),
           expected_checksum,
-          chr(actual_checksum),
+          PrintableChar(actual_checksum),
           actual_checksum))
 
   if len(errorLocations) > 0:

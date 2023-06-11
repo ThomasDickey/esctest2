@@ -1,7 +1,13 @@
 from esc import BS, CR, LF, empty
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, intentionalDeviationFromSpec, knownBug, vtLevel
+from escutil import AssertEQ
+from escutil import AssertScreenCharsInRectEqual
+from escutil import GetCursorPosition
+from escutil import GetScreenSize
+from escutil import intentionalDeviationFromSpec
+from escutil import knownBug
+from escutil import vtLevel
 from esctypes import Point, Rect
 
 class DECSTRTests(object):
@@ -86,9 +92,12 @@ class DECSTRTests(object):
                                                     empty() * 3])
 
   @intentionalDeviationFromSpec(terminal="iTerm2",
-                                reason="For compatibility purposes, iTerm2 mimics xterm's behavior of turning on DECAWM by default.")
+                                reason="For compatibility purposes,"
+                                + " iTerm2 mimics xterm's behavior of turning"
+                                + " on DECAWM by default.")
   @intentionalDeviationFromSpec(terminal="iTerm2",
-                                reason="For compatibility purposes, xterm turns on DECAWM by default.")
+                                reason="For compatibility purposes,"
+                                + " xterm turns on DECAWM by default.")
   @vtLevel(2)
   def test_DECSTR_DECAWM(self):
     # Turn on autowrap
