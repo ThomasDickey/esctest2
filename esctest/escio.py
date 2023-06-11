@@ -7,6 +7,7 @@ from esc import ESC, BEL, ST
 import escargs
 from esclog import LogDebug
 import esctypes
+import escoding
 
 stdin_fd = None
 stdout_fd = None
@@ -27,8 +28,8 @@ def Shutdown():
 def Write(s, sideChannelOk=True):
   global gSideChannel
   if sideChannelOk and gSideChannel is not None:
-    gSideChannel.write(s)
-  stdout_fd.write(s)
+    gSideChannel.write(escoding.to_binary(s))
+  stdout_fd.write(escoding.to_binary(s))
 
 def SetSideChannel(filename):
   global gSideChannel
@@ -174,5 +175,5 @@ def read(n):
     r, w, e = select.select([f], [], [], escargs.args.timeout)
     if f not in r:
       raise esctypes.InternalError("Timeout waiting to read.")
-    s += os.read(f, 1)
+    s += escoding.to_string(os.read(f, 1))
   return s
