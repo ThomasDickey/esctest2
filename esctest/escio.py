@@ -1,11 +1,12 @@
-from esc import ESC, BEL, ST
-import escargs
-from esclog import LogDebug
-import esctypes
 import os
 import select
 import sys
 import tty
+
+from esc import ESC, BEL, ST
+import escargs
+from esclog import LogDebug
+import esctypes
 
 stdin_fd = None
 stdout_fd = None
@@ -41,20 +42,17 @@ def SetSideChannel(filename):
 def OSC():
   if use8BitControls:
     return chr(0x9d)
-  else:
-    return ESC + "]"
+  return ESC + "]"
 
 def CSI():
   if use8BitControls:
     return chr(0x9b)
-  else:
-    return ESC + "["
+  return ESC + "["
 
 def DCS():
   if use8BitControls:
     return chr(0x90)
-  else:
-    return ESC + "P"
+  return ESC + "P"
 
 def WriteOSC(params, bel=False, requestsReport=False):
   str_params = map(str, params)
@@ -76,8 +74,7 @@ def WriteCSI(prefix="", params=[], intermediate="", final="", requestsReport=Fal
   def StringifyCSIParam(p):
     if p is None:
       return ""
-    else:
-      return str(p)
+    return str(p)
   str_params = map(StringifyCSIParam, params)
 
   # Remove trailing empty args
@@ -166,15 +163,14 @@ def ReadDCS():
     result += c
   if result.endswith(ST):
     return result[:-2]
-  else:
-    return result[:-1]
+  return result[:-1]
 
 def read(n):
   """Try to read n bytes. Times out if it takes more than 1
   second to read any given byte."""
   s = ""
   f = sys.stdin.fileno()
-  for _ in xrange(n):
+  for _ in range(n):
     r, w, e = select.select([f], [], [], escargs.args.timeout)
     if f not in r:
       raise esctypes.InternalError("Timeout waiting to read.")

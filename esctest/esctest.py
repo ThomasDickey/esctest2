@@ -1,4 +1,10 @@
 #!/usr/bin/python2.7
+
+import inspect
+import os
+import re
+import traceback
+
 import esc
 import escargs
 import esccmd
@@ -6,11 +12,7 @@ import escio
 import esclog
 import esctypes
 import escutil
-import inspect
-import os
-import re
 import tests
-import traceback
 
 def init():
   global newline
@@ -41,7 +43,9 @@ def reset():
   esccmd.DECRESET(esccmd.OPT_ALTBUF)  # Is this needed?
   esccmd.DECRESET(esccmd.OPT_ALTBUF_CURSOR)  # Is this needed?
   esccmd.DECRESET(esccmd.ALTBUF)  # Is this needed?
-  esccmd.DECRESET(esccmd.DECLRMM)  # This can be removed when the bug revealed by test_DECSET_DECLRMM_ResetByDECSTR is fixed.
+  esccmd.DECRESET(esccmd.DECLRMM) # This can be removed when the bug revealed
+                                  # by # test_DECSET_DECLRMM_ResetByDECSTR is
+                                  # fixed.
   esccmd.RM(esccmd.IRM)
   esccmd.RM(esccmd.LNM)
   # Technically, autowrap should be off by default (this is what the spec calls for).
@@ -58,7 +62,7 @@ def reset():
   esccmd.ED(2)
 
   # Pop the title stack just in case something got left on there
-  for _ in xrange(5):
+  for _ in range(5):
     esccmd.XTERM_WINOPS(esccmd.WINOP_POP_TITLE,
                         esccmd.WINOP_PUSH_TITLE_ICON_AND_WINDOW)
 
@@ -101,16 +105,16 @@ def RunTest(name, method):
     RemoveSideChannel()
     escutil.AssertAssertionAsserted()
     esclog.LogInfo("Passed.")
-  except esctypes.KnownBug, e:
+  except esctypes.KnownBug as e:
     RemoveSideChannel()
     esclog.LogInfo("Fails as expected: " + str(e))
     ok = None
-  except esctypes.InsufficientVTLevel, e:
+  except esctypes.InsufficientVTLevel as e:
     RemoveSideChannel()
     esclog.LogInfo("Skipped because terminal lacks requisite capability: " +
                    str(e))
     ok = None
-  except Exception, e:
+  except Exception as e:
     RemoveSideChannel()
     tb = traceback.format_exc()
     ok = False
@@ -198,16 +202,16 @@ def main():
 
   try:
     PerformAction()
-  except Exception, e:
+  except Exception:
     tb = traceback.format_exc()
     try:
       reset()
     except:
-      print "reset() failed with traceback:"
-      print traceback.format_exc().replace("\n", "\r\n")
+      print("reset() failed with traceback:")
+      print(traceback.format_exc().replace("\n", "\r\n"))
 
-    print "RunTests failed:\r\n"
-    print tb.replace("\n", "\r\n")
+    print("RunTests failed:\r\n")
+    print(tb.replace("\n", "\r\n"))
     esclog.LogError("Failed with traceback:")
     esclog.LogError(tb)
   finally:
@@ -219,10 +223,10 @@ def main():
       try:
         reset()
       except:
-        print "reset() failed with traceback:"
-        print traceback.format_exc().replace("\n", "\r\n")
+        print("reset() failed with traceback:")
+        print(traceback.format_exc().replace("\n", "\r\n"))
 
-      print "\r\nLogs:\r\n"
+      print ("\r\nLogs:\r\n")
       esclog.Print()
 
   shutdown()

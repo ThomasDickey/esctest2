@@ -2,7 +2,7 @@ from esc import TAB, S8C1T, S7C1T
 import escargs
 import esccmd
 import escio
-from escutil import AssertEQ, GetCursorPosition, knownBug, optionRequired
+from escutil import AssertEQ, GetCursorPosition, optionRequired
 from esctypes import Point
 
 class HTSTests(object):

@@ -28,4 +28,4 @@ def Log(level, fmt):
     log += s
 
 def Print():
-  print log.replace("\n", "\r\n")
+  print(log.replace("\n", "\r\n"))

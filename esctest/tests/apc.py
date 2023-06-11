@@ -2,7 +2,7 @@ from esc import empty, ST, S7C1T, S8C1T
 import escargs
 import esccmd
 import escio
-from escutil import AssertScreenCharsInRectEqual, knownBug, optionRequired, vtLevel
+from escutil import AssertScreenCharsInRectEqual, optionRequired, vtLevel
 from esctypes import Rect
 
 class APCTests(object):

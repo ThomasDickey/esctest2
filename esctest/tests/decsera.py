@@ -27,7 +27,7 @@ class DECSERATests(tests.fill_rectangle.FillRectangleTests):
       return esc.blank() * count
     s = ""
     data = self.data()
-    for i in xrange(count):
+    for i in range(count):
       p = Point(point.x() + i, point.y())
       if p.y() >= len(data):
         s += esc.blank()

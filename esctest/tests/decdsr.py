@@ -12,8 +12,7 @@ class DECDSRTests(object):
       return 2
     elif myLevel <= 24:
       return 3
-    else:
-      return 4
+    return 4
 
   # TODO: It looks like this code didn't exist until at least VT level 3 was
   # introduced, so I'm not sure it makes sense to test it in a term that

@@ -9,7 +9,7 @@ class DLTests(object):
     """Fills the screen with 4-char line numbers (0001, 0002, ...) down to the
     last line and puts the cursor on the start of the second line."""
     height = GetScreenSize().height()
-    for i in xrange(height):
+    for i in range(height):
       y = i + 1
       esccmd.CUP(Point(1, y))
       escio.Write("%04d" % y)
@@ -30,7 +30,7 @@ class DLTests(object):
              "klmno",
              "pqrst",
              "uvwxy"]
-    for i in xrange(len(lines)):
+    for i in range(len(lines)):
       y = i + 1
       line = lines[i]
       esccmd.CUP(Point(1, y))
@@ -50,7 +50,7 @@ class DLTests(object):
     height = GetScreenSize().height()
     y = 1
     expected_lines = []
-    for _ in xrange(height):
+    for _ in range(height):
       if y != 2:
         expected_lines.append("%04d" % y)
       y += 1
@@ -72,7 +72,7 @@ class DLTests(object):
     height = GetScreenSize().height()
     y = 1
     expected_lines = []
-    for _ in xrange(height):
+    for _ in range(height):
       if y < 2 or y > 3:
         expected_lines.append("%04d" % y)
       y += 1
@@ -94,9 +94,8 @@ class DLTests(object):
     esccmd.DL(height * 2)
 
     # Build an array of 0001 followed by height-1 empty lines.
-    y = 1
     expected_lines = ["0001"]
-    for _ in xrange(height - 1):
+    for _ in range(height - 1):
       expected_lines.append(empty() * 4)
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 4, height), expected_lines)

@@ -1,13 +1,15 @@
+import time
+
 import escargs
 import esccmd
 import esclog
+
 from escutil import AssertEQ, AssertTrue, GetDisplaySize, GetIconTitle
 from escutil import GetIsIconified, GetScreenSize, GetWindowPosition
 from escutil import GetCharSizePixels, GetFrameSizePixels, GetScreenSizePixels
 from escutil import GetWindowSizePixels, GetWindowTitle, knownBug
 from escutil import CanQueryShellSize
 from esctypes import Point, Size
-import time
 
 # No tests for the following operations:
 # 5 - Raise in stacking order
@@ -40,8 +42,7 @@ class XtermWinopsTests(object):
     based resizing tests."""
     if escargs.args.expected_terminal == "xterm":
       return Size(2, 2)
-    else:
-      return Size(0, 0)
+    return Size(0, 0)
 
   def GetPixelErrorLimit(self):
     """Returns a Size denoting the expected error limit for pixel-based
@@ -70,8 +71,7 @@ class XtermWinopsTests(object):
       chars = GetCharSizePixels()
       return Size(frame.width() + cells * chars.width(),
                   frame.height() + cells * chars.height())
-    else:
-      return Size(20, 20)
+    return Size(20, 20)
 
   def DebugSize(self, name, value):
     """Log information on a given Size value and its name."""
@@ -117,11 +117,11 @@ class XtermWinopsTests(object):
     window size and the X screen-size, since that is fairly likely
     to succeed where a fixed size would fail since it does not take
     into account the actual screen-size."""
-    return (size_a.width() + size_b.width()) / 2
+    return (size_a.width() + size_b.width()) // 2
 
   def AverageHeight(self, size_a, size_b):
     """Return the average of the heights from two sizes."""
-    return (size_a.height() + size_b.height()) / 2
+    return (size_a.height() + size_b.height()) // 2
 
   def test_XtermWinops_IconifyDeiconfiy(self):
     esccmd.XTERM_WINOPS(esccmd.WINOP_ICONIFY)

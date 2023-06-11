@@ -26,7 +26,7 @@ class SDTests(object):
              "klmno",
              "pqrst",
              "uvwxy"]
-    for i in xrange(len(lines)):
+    for i in range(len(lines)):
       y = i + 1
       line = lines[i]
       esccmd.CUP(Point(1, y))
@@ -67,7 +67,7 @@ class SDTests(object):
     # Fill the screen with 0001, 0002, ..., height. Fill expected_lines with empty rows.
     height = GetScreenSize().height()
     expected_lines = []
-    for i in xrange(height):
+    for i in range(height):
       y = i + 1
       esccmd.CUP(Point(1, y))
       escio.Write("%04d" % y)

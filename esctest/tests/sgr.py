@@ -1,6 +1,5 @@
 import esccmd
 import escio
-from esclog import LogDebug
 from escutil import AssertCharHasSGR
 from esctypes import Point
 

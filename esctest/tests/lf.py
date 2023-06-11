@@ -120,7 +120,7 @@ class LFTests(object):
 
     # Move it down by a lot
     height = GetScreenSize().height()
-    for _ in xrange(height):
+    for _ in range(height):
       escio.Write(LF)
 
     # Ensure it stopped at the bottom of the screen

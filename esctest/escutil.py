@@ -209,7 +209,7 @@ def GetIndexedColors():
         gNumIndexedColors = 8
       if gNumIndexedColors > 256:
         gNumIndexedColors = 256
-    except Exception, e:
+    except Exception:
       gNumIndexedColors = 16
   return gNumIndexedColors
 
@@ -349,7 +349,7 @@ def optionRejects(terminal, option):
       if escargs.args.expected_terminal == terminal:
         try:
           func(self, *args, **kwargs)
-        except Exception, e:
+        except Exception:
           if not hasOption:
             # Failed despite option being unset. Re-raise.
             raise
@@ -379,7 +379,7 @@ def optionRequired(terminal, option, allowPassWithoutOption=False):
       if escargs.args.expected_terminal == terminal:
         try:
           func(self, *args, **kwargs)
-        except Exception, e:
+        except Exception:
           if hasOption:
             # Failed despite option being set. Re-raise.
             raise
@@ -411,7 +411,7 @@ def knownBug(terminal, reason, noop=False, shouldTry=True):
           raise esctypes.KnownBug(reason + " (not trying)")
         try:
           func(self, *args, **kwargs)
-        except Exception, e:
+        except Exception:
           tb = traceback.format_exc()
           lines = tb.split("\n")
           lines = map(lambda x: "KNOWN BUG: " + x, lines)
@@ -421,8 +421,6 @@ def knownBug(terminal, reason, noop=False, shouldTry=True):
         # tests always pass, though.
         if not escargs.args.force and not noop:
           raise esctypes.InternalError("Should have failed")
-        elif noop:
-          raise esctypes.KnownBug(reason + " (test ran and passed, but is documented as a 'no-op'; the nature of the bug makes it untestable)")
       else:
         func(self, *args, **kwargs)
 

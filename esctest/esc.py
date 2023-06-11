@@ -33,11 +33,9 @@ vtLevel = 1
 def empty():
   if escargs.args.xterm_checksum >= 334:
     return ' '
-  else:
-    return NUL
+  return NUL
 
 def blank():
   if escargs.args.expected_terminal == "xterm":
     return ' '
-  else:
-    return NUL
+  return NUL

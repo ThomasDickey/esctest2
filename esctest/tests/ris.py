@@ -1,7 +1,7 @@
 from esc import empty, TAB
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, GetIconTitle, GetWindowTitle, knownBug, vtLevel
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, GetIconTitle, GetWindowTitle, vtLevel
 from esctypes import Point, Rect
 
 class RISTests(object):

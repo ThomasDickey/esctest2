@@ -41,17 +41,17 @@ class DECSTBMTests(object):
     """The value of the top margin (Pt) must be less than the bottom margin (Pb)."""
     size = GetScreenSize()
     esccmd.DECSTBM(3, 3)
-    for i in xrange(size.height()):
+    for i in range(size.height()):
       escio.Write("%04d" % i)
       y = i + 1
       if y != size.height():
         escio.Write(CR + LF)
-    for i in xrange(size.height()):
+    for i in range(size.height()):
       y = i + 1
       AssertScreenCharsInRectEqual(Rect(1, y, 4, y), ["%04d" % i])
     esccmd.CUP(Point(1, size.height()))
     escio.Write(LF)
-    for i in xrange(size.height() - 1):
+    for i in range(size.height() - 1):
       y = i + 1
       AssertScreenCharsInRectEqual(Rect(1, y, 4, y), ["%04d" % (i + 1)])
 

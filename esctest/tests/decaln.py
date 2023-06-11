@@ -14,10 +14,10 @@ class DECALNTests(object):
     AssertScreenCharsInRectEqual(Rect(1, size.height(), 1, size.height()), ["E"])
     AssertScreenCharsInRectEqual(Rect(size.width(), size.height(), size.width(), size.height()),
                                  ["E"])
-    AssertScreenCharsInRectEqual(Rect(size.width() / 2,
-                                      size.height() / 2,
-                                      size.width() / 2,
-                                      size.height() / 2),
+    AssertScreenCharsInRectEqual(Rect(size.width() // 2,
+                                      size.height() // 2,
+                                      size.width() // 2,
+                                      size.height() // 2),
                                  ["E"])
 
   def test_DECALN_MovesCursorHome(self):

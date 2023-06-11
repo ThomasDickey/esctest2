@@ -2,7 +2,7 @@ from esc import empty, S7C1T, S8C1T
 import escargs
 import esccmd
 import escio
-from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, knownBug, optionRequired, vtLevel
+from escutil import AssertEQ, AssertScreenCharsInRectEqual, GetCursorPosition, GetScreenSize, optionRequired, vtLevel
 from esctypes import Point, Rect
 
 class INDTests(object):
@@ -114,7 +114,7 @@ class INDTests(object):
 
     # Move it down by a lot
     height = GetScreenSize().height()
-    for _ in xrange(height):
+    for _ in range(height):
       esccmd.IND()
 
     # Ensure it stopped at the bottom of the screen

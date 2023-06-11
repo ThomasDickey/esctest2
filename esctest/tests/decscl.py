@@ -27,7 +27,7 @@ class DECSCLTests(object):
       escio.ReadCSI('$y')
       # Should not get here.
       AssertTrue(False)
-    except InternalError, e:
+    except InternalError:
       # Assert something so the test infrastructure is happy.
       AssertTrue(True)
 

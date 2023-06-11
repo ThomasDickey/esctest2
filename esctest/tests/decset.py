@@ -170,7 +170,7 @@ class DECSETTests(object):
 
     # 1, 2, ... N - 2
     AssertEQ(GetCursorPosition().x(), 1)
-    for _ in xrange(size.width() - 2):
+    for _ in range(size.width() - 2):
       escio.Write("x")
     AssertEQ(GetCursorPosition().x(), size.width() - 1)
 
@@ -258,7 +258,7 @@ class DECSETTests(object):
   def fillLineAndWriteTab(self):
     escio.Write(CR + LF)
     size = GetScreenSize()
-    for _ in xrange(size.width()):
+    for _ in range(size.width()):
       escio.Write("x")
     escio.Write(TAB)
 
@@ -266,7 +266,7 @@ class DECSETTests(object):
     """In auto-wrap mode, tabs to not wrap to the next line."""
     esccmd.DECSET(esccmd.DECAWM)
     size = GetScreenSize()
-    for _ in xrange(size.width() / 8 + 2):
+    for _ in range(size.width() // 8 + 2):
       escio.Write(TAB)
     AssertEQ(GetCursorPosition().x(), size.width())
     AssertEQ(GetCursorPosition().y(), 1)

@@ -29,7 +29,7 @@ class ILTests(object):
              "kLMNo",
              "pQRSt",
              "uvwxy"]
-    for i in xrange(len(lines)):
+    for i in range(len(lines)):
       esccmd.CUP(Point(1, i + 1))
       escio.Write(lines[i])
 
@@ -67,14 +67,14 @@ class ILTests(object):
   def test_IL_ScrollsOffBottom(self):
     """Lines should be scrolled off the bottom of the screen."""
     height = GetScreenSize().height()
-    for i in xrange(height):
+    for i in range(height):
       esccmd.CUP(Point(1, i + 1))
       escio.Write("%04d" % (i + 1))
     esccmd.CUP(Point(1, 2))
     esccmd.IL()
 
     expected = 1
-    for i in xrange(height):
+    for i in range(height):
       y = i + 1
       if y == 2:
         AssertScreenCharsInRectEqual(Rect(1, y, 4, y), [empty() * 4])
