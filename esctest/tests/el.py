@@ -83,4 +83,3 @@ class ELTests(object):
     esccmd.EL(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
                                  [blank() * 2 + "c"])
-

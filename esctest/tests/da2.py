@@ -33,7 +33,3 @@ class DA2Tests(object):
   def test_DA2_0(self):
     esccmd.DA2(0)
     self.handleDA2Response()
-
-
-
-

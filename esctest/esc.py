@@ -41,4 +41,3 @@ def blank():
     return ' '
   else:
     return NUL
-

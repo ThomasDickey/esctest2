@@ -56,4 +56,3 @@ class CUBTests(object):
 
     # Ensure it stopped at the top of the scroll region.
     AssertEQ(GetCursorPosition().x(), 5)
-

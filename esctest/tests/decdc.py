@@ -179,5 +179,3 @@ class DECDCTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, 7, 2),
                                  ["ab" + empty() * 3 + "fg",
                                   "AB" + empty() * 3 + "FG"])
-
-

@@ -33,4 +33,3 @@ class APCTests(object):
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
                                  ["A" + empty() * 2])
-

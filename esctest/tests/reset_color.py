@@ -29,4 +29,3 @@ class ResetColorTests(object):
     esccmd.ResetColor()
     esccmd.ChangeColor("3", "?")
     AssertEQ(escio.ReadOSC("4"), original)
-

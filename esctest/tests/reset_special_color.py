@@ -89,4 +89,3 @@ class ResetSpecialColorTests(object):
     esccmd.ResetDynamicColor("110")
     esccmd.ChangeSpecialColor("10", "?")
     AssertEQ(escio.ReadOSC("10"), original)
-

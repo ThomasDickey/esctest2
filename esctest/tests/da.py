@@ -46,6 +46,3 @@ class DATests(object):
   def test_DA_0(self):
     esccmd.DA(0)
     self.handleDAResponse()
-
-
-

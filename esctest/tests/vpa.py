@@ -60,4 +60,3 @@ class VPATests(object):
 
     position = GetCursorPosition()
     AssertEQ(position.y(), 2)
-

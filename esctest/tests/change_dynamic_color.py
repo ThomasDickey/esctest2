@@ -85,5 +85,3 @@ class ChangeDynamicColorTests(object):
   def test_ChangeDynamicColor_TekHVC(self):
     self.doChangeDynamicColorTest("10", "TekHVC:1/1/1", "1a1a/1313/0f0f")
     self.doChangeDynamicColorTest("10", "TekHVC:0.5/0.5/0.5", "1111/1313/0e0e")
-
-

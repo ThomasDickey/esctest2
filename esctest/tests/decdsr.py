@@ -212,4 +212,3 @@ class DECDSRTests(object):
     # 83 and 87 both seem like reasonable responses for a terminal that
     # supports tabs or windows.
     AssertTrue(params[0] in [83, 87])
-

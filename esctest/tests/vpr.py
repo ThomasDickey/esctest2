@@ -66,4 +66,3 @@ class VPRTests(object):
     AssertScreenCharsInRectEqual(Rect(6, 7, 7, 9), ['X' + empty(),
                                                     empty() * 2,
                                                     empty() + 'Y'])
-

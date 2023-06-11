@@ -20,4 +20,3 @@ class RMTests(object):
     esccmd.RM(esccmd.IRM)
     escio.Write("YZ")
     AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), ["YZ"])
-

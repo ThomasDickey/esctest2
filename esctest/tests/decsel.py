@@ -162,4 +162,3 @@ class DECSELTests(object):
     esccmd.EPA()
     esccmd.DECSEL(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [blank() * 2])
-

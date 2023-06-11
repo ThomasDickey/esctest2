@@ -55,5 +55,3 @@ class S8C1TTests(object):
     esccmd.ECH(3)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
                                  [blank() * 2 + "c"])
-
-

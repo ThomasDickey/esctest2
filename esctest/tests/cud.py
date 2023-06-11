@@ -54,4 +54,3 @@ class CUDTests(object):
 
     # Ensure it stopped at the bottom of the scroll region.
     AssertEQ(GetCursorPosition().y(), 4)
-

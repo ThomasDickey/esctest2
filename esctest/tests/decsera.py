@@ -77,4 +77,3 @@ class DECSERATests(tests.fill_rectangle.FillRectangleTests):
     esccmd.EPA()
     esccmd.DECSERA(1, 1, 1, 2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [esc.blank() * 2])
-

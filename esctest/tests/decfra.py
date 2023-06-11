@@ -30,4 +30,3 @@ class DECFRATests(tests.fill_rectangle.FillRectangleTests):
 
   def test_DECFRA_ignoresMargins(self):
     self.fillRectangle_ignoresMargins()
-

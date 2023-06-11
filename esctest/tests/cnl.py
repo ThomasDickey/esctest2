@@ -68,4 +68,3 @@ class CNLTests(object):
     position = GetCursorPosition()
     AssertEQ(position.y(), 4)
     AssertEQ(position.x(), 5)
-

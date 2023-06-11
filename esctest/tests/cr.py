@@ -51,4 +51,3 @@ class CRTests(object):
     escio.Write("x")
     esccmd.DECRESET(esccmd.DECOM)
     AssertScreenCharsInRectEqual(Rect(5, 1, 5, 1), ["x"])
-

@@ -111,4 +111,3 @@ class BSTests(object):
     escio.Write("X")
     AssertScreenCharsInRectEqual(Rect(size.width() - 1, 1, size.width(), 1),
                                  ["Xb"])
-

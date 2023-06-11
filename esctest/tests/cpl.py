@@ -68,4 +68,3 @@ class CPLTests(object):
     position = GetCursorPosition()
     AssertEQ(position.y(), 2)
     AssertEQ(position.x(), 5)
-

@@ -16,4 +16,3 @@ class ANSIRCTests(SaveRestoreCursorTests):
 
   def test_SaveRestoreCursor_WorksInLRM(self, shouldWork=True):
     SaveRestoreCursorTests.test_SaveRestoreCursor_WorksInLRM(self, False)
-

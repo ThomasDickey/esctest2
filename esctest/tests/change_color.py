@@ -90,5 +90,3 @@ class ChangeColorTests(object):
   def test_ChangeColor_TekHVC(self):
     self.doChangeColorTest("0", "TekHVC:1/1/1", "1a1a/1313/0f0f")
     self.doChangeColorTest("0", "TekHVC:0.5/0.5/0.5", "1111/1313/0e0e")
-
-

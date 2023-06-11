@@ -56,4 +56,3 @@ parser.add_argument("--timeout",
                     help="Timeout for reading reports from terminal.",
                     default=1,
                     type=float)
-

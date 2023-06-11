@@ -29,4 +29,3 @@ class DECERATests(tests.fill_rectangle.FillRectangleTests):
 
   def test_DECERA_ignoresMargins(self):
     self.fillRectangle_ignoresMargins()
-

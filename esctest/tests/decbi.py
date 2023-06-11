@@ -71,5 +71,3 @@ class DECBITests(object):
     esccmd.CUP(Point(1, 1))
     esccmd.DECBI()
     AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [blank() + "x"])
-
-

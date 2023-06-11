@@ -7,4 +7,3 @@ class DECRCTests(tests.save_restore_cursor.SaveRestoreCursorTests):
 
   def restoreCursor(self):
     esccmd.DECRC()
-

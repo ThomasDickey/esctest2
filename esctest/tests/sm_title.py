@@ -74,4 +74,3 @@ class SMTitleTests(object):
     AssertEQ(GetIconTitle(), "6162")
     esccmd.ChangeIconTitle("61")
     AssertEQ(GetIconTitle(), "61")
-

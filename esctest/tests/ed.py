@@ -178,4 +178,3 @@ class EDTests(object):
     esccmd.ED(0)
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
                                  [blank() * 2 + "c"])
-

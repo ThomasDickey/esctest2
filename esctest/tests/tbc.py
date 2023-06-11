@@ -54,4 +54,3 @@ class TBCTests(object):
     AssertEQ(GetCursorPosition().x(), 9)
     escio.Write(TAB)
     AssertEQ(GetCursorPosition().x(), 17)
-

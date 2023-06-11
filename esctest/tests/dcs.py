@@ -9,4 +9,3 @@ class DCSTests(object):
     """An unrecognized DCS code should be swallowed"""
     escio.WriteDCS("z", "0")
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), empty())
-

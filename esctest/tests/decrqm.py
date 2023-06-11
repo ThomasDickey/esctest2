@@ -367,4 +367,3 @@ class DECRQMTests(object):
     I gather this is irrelevant if your terminal doesn't support horizontal
     scrolling."""
     self.doPermanentlyResetDecTest(esccmd.DECHCCM)
-

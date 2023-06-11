@@ -386,4 +386,3 @@ class DECSEDTests(object):
     esccmd.EPA()
     esccmd.DECSED(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), [blank() * 2])
-

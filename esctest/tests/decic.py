@@ -154,5 +154,3 @@ class DECICTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, len(s), 2),
                                  ["ab" + blank() + "cdfg",
                                   "AB" + blank() + "CDFG"])
-
-

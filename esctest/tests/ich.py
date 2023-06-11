@@ -106,4 +106,3 @@ class ICHTests(object):
     esccmd.DECRESET(esccmd.DECLRMM)
     AssertScreenCharsInRectEqual(Rect(1, 1, len(s), 1),
                                  ["ab" + blank() + "cdfg"])
-

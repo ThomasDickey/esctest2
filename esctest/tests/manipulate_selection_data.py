@@ -15,4 +15,3 @@ class ManipulateSelectionDataTests(object):
     esccmd.ManipulateSelectionData(Pd="?")
     r = escio.ReadOSC("52")
     AssertEQ(r, ";s0;" + base64.b64encode(s))
-

@@ -180,5 +180,3 @@ def read(n):
       raise esctypes.InternalError("Timeout waiting to read.")
     s += os.read(f, 1)
   return s
-
-

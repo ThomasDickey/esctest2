@@ -533,7 +533,3 @@ class DECSETTests(object):
     cursor = GetCursorPosition()
     AssertEQ(cursor.x(), 2)
     AssertEQ(cursor.y(), 3)
-
-
-
-

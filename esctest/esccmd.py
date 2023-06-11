@@ -807,4 +807,3 @@ def XTERM_WINOPS(Ps1=None, Ps2=None, Ps3=None):
                            WINOP_REPORT_ICON_LABEL,
                            WINOP_REPORT_WINDOW_TITLE]
   escio.WriteCSI(params=params, final="t", requestsReport=requestsReport)
-
