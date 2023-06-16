@@ -1,12 +1,15 @@
 import esc
+import escargs
 import esccmd
 import escio
+
 from escutil import AssertEQ
 from escutil import AssertScreenCharsInRectEqual
 from escutil import GetCursorPosition
 from escutil import GetScreenSize
 from escutil import knownBug
 from escutil import vtLevel
+
 from esctypes import Point, Rect
 
 class BSTests(object):
@@ -26,7 +29,10 @@ class BSTests(object):
     esccmd.CUP(Point(1, 3))
     escio.Write(esc.BS)
     size = GetScreenSize()
-    AssertEQ(GetCursorPosition(), Point(size.width(), 2))
+    if escargs.args.xterm_reverse_wrap < 380:
+      AssertEQ(GetCursorPosition(), Point(size.width(), 2))
+    else:
+      AssertEQ(GetCursorPosition(), Point(1, 3))
 
   def test_BS_ReverseWrapRequiresDECAWM(self):
     esccmd.DECRESET(esccmd.DECAWM)
@@ -49,7 +55,10 @@ class BSTests(object):
     esccmd.DECSLRM(5, 10)
     esccmd.CUP(Point(5, 3))
     escio.Write(esc.BS)
-    AssertEQ(GetCursorPosition(), Point(10, 2))
+    if escargs.args.xterm_reverse_wrap < 380:
+      AssertEQ(GetCursorPosition(), Point(10, 2))
+    else:
+      AssertEQ(GetCursorPosition(), Point(5, 3))
 
   @vtLevel(4)
   def test_BS_ReversewrapFromLeftEdgeToRightMargin(self):
@@ -61,7 +70,10 @@ class BSTests(object):
     esccmd.DECSLRM(5, 10)
     esccmd.CUP(Point(1, 3))
     escio.Write(esc.BS)
-    AssertEQ(GetCursorPosition(), Point(10, 2))
+    if escargs.args.xterm_reverse_wrap < 380:
+      AssertEQ(GetCursorPosition(), Point(10, 2))
+    else:
+      AssertEQ(GetCursorPosition(), Point(1, 3))
 
   @knownBug(terminal="iTerm2", reason="Does not wrap around properly")
   def test_BS_ReverseWrapGoesToBottom(self):
@@ -81,7 +93,10 @@ class BSTests(object):
     esccmd.DECSTBM(2, 5)
     esccmd.CUP(Point(1, 2))
     escio.Write(esc.BS)
-    AssertEQ(GetCursorPosition(), Point(80, 5))
+    if escargs.args.xterm_reverse_wrap < 380:
+      AssertEQ(GetCursorPosition(), Point(80, 5))
+    else:
+      AssertEQ(GetCursorPosition(), Point(1, 2))
 
   @vtLevel(4)
   def test_BS_StopsAtLeftMargin(self):

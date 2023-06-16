@@ -164,6 +164,18 @@ the calculation from #334, set the following resource:
 To force xterm to use the calculation from #279, set the following resource:
   xterm*checksumExtension: 31
 
+--xterm-reverse-wrap[=patchnumber]
+The patch numbers are part of $XTERM_VERSION, allowing them to be scripted.
+ * Xterm #380 amended the behavior of wrapping when moving the cursor backwards.
+   The original 1986 logic allowed reverse-wrapping before the left margin, when
+   both DECAWM and xterm's reverse-wrap modes are set.  If the cursor happens to
+   be on the right margin (indicating that xterm is about to wrap forward by one
+   cell), the number of cells by which to move backward is reduced by one.  This
+   is documented in the manual page as a feature for editing long lines, but not
+   taking into account whether the current line (or previous lines) actually was
+   wrapped.  As a result, it was possible to move before the beginning of the
+   screen, wrapping around to the bottom of the screen.
+
 --v=verbosity
 Verbosity level for logging. The following levels are defined:
 * 1: Errors only.
