@@ -1,6 +1,9 @@
 from esc import ESC
+
 from escutil import AssertVTLevel
 from escutil import GetIndexedColors
+
+import escargs
 import escio
 import escoding
 
@@ -47,7 +50,8 @@ DECXRLM = 73
 MoreFix = 41  # Work around bug in more(1) (see details in test_DECSET_MoreFix)
 OPT_ALTBUF = 1047  # Switch to alt buf. DECRESET first clears the alt buf.
 OPT_ALTBUF_CURSOR = 1049  # Like 1047 but saves/restores main screen's cursor position.
-ReverseWraparound = 45  # Reverse-wraparound mode (only works on conjunction with DECAWM)
+ReverseWrapExtend = 1045  # Extended Reverse-wraparound mode (only works on conjunction with DECAWM)
+ReverseWrapInline = 45    # Reverse-wraparound mode (only works on conjunction with DECAWM)
 SaveRestoreCursor = 1048  # Save cursor as in DECSC.
 
 # Xterm Winops (CSI Ps t)
@@ -807,3 +811,14 @@ def XTERM_WINOPS(Ps1=None, Ps2=None, Ps3=None):
                            WINOP_REPORT_ICON_LABEL,
                            WINOP_REPORT_WINDOW_TITLE]
   escio.WriteCSI(params=params, final="t", requestsReport=requestsReport)
+
+def ReverseWraparound():
+  '''
+  Return an appropriate reverse-wrap private mode.  Some tests will fail for
+  xterm in patches 381, 392 since the extended mode was added in 383 to help
+  with (rare) scripts which require the feature.  See the longer note in
+  test_BS_ReverseWrapGoesToBottom.
+  '''
+  if escargs.args.xterm_reverse_wrap >= 383:
+    return ReverseWrapExtend	# since xterm 383
+  return ReverseWrapInline	# since xterm 380

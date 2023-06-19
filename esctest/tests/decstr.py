@@ -115,7 +115,7 @@ class DECSTRTests(object):
   @vtLevel(2)
   def test_DECSTR_ReverseWraparound(self):
     # Turn on reverse wraparound
-    esccmd.DECSET(esccmd.ReverseWraparound)
+    esccmd.DECSET(esccmd.ReverseWraparound())
 
     # Perform soft reset
     esccmd.DECSTR()

@@ -326,7 +326,7 @@ class DECSETTests(object):
     """xterm supports DECSET 45 to toggle 'reverse wraparound'. Both DECAWM and
     45 must be set."""
     # iTerm2 turns reverse wraparound on by default, while xterm does not.
-    esccmd.DECSET(esccmd.ReverseWraparound)
+    esccmd.DECSET(esccmd.ReverseWraparound())
     esccmd.DECSET(esccmd.DECAWM)
     esccmd.CUP(Point(1, 2))
     escio.Write(BS)
@@ -335,7 +335,7 @@ class DECSETTests(object):
   def test_DECSET_ReverseWraparoundLastCol_BS(self):
     """If the cursor is in the last column and a character was just output and
     reverse-wraparound is on then backspace by 1 has no effect."""
-    esccmd.DECSET(esccmd.ReverseWraparound)
+    esccmd.DECSET(esccmd.ReverseWraparound())
     esccmd.DECSET(esccmd.DECAWM)
     size = GetScreenSize()
     esccmd.CUP(Point(size.width() - 1, 1))
@@ -350,7 +350,7 @@ class DECSETTests(object):
     size = GetScreenSize()
     esccmd.CUP(Point(size.width() - 1, 1))
     escio.Write("abcd")
-    esccmd.DECSET(esccmd.ReverseWraparound)
+    esccmd.DECSET(esccmd.ReverseWraparound())
     esccmd.DECSET(esccmd.DECAWM)
     esccmd.CUB(4)
     AssertEQ(GetCursorPosition().x(), size.width() - 1)
@@ -359,7 +359,7 @@ class DECSETTests(object):
     """DECRESET of reverse wraparound prevents it from happening."""
     # Note that iTerm disregards the value of ReverseWraparound when there's a
     # soft EOL on the preceding line and always wraps.
-    esccmd.DECRESET(esccmd.ReverseWraparound)
+    esccmd.DECRESET(esccmd.ReverseWraparound())
     esccmd.DECSET(esccmd.DECAWM)
     esccmd.CUP(Point(1, 2))
     escio.Write(BS)
@@ -369,7 +369,7 @@ class DECSETTests(object):
     """Reverse wraparound only works if DECAWM is set."""
     # iTerm2 turns reverse wraparound on by default, while xterm does not.
     esccmd.CUP(Point(1, 2))
-    esccmd.DECSET(esccmd.ReverseWraparound)
+    esccmd.DECSET(esccmd.ReverseWraparound())
     esccmd.DECRESET(esccmd.DECAWM)
     escio.Write(BS)
     AssertEQ(GetCursorPosition().x(), 1)

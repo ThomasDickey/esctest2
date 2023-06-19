@@ -167,11 +167,11 @@ class SaveRestoreCursorTests(object):
 
   def test_SaveRestoreCursor_ReverseWrapNotAffected(self):
     # Turn on reverse wrap and save
-    esccmd.DECSET(esccmd.ReverseWraparound)
+    esccmd.DECSET(esccmd.ReverseWraparound())
     self.saveCursor()
 
     # Turn off reverse wrap and restore. Restore should turn reverse wrap on.
-    esccmd.DECRESET(esccmd.ReverseWraparound)
+    esccmd.DECRESET(esccmd.ReverseWraparound())
     self.restoreCursor()
 
     # See if reverse wrap is still off.

@@ -25,7 +25,7 @@ class BSTests(object):
 
   def test_BS_WrapsInWraparoundMode(self):
     esccmd.DECSET(esccmd.DECAWM)
-    esccmd.DECSET(esccmd.ReverseWraparound)
+    esccmd.DECSET(esccmd.ReverseWraparound())
     esccmd.CUP(Point(1, 3))
     escio.Write(esc.BS)
     size = GetScreenSize()
@@ -36,13 +36,13 @@ class BSTests(object):
 
   def test_BS_ReverseWrapRequiresDECAWM(self):
     esccmd.DECRESET(esccmd.DECAWM)
-    esccmd.DECSET(esccmd.ReverseWraparound)
+    esccmd.DECSET(esccmd.ReverseWraparound())
     esccmd.CUP(Point(1, 3))
     escio.Write(esc.BS)
     AssertEQ(GetCursorPosition(), Point(1, 3))
 
     esccmd.DECSET(esccmd.DECAWM)
-    esccmd.DECRESET(esccmd.ReverseWraparound)
+    esccmd.DECRESET(esccmd.ReverseWraparound())
     esccmd.CUP(Point(1, 3))
     escio.Write(esc.BS)
     AssertEQ(GetCursorPosition(), Point(1, 3))
@@ -50,7 +50,7 @@ class BSTests(object):
   @vtLevel(4)
   def test_BS_ReverseWrapWithLeftRight(self):
     esccmd.DECSET(esccmd.DECAWM)
-    esccmd.DECSET(esccmd.ReverseWraparound)
+    esccmd.DECSET(esccmd.ReverseWraparound())
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(5, 10)
     esccmd.CUP(Point(5, 3))
@@ -65,7 +65,7 @@ class BSTests(object):
     """If cursor starts at left edge of screen, left of left margin, backspace
     takes it to the right margin."""
     esccmd.DECSET(esccmd.DECAWM)
-    esccmd.DECSET(esccmd.ReverseWraparound)
+    esccmd.DECSET(esccmd.ReverseWraparound())
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(5, 10)
     esccmd.CUP(Point(1, 3))
@@ -83,13 +83,20 @@ class BSTests(object):
     Reverse-wrap is a feature of xterm since its first release in 1986.
     The X10.4 version would reverse-wrap (as some hardware terminals did)
     from the upper-left corner of the screen to the lower-right.
+
     Left/right margin support, which was added to xterm in 2012,
     modified the reverse-wrap feature to limit the cursor to those margins.
+
     Because top/bottom margins should be treated consistently,
     xterm was modified in 2018 to further amend the handling of
-    reverse-wrap."""
+    reverse-wrap.
+
+    In 2023, xterm was modified to change the behavior of private mode 45
+    to limit it to the original goal (assisting editing of long wrapped
+    lines), and add a new private mode 1045 which behaves like the original
+    private mode (allowing wrapping around the top/bottom lines)."""
     esccmd.DECSET(esccmd.DECAWM)
-    esccmd.DECSET(esccmd.ReverseWraparound)
+    esccmd.DECSET(esccmd.ReverseWraparound())
     esccmd.DECSTBM(2, 5)
     esccmd.CUP(Point(1, 2))
     escio.Write(esc.BS)
