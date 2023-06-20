@@ -8,9 +8,9 @@ class DECDSRTests(object):
     esccmd.DA2()
     params = escio.ReadCSI('c', expected_prefix='>')
     myLevel = params[0]
-    if myLevel < 18:
-      return 2
-    elif myLevel <= 24:
+    if myLevel <= 24:
+      if myLevel < 18:
+        return 2
       return 3
     return 4
 

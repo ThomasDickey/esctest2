@@ -15,6 +15,7 @@ import escutil
 import tests
 
 def init():
+  '''Initialize ESC-tester'''
   global newline
   global logfile
   global log
@@ -32,9 +33,11 @@ def init():
   escio.Init()
 
 def shutdown():
+  '''Turn off terminal modes used for testing.'''
   escio.Shutdown()
 
 def reset():
+  '''Reset terminal to known state, at the beginning of each unit test.'''
   esccmd.DECSCL(60 + esc.vtLevel, 1)
 
   escio.use8BitControls = False
@@ -96,6 +99,7 @@ def CheckForKnownBug(name, method):
   return escutil.ReasonForKnownBugInMethod(method)
 
 def RunTest(name, method):
+  '''Run one test.'''
   ok = True
   esclog.LogInfo("Run test: " + name)
   try:
@@ -156,6 +160,7 @@ def ListKnownBugs():
       esclog.LogInfo("%s: %s" % (name, reason))
 
 def RunTests():
+  '''Run all unit-tests.'''
   failed = 0
   passed = 0
   knownBugs = 0
@@ -198,6 +203,7 @@ def plural(word, count, caps=False):
   return str(count) + " " + word + suffix
 
 def main():
+  '''Main program of ESC-tester.'''
   init()
 
   try:

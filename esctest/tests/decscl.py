@@ -1,3 +1,8 @@
+""" level 1, 2, 3, 4
+RIS on change
+7 vs 8 bit
+"""
+
 from esc import empty
 import esccmd
 import escio
@@ -9,11 +14,6 @@ from escutil import GetScreenSize
 from escutil import knownBug
 from escutil import vtLevel
 from esctypes import InternalError, Point, Rect
-
-""" level 1, 2, 3, 4
-RIS on change
-7 vs 8 bit
-"""
 
 class DECSCLTests(object):
   """VT Level 1 doesn't have any distinguishing features that are testable that
