@@ -145,7 +145,7 @@ def ReadCSI(expected_final, expected_prefix=None):
     if c == ";":
       params.append(int(current_param))
       current_param = ""
-    elif c >= '0' and c <= '9':
+    elif '0' <= c <= '9':
       current_param += c
     else:
       # Read all the final characters, asserting they match.

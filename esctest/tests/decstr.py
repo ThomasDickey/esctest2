@@ -161,6 +161,11 @@ class DECSTRTests(object):
     # Perform soft reset
     esccmd.DECSTR()
 
+    # current cursor position should still be the upper-left
+    position = GetCursorPosition()
+    AssertEQ(position.x(), 1)
+    AssertEQ(position.y(), 1)
+
     # Ensure output goes to screen
     escio.Write("X")
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["X"])

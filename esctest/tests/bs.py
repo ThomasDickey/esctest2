@@ -1,4 +1,5 @@
 import esc
+import escargs
 import esccmd
 import escio
 
@@ -131,3 +132,37 @@ class BSTests(object):
     escio.Write("X")
     AssertScreenCharsInRectEqual(Rect(size.width() - 1, 1, size.width(), 1),
                                  ["Xb"])
+
+  def test_BS_AfterNoWrappedInlines(self):
+    '''Backspace after lines that did not wrap will not wrap to prior lines'''
+    DECSET(esccmd.DECAWM)
+    DECSET(esccmd.ReverseWrapInline)
+    size = GetScreenSize()
+    fill = "*" * (size.width() - 2) + "\n"
+    CUP(Point(1, 3))
+    # write two lines without wrapping
+    escio.Write(fill)
+    escio.Write(fill)
+    # write enough backspaces to go before the two lines, if unconstrained
+    CUP(Point(5, 5))
+    escio.Write(esc.BS * size.width() * 2)
+    if escargs.args.xterm_reverse_wrap >= 383:
+      AssertEQ(GetCursorPosition(), Point(1, 4))
+    else:
+      AssertEQ(GetCursorPosition(), Point(5, 3))
+
+  def test_BS_AfterOneWrappedInline(self):
+    '''Backspace after wrapped line may wrap to the beginning of the line.'''
+    DECSET(esccmd.DECAWM)
+    DECSET(esccmd.ReverseWrapInline)
+    size = GetScreenSize()
+    fill = "*" * (size.width() + 2) * 2
+    # write two copies of filler, each a little longer than the line size.
+    CUP(Point(1, 3))
+    escio.Write(fill + "\n" + fill)
+    # backspace enough to go before both copies, if unconstrained
+    escio.Write(esc.BS * (size.width() * 5))
+    if escargs.args.xterm_reverse_wrap >= 383:
+      AssertEQ(GetCursorPosition(), Point(1, 6))
+    else:
+      AssertEQ(GetCursorPosition(), Point(9, 3))

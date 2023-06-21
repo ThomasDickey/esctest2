@@ -14,10 +14,6 @@ class DECDSRTests(object):
       return 3
     return 4
 
-  # TODO: It looks like this code didn't exist until at least VT level 3 was
-  # introduced, so I'm not sure it makes sense to test it in a term that
-  # returns a lower VT level. I plan to go back and update all the tests for
-  # different VT level capabilities.
   @vtLevel(3)
   def test_DECDSR_DECXCPR(self):
     """DECXCPR reports the cursor position. Response is:

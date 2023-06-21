@@ -65,7 +65,6 @@ class DECSETTests(object):
     # erase the screen.
     esccmd.DECRESET(esccmd.DECNCSM)
 
-    """Set 132 column mode."""
     # From the docs:
     # When the terminal receives the sequence, the screen is erased and the
     # cursor moves to the home position. This also sets the scrolling region
