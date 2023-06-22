@@ -5,7 +5,9 @@ from esctypes import Point, Rect
 from escutil import AssertScreenCharsInRectEqual, knownBug, vtLevel
 
 class EDTests(object):
-  def prepare(self):
+
+  @classmethod
+  def prepare(cls):
     """Sets up the display as:
     a
 
@@ -24,7 +26,8 @@ class EDTests(object):
 
     esccmd.CUP(Point(2, 3))
 
-  def prepare_wide(self):
+  @classmethod
+  def prepare_wide(cls):
     """Sets up the display as:
     abcde
     fghij
@@ -151,8 +154,9 @@ class EDTests(object):
                                   empty() * 5,
                                   empty() * 5])
 
+  @classmethod
   @vtLevel(4)
-  def test_ED_doesNotRespectDECProtection(self):
+  def test_ED_doesNotRespectDECProtection(cls):
     """ED should not respect DECSCA"""
     escio.Write("a")
     escio.Write("b")
@@ -164,10 +168,11 @@ class EDTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
                                  [empty() * 3])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2",
             reason="Protection not implemented.")
-  def test_ED_respectsISOProtection(self):
+  def test_ED_respectsISOProtection(cls):
     """ED respects SPA/EPA."""
     escio.Write("a")
     escio.Write("b")

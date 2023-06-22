@@ -5,7 +5,9 @@ from esctypes import Point, Rect
 from escutil import AssertScreenCharsInRectEqual, knownBug, vtLevel
 
 class ELTests(object):
-  def prepare(self):
+
+  @classmethod
+  def prepare(cls):
     """Initializes the screen to abcdefghij on the first line with the cursor
     on the 'e'."""
     esccmd.CUP(Point(1, 1))
@@ -56,8 +58,9 @@ class ELTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
                                  [10 * empty()])
 
+  @classmethod
   @vtLevel(4)
-  def test_EL_doesNotRespectDECProtection(self):
+  def test_EL_doesNotRespectDECProtection(cls):
     """EL respects DECSCA."""
     escio.Write("a")
     escio.Write("b")
@@ -69,10 +72,11 @@ class ELTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
                                  [empty() * 3])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2",
             reason="Protection not implemented.")
-  def test_EL_respectsISOProtection(self):
+  def test_EL_respectsISOProtection(cls):
     """EL respects SPA/EPA."""
     escio.Write("a")
     escio.Write("b")

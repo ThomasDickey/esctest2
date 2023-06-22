@@ -5,7 +5,9 @@ import escio
 from escutil import AssertEQ, AssertGE
 
 class DA2Tests(object):
-  def handleDA2Response(self):
+
+  @classmethod
+  def handleDA2Response(cls):
     params = escio.ReadCSI('c', expected_prefix='>')
     if escargs.args.expected_terminal == "xterm":
       if esc.vtLevel == 5:

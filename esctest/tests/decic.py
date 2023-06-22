@@ -11,9 +11,10 @@ from esctypes import Point, Rect
 
 class DECICTests(object):
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_DECIC_DefaultParam(self):
+  def test_DECIC_DefaultParam(cls):
     """ Test DECIC with default parameter """
     esccmd.CUP(Point(1, 1))
     AssertEQ(GetCursorPosition().x(), 1)
@@ -26,9 +27,10 @@ class DECICTests(object):
                                  ["a" + blank() + "bcdefg",
                                   "A" + blank() + "BCDEFG"])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_DECIC_ExplicitParam(self):
+  def test_DECIC_ExplicitParam(cls):
     """Test DECIC with explicit parameter. Also verifies lines above and below
     the cursor are affected."""
     esccmd.CUP(Point(1, 1))
@@ -43,9 +45,10 @@ class DECICTests(object):
                                   "A" + blank() * 2 + "BCDEFG",
                                   "z" + blank() * 2 + "yxwvut"])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_DECIC_CursorWithinTopBottom(self):
+  def test_DECIC_CursorWithinTopBottom(cls):
     """DECIC should only affect rows inside region."""
     esccmd.DECSTBM()
     esccmd.DECSET(esccmd.DECLRMM)
@@ -70,9 +73,10 @@ class DECICTests(object):
                                   "z" + blank() * 2 + "yxwvut",
                                   "ZYXWVUT" + empty() * 2])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented", noop=True)
-  def test_DECIC_IsNoOpWhenCursorBeginsOutsideScrollRegion(self):
+  def test_DECIC_IsNoOpWhenCursorBeginsOutsideScrollRegion(cls):
     """Ensure DECIC does nothing when the cursor starts out outside the scroll
     region."""
     esccmd.CUP(Point(1, 1))
@@ -94,9 +98,10 @@ class DECICTests(object):
                                  ["abcdefg",
                                   "ABCDEFG"])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_DECIC_ScrollOffRightEdge(self):
+  def test_DECIC_ScrollOffRightEdge(cls):
     """Test DECIC behavior when pushing text off the right edge. """
     width = GetScreenSize().width()
     s = "abcdefg"
@@ -114,9 +119,10 @@ class DECICTests(object):
     # Ensure there is no wrap-around.
     AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [empty(), empty()])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_DECIC_ScrollEntirelyOffRightEdge(self):
+  def test_DECIC_ScrollEntirelyOffRightEdge(cls):
     """Test DECIC behavior when pushing text off the right edge. """
     width = GetScreenSize().width()
     esccmd.CUP(Point(1, 1))
@@ -134,9 +140,10 @@ class DECICTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3),
                                  [blank(), blank()])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_DECIC_ScrollOffRightMarginInScrollRegion(self):
+  def test_DECIC_ScrollOffRightMarginInScrollRegion(cls):
     """Test DECIC when cursor is within the scroll region."""
     esccmd.CUP(Point(1, 1))
     s = "abcdefg"

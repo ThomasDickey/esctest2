@@ -11,7 +11,9 @@ from esctypes import Point, Rect
 
 class DECCRATests(object):
   """Copy rectangular area."""
-  def prepare(self):
+
+  @classmethod
+  def prepare(cls):
     esccmd.CUP(Point(1, 1))
     escio.Write("abcdefgh" + CR + LF)
     escio.Write("ijklmnop" + CR + LF)
@@ -221,9 +223,10 @@ class DECCRATests(object):
                                   "QRSTz01X",
                                   "YZ6789!@"])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_DECCRA_overlyLargeSourceClippedToScreenSize(self):
+  def test_DECCRA_overlyLargeSourceClippedToScreenSize(cls):
     size = GetScreenSize()
 
     # Put ab, cX in the bottom right

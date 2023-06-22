@@ -1,4 +1,4 @@
-# The following CSI codes supported by xcode are not tested.
+# The following CSI codes supported by xterm are not tested.
 # Query ReGIS/Sixel attributes:  CSI ? Pi ; Pa ; P vS
 # Initiate highlight mouse tracking: CSI Ps ; Ps ; Ps ; Ps ; Ps T
 # Media Copy (MC): CSI Pm i

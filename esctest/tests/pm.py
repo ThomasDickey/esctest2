@@ -6,9 +6,11 @@ from escutil import AssertScreenCharsInRectEqual, knownBug, optionRequired, vtLe
 from esctypes import Rect
 
 class PMTests(object):
+
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
-  def test_PM_Basic(self):
+  def test_PM_Basic(cls):
     esccmd.PM()
     escio.Write("xyz")
     escio.Write(ST)
@@ -17,10 +19,11 @@ class PMTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
                                  ["A" + empty() * 2])
 
+  @classmethod
   @vtLevel(4)
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   @knownBug(terminal="iTerm2", reason="PM not implemented.")
-  def test_PM_8bit(self):
+  def test_PM_8bit(cls):
     escio.use8BitControls = True
     escio.Write(S8C1T)
     esccmd.PM()

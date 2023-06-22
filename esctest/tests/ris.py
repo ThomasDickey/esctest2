@@ -11,22 +11,26 @@ from escutil import vtLevel
 from esctypes import Point, Rect
 
 class RISTests(object):
+
+  @classmethod
   @vtLevel(4)
-  def test_RIS_ClearsScreen(self):
+  def test_RIS_ClearsScreen(cls):
     escio.Write("x")
 
     esccmd.RIS()
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [empty()])
 
-  def test_RIS_CursorToOrigin(self):
+  @classmethod
+  def test_RIS_CursorToOrigin(cls):
     esccmd.CUP(Point(5, 6))
 
     esccmd.RIS()
 
     AssertEQ(GetCursorPosition(), Point(1, 1))
 
-  def test_RIS_ResetTabs(self):
+  @classmethod
+  def test_RIS_ResetTabs(cls):
     esccmd.HTS()
     esccmd.CUF()
     esccmd.HTS()
@@ -38,7 +42,8 @@ class RISTests(object):
     escio.Write(TAB)
     AssertEQ(GetCursorPosition(), Point(9, 1))
 
-  def test_RIS_ResetTitleMode(self):
+  @classmethod
+  def test_RIS_ResetTitleMode(cls):
     esccmd.RM_Title(esccmd.SET_UTF8, esccmd.QUERY_UTF8)
     esccmd.SM_Title(esccmd.SET_HEX, esccmd.QUERY_HEX)
 
@@ -54,8 +59,9 @@ class RISTests(object):
     esccmd.ChangeIconTitle("a")
     AssertEQ(GetIconTitle(), "a")
 
+  @classmethod
   @vtLevel(4)
-  def test_RIS_ExitAltScreen(self):
+  def test_RIS_ExitAltScreen(cls):
     escio.Write("m")
     esccmd.DECSET(esccmd.ALTBUF)
     esccmd.CUP(Point(1, 1))
@@ -67,7 +73,8 @@ class RISTests(object):
     esccmd.DECSET(esccmd.ALTBUF)
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["a"])
 
-  def test_RIS_ResetDECCOLM(self):
+  @classmethod
+  def test_RIS_ResetDECCOLM(cls):
     """Test whether RIS resets DECCOLM.
 
     The control sequence allowing 80/132 switching is an xterm feature
@@ -83,8 +90,9 @@ class RISTests(object):
 
     AssertEQ(GetScreenSize().width(), 80)
 
+  @classmethod
   @vtLevel(4)
-  def test_RIS_ResetDECOM(self):
+  def test_RIS_ResetDECOM(cls):
     esccmd.DECSTBM(5, 7)
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(5, 7)
@@ -98,8 +106,9 @@ class RISTests(object):
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["X"])
 
+  @classmethod
   @vtLevel(4)
-  def test_RIS_RemoveMargins(self):
+  def test_RIS_RemoveMargins(cls):
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(3, 5)
     esccmd.DECSTBM(4, 6)

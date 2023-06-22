@@ -3,7 +3,9 @@ from escutil import AssertEQ, GetCursorPosition, GetScreenSize, vtLevel
 from esctypes import Point
 
 class VPATests(object):
-  def test_VPA_DefaultParams(self):
+
+  @classmethod
+  def test_VPA_DefaultParams(cls):
     """With no params, VPA moves to 1st line."""
     esccmd.VPA(6)
 
@@ -15,7 +17,8 @@ class VPATests(object):
     position = GetCursorPosition()
     AssertEQ(position.y(), 1)
 
-  def test_VPA_StopsAtBottomEdge(self):
+  @classmethod
+  def test_VPA_StopsAtBottomEdge(cls):
     """VPA won't go past the bottom edge."""
     # Position on 5th row
     esccmd.CUP(Point(6, 5))
@@ -29,7 +32,8 @@ class VPATests(object):
     AssertEQ(position.x(), 6)
     AssertEQ(position.y(), size.height())
 
-  def test_VPA_DoesNotChangeColumn(self):
+  @classmethod
+  def test_VPA_DoesNotChangeColumn(cls):
     """VPA moves the specified line and does not change the column."""
     esccmd.CUP(Point(6, 5))
     esccmd.VPA(2)
@@ -38,8 +42,9 @@ class VPATests(object):
     AssertEQ(position.x(), 6)
     AssertEQ(position.y(), 2)
 
+  @classmethod
   @vtLevel(4)
-  def test_VPA_IgnoresOriginMode(self):
+  def test_VPA_IgnoresOriginMode(cls):
     """VPA does not respect origin mode."""
     # Set a scroll region.
     esccmd.DECSTBM(6, 11)

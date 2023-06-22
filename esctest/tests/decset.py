@@ -58,8 +58,10 @@ import escio
 
 # TODO: test DECANM. It sets the font to USASCII and sets VT100 mode
 class DECSETTests(object):
+
+  @classmethod
   @vtLevel(4)
-  def test_DECSET_DECCOLM(self):
+  def test_DECSET_DECCOLM(cls):
     """DECNCSM - No Clearing Screen On Column Change"""
     # Ensure this is reset from other tests.  Otherwise DECCOLM will not
     # erase the screen.
@@ -104,8 +106,9 @@ class DECSETTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 2, 5, 3), ["Hello", "World"])
     AssertScreenCharsInRectEqual(Rect(5, 5, 5, 5), [empty()])
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSET_DECOM(self):
+  def test_DECSET_DECOM(cls):
     """Set origin mode. Cursor positioning is relative to the scroll region's
     top left."""
     # Origin mode allows cursor addressing relative to a user-defined origin.
@@ -125,8 +128,9 @@ class DECSETTests(object):
     # mode, so this is an extra wrinkle in this test.
     AssertScreenCharsInRectEqual(Rect(5, 5, 5, 5), ["X"])
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSET_DECOM_SoftReset(self):
+  def test_DECSET_DECOM_SoftReset(cls):
     """Soft reset turns off DECOM."""
     esccmd.DECSTBM(5, 7)
     esccmd.DECSET(esccmd.DECLRMM)
@@ -139,8 +143,9 @@ class DECSETTests(object):
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["X"])
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSET_DECOM_DECRQCRA(self):
+  def test_DECSET_DECOM_DECRQCRA(cls):
     """DECRQCRA should be relative to the origin in origin mode. DECRQCRA
     doesn't have its own test so this is tested here instead."""
     esccmd.CUP(Point(5, 5))
@@ -153,8 +158,9 @@ class DECSETTests(object):
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["X"])
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSET_DECAWM(self):
+  def test_DECSET_DECAWM(cls):
     """Auto-wrap mode."""
     size = GetScreenSize()
     esccmd.CUP(Point(size.width() - 1, 1))
@@ -170,7 +176,8 @@ class DECSETTests(object):
     AssertScreenCharsInRectEqual(Rect(size.width() - 1, 1, size.width(), 1), ["AC"])
     AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), ["c"])
 
-  def test_DECSET_DECAWM_CursorAtRightMargin(self):
+  @classmethod
+  def test_DECSET_DECAWM_CursorAtRightMargin(cls):
     """If you start at column 1 and write N+1 characters (where N is the width of
     the window) the cursor's position should go: 1, 2, ..., N, N, 2."""
     esccmd.DECSET(esccmd.DECAWM)
@@ -194,8 +201,9 @@ class DECSETTests(object):
     escio.Write("x")
     AssertEQ(GetCursorPosition().x(), 2)
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSET_DECAWM_OnRespectsLeftRightMargin(self):
+  def test_DECSET_DECAWM_OnRespectsLeftRightMargin(cls):
     """Auto-wrap mode on respects left-right margins."""
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(5, 9)
@@ -206,8 +214,9 @@ class DECSETTests(object):
 
     AssertScreenCharsInRectEqual(Rect(5, 8, 9, 9), [empty() * 3 + "ab", "cdef" + empty()])
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSET_DECAWM_OffRespectsLeftRightMargin(self):
+  def test_DECSET_DECAWM_OffRespectsLeftRightMargin(cls):
     """Auto-wrap mode off respects left-right margins."""
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(5, 9)
@@ -219,7 +228,8 @@ class DECSETTests(object):
     AssertEQ(GetCursorPosition().x(), 9)
     AssertScreenCharsInRectEqual(Rect(5, 8, 9, 9), [empty() * 5, empty() * 3 + "af"])
 
-  def test_DECSET_Allow80To132(self):
+  @classmethod
+  def test_DECSET_Allow80To132(cls):
     """DECCOLM only has an effect if Allow80To132 is on."""
     # There are four tests:
     #          Allowed   Not allowed
@@ -263,14 +273,16 @@ class DECSETTests(object):
     esccmd.DECRESET(esccmd.DECCOLM)
     AssertEQ(GetScreenSize().width(), 132)
 
-  def fillLineAndWriteTab(self):
+  @classmethod
+  def fillLineAndWriteTab(cls):
     escio.Write(CR + LF)
     size = GetScreenSize()
     for _ in range(size.width()):
       escio.Write("x")
     escio.Write(TAB)
 
-  def test_DECSET_DECAWM_TabDoesNotWrapAround(self):
+  @classmethod
+  def test_DECSET_DECAWM_TabDoesNotWrapAround(cls):
     """In auto-wrap mode, tabs to not wrap to the next line."""
     esccmd.DECSET(esccmd.DECAWM)
     size = GetScreenSize()
@@ -280,8 +292,9 @@ class DECSETTests(object):
     AssertEQ(GetCursorPosition().y(), 1)
     escio.Write("X")
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSET_DECAWM_NoLineWrapOnTabWithLeftRightMargin(self):
+  def test_DECSET_DECAWM_NoLineWrapOnTabWithLeftRightMargin(cls):
     esccmd.DECSET(esccmd.DECAWM)
     esccmd.XTERM_WINOPS(esccmd.WINOP_RESIZE_CHARS,
                         24,
@@ -321,7 +334,8 @@ class DECSETTests(object):
     escio.Write("2")
     AssertScreenCharsInRectEqual(Rect(1, 5, 1, 5), ["2"])
 
-  def test_DECSET_ReverseWraparound_BS(self):
+  @classmethod
+  def test_DECSET_ReverseWraparound_BS(cls):
     """xterm supports DECSET 45 to toggle 'reverse wraparound'. Both DECAWM and
     45 must be set."""
     # iTerm2 turns reverse wraparound on by default, while xterm does not.
@@ -331,7 +345,8 @@ class DECSETTests(object):
     escio.Write(BS)
     AssertEQ(GetCursorPosition().x(), GetScreenSize().width())
 
-  def test_DECSET_ReverseWraparoundLastCol_BS(self):
+  @classmethod
+  def test_DECSET_ReverseWraparoundLastCol_BS(cls):
     """If the cursor is in the last column and a character was just output and
     reverse-wraparound is on then backspace by 1 has no effect."""
     esccmd.DECSET(esccmd.ReverseWraparound())
@@ -345,7 +360,8 @@ class DECSETTests(object):
     escio.Write(BS)
     AssertEQ(GetCursorPosition().x(), size.width())
 
-  def test_DECSET_ReverseWraparound_Multi(self):
+  @classmethod
+  def test_DECSET_ReverseWraparound_Multi(cls):
     size = GetScreenSize()
     esccmd.CUP(Point(size.width() - 1, 1))
     escio.Write("abcd")
@@ -354,7 +370,8 @@ class DECSETTests(object):
     esccmd.CUB(4)
     AssertEQ(GetCursorPosition().x(), size.width() - 1)
 
-  def test_DECSET_ResetReverseWraparoundDisablesIt(self):
+  @classmethod
+  def test_DECSET_ResetReverseWraparoundDisablesIt(cls):
     """DECRESET of reverse wraparound prevents it from happening."""
     # Note that iTerm disregards the value of ReverseWraparound when there's a
     # soft EOL on the preceding line and always wraps.
@@ -364,7 +381,8 @@ class DECSETTests(object):
     escio.Write(BS)
     AssertEQ(GetCursorPosition().x(), 1)
 
-  def test_DECSET_ReverseWraparound_RequiresDECAWM(self):
+  @classmethod
+  def test_DECSET_ReverseWraparound_RequiresDECAWM(cls):
     """Reverse wraparound only works if DECAWM is set."""
     # iTerm2 turns reverse wraparound on by default, while xterm does not.
     esccmd.CUP(Point(1, 2))
@@ -373,8 +391,9 @@ class DECSETTests(object):
     escio.Write(BS)
     AssertEQ(GetCursorPosition().x(), 1)
 
+  @classmethod
   @vtLevel(4)
-  def doAltBuftest(self, code, altGetsClearedBeforeToMain, cursorSaved, movesCursorOnEnter=False):
+  def doAltBuftest(cls, code, altGetsClearedBeforeToMain, cursorSaved, movesCursorOnEnter=False):
     """|code| is the code to test with, either 47 or 1047."""
     # Scribble in main screen
     escio.Write("abc" + CR + LF + "abc")
@@ -451,8 +470,9 @@ class DECSETTests(object):
     entering alt and restores it after returning to main."""
     self.doAltBuftest(esccmd.OPT_ALTBUF_CURSOR, True, True, True)
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSET_DECLRMM(self):
+  def test_DECSET_DECLRMM(cls):
     """Left-right margin. This is tested extensively in many other places as well."""
     # Turn on margins and write.
     esccmd.DECSET(esccmd.DECLRMM)
@@ -470,8 +490,9 @@ class DECSETTests(object):
     escio.Write("ABCDEFGH")
     AssertScreenCharsInRectEqual(Rect(1, 1, 8, 1), ["ABCDEFGH"])
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSET_DECLRMM_MarginsResetByDECSTR(self):
+  def test_DECSET_DECLRMM_MarginsResetByDECSTR(cls):
     esccmd.DECSLRM(2, 4)
     esccmd.DECSTR()
     esccmd.DECSET(esccmd.DECLRMM)
@@ -479,8 +500,9 @@ class DECSETTests(object):
     escio.Write("abc")
     AssertEQ(GetCursorPosition().x(), 6)
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSET_DECLRMM_ModeResetByDECSTR(self):
+  def test_DECSET_DECLRMM_ModeResetByDECSTR(cls):
     """ DEC STD 070 says DECSTR resets left/right mode."""
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSTR()
@@ -489,11 +511,12 @@ class DECSETTests(object):
     escio.Write("abc")
     AssertEQ(GetCursorPosition().x(), 6)
 
+  @classmethod
   @vtLevel(5)
   @knownBug(terminal="iTerm2", reason="DECNCSM not implemented")
   @optionRequired(terminal="xterm",
                   option=escargs.XTERM_WINOPS_ENABLED)
-  def test_DECSET_DECNCSM(self):
+  def test_DECSET_DECNCSM(cls):
     """From the manual: When enabled, a column mode change (either through
     Set-Up or by the escape sequence DECCOLM) does not clear the screen. When
     disabled, the column mode change clears the screen as a side effect."""
@@ -534,8 +557,9 @@ class DECSETTests(object):
     esccmd.DECRESET(esccmd.DECCOLM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [empty()])
 
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Save/restore cursor not implemented")
-  def test_DECSET_SaveRestoreCursor(self):
+  def test_DECSET_SaveRestoreCursor(cls):
     """Set saves the cursor position. Reset restores it."""
     esccmd.CUP(Point(2, 3))
     esccmd.DECSET(esccmd.SaveRestoreCursor)

@@ -4,8 +4,10 @@ import escio
 from escutil import AssertEQ, AssertGE, AssertTrue, knownBug
 
 class DATests(object):
+
+  @classmethod
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't report 18 or 22.")
-  def handleDAResponse(self):
+  def handleDAResponse(cls):
     params = escio.ReadCSI('c', expected_prefix='?')
     if escargs.args.expected_terminal == "xterm":
       # This is for a default build. There are various options that could

@@ -33,23 +33,27 @@ from escutil import vtLevel
 
 class DECFITests(object):
   """Move cursor forward or scroll data within margins right."""
+
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
-  def test_DECFI_Basic(self):
+  def test_DECFI_Basic(cls):
     esccmd.CUP(Point(5, 6))
     esccmd.DECFI()
     AssertEQ(GetCursorPosition(), Point(6, 6))
 
+  @classmethod
   @vtLevel(4)
-  def test_DECFI_NoWrapOnRightEdge(self):
+  def test_DECFI_NoWrapOnRightEdge(cls):
     size = GetScreenSize()
     esccmd.CUP(Point(size.width(), 2))
     esccmd.DECFI()
     AssertEQ(GetCursorPosition(), Point(size.width(), 2))
 
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   @vtLevel(4)
-  def test_DECFI_Scrolls(self):
+  def test_DECFI_Scrolls(cls):
     strings = ["abcde",
                "fghij",
                "klmno",
@@ -75,9 +79,10 @@ class DECFITests(object):
                                   "prs" + empty() + "t",
                                   "uvwxy"])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
-  def test_DECFI_RightOfMargin(self):
+  def test_DECFI_RightOfMargin(cls):
     """DEC STD 070 says DECFI can move when outside the margins."""
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(3, 5)
@@ -85,9 +90,10 @@ class DECFITests(object):
     esccmd.DECFI()
     AssertEQ(GetCursorPosition(), Point(7, 1))
 
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   @vtLevel(4)
-  def test_DECFI_WholeScreenScrolls(self):
+  def test_DECFI_WholeScreenScrolls(cls):
     """Starting with the cursor at the right edge of the page (outside the
     margins), verify that DECFI is ignored."""
     size = GetScreenSize()

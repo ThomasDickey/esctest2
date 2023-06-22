@@ -26,9 +26,11 @@ from escutil import vtLevel
 from esctypes import Point, Rect
 
 class DECDCTests(object):
+
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_DECDC_DefaultParam(self):
+  def test_DECDC_DefaultParam(cls):
     """Test DECDC with default parameter """
     esccmd.CUP(Point(1, 1))
     AssertEQ(GetCursorPosition().x(), 1)
@@ -41,9 +43,10 @@ class DECDCTests(object):
                                  ["acdefg" + empty(),
                                   "ACDEFG" + empty()])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_DECDC_ExplicitParam(self):
+  def test_DECDC_ExplicitParam(cls):
     """Test DECDC with explicit parameter. Also verifies lines above and below
     the cursor are affected."""
     esccmd.CUP(Point(1, 1))
@@ -58,9 +61,10 @@ class DECDCTests(object):
                                   "ADEFG" + empty() * 2,
                                   "zwvut" + empty() * 2])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_DECDC_CursorWithinTopBottom(self):
+  def test_DECDC_CursorWithinTopBottom(cls):
     """DECDC should only affect rows inside region."""
     esccmd.DECSTBM()
     esccmd.DECSET(esccmd.DECLRMM)
@@ -85,9 +89,10 @@ class DECDCTests(object):
                                   "zwvut" + empty() * 2,
                                   "ZYXWVUT"])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented", noop=True)
-  def test_DECDC_IsNoOpWhenCursorBeginsOutsideScrollRegion(self):
+  def test_DECDC_IsNoOpWhenCursorBeginsOutsideScrollRegion(cls):
     """Ensure DECDC does nothing when the cursor starts out outside the scroll
     region.
 
@@ -113,9 +118,10 @@ class DECDCTests(object):
                                  ["abcdefg",
                                   "ABCDEFG"])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_DECDC_DeleteAll(self):
+  def test_DECDC_DeleteAll(cls):
     """Test DECDC behavior when deleting more columns than are available."""
     width = GetScreenSize().width()
     s = "abcdefg"
@@ -133,9 +139,10 @@ class DECDCTests(object):
     # Ensure there is no wrap-around.
     AssertScreenCharsInRectEqual(Rect(1, 2, 1, 3), [empty(), empty()])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_DECDC_DeleteWithLeftRightMargins(self):
+  def test_DECDC_DeleteWithLeftRightMargins(cls):
     """Test DECDC when cursor is within the scroll region."""
     esccmd.CUP(Point(1, 1))
     s = "abcdefg"
@@ -160,9 +167,10 @@ class DECDCTests(object):
                                   "ABDE" + empty() + "FG"])
 
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_DECDC_DeleteAllWithLeftRightMargins(self):
+  def test_DECDC_DeleteAllWithLeftRightMargins(cls):
     """Test DECDC when cursor is within the scroll region."""
     esccmd.CUP(Point(1, 1))
     s = "abcdefg"

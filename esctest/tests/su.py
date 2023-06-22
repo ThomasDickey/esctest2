@@ -5,7 +5,9 @@ from esctypes import Point, Rect
 from escutil import AssertScreenCharsInRectEqual, GetScreenSize, vtLevel
 
 class SUTests(object):
-  def prepare(self):
+
+  @classmethod
+  def prepare(cls):
     """Sets the screen up as
     abcde
     fghij
@@ -50,8 +52,9 @@ class SUTests(object):
                       empty() * 5]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
+  @classmethod
   @vtLevel(4)
-  def test_SU_CanClearScreen(self):
+  def test_SU_CanClearScreen(cls):
     """An SU equal to the height of the screen clears it."""
     # Fill the screen with 0001, 0002, ..., height. Fill expected_lines with empty rows.
     height = GetScreenSize().height()

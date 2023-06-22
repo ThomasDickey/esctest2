@@ -11,22 +11,26 @@ from escutil import vtLevel
 
 class DECBITests(object):
   """Move cursor back or scroll data within margins right."""
+
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
-  def test_DECBI_Basic(self):
+  def test_DECBI_Basic(cls):
     esccmd.CUP(Point(5, 6))
     esccmd.DECBI()
     AssertEQ(GetCursorPosition(), Point(4, 6))
 
+  @classmethod
   @vtLevel(4)
-  def test_DECBI_NoWrapOnLeftEdge(self):
+  def test_DECBI_NoWrapOnLeftEdge(cls):
     esccmd.CUP(Point(1, 2))
     esccmd.DECBI()
     AssertEQ(GetCursorPosition(), Point(1, 2))
 
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   @vtLevel(4)
-  def test_DECBI_Scrolls(self):
+  def test_DECBI_Scrolls(cls):
     strings = ["abcde",
                "fghij",
                "klmno",
@@ -52,9 +56,10 @@ class DECBITests(object):
                                   "p" + blank() + "qrt",
                                   "uvwxy"])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
-  def test_DECBI_LeftOfMargin(self):
+  def test_DECBI_LeftOfMargin(cls):
     """Test DECBI (back-index) when the cursor is before the left-margin.
 
     DEC STD 070 says DECBI can move when outside the margins."""
@@ -64,9 +69,10 @@ class DECBITests(object):
     esccmd.DECBI()
     AssertEQ(GetCursorPosition(), Point(1, 1))
 
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   @vtLevel(4)
-  def test_DECBI_WholeScreenScrolls(self):
+  def test_DECBI_WholeScreenScrolls(cls):
     """Test DECBI (back-index) when the cursor is before the left-margin, but
     at the left edge of the screen.
 

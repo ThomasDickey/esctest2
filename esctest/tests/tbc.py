@@ -6,8 +6,9 @@ from esctypes import Point
 
 class TBCTests(object):
 
+  @classmethod
   @vtLevel(1)
-  def test_TBC_Default(self):
+  def test_TBC_Default(cls):
     """No param clears the tab stop at the cursor."""
     escio.Write(TAB)
     AssertEQ(GetCursorPosition().x(), 9)
@@ -16,8 +17,9 @@ class TBCTests(object):
     escio.Write(TAB)
     AssertEQ(GetCursorPosition().x(), 17)
 
+  @classmethod
   @vtLevel(1)
-  def test_TBC_0(self):
+  def test_TBC_0(cls):
     """0 param clears the tab stop at the cursor."""
     escio.Write(TAB)
     AssertEQ(GetCursorPosition().x(), 9)
@@ -26,8 +28,9 @@ class TBCTests(object):
     escio.Write(TAB)
     AssertEQ(GetCursorPosition().x(), 17)
 
+  @classmethod
   @vtLevel(1)
-  def test_TBC_3(self):
+  def test_TBC_3(cls):
     """3 param clears all tab stops."""
     # Remove all tab stops
     esccmd.TBC(3)
@@ -41,8 +44,9 @@ class TBCTests(object):
     escio.Write(TAB)
     AssertEQ(GetCursorPosition().x(), 30)
 
+  @classmethod
   @vtLevel(1)
-  def test_TBC_NoOp(self):
+  def test_TBC_NoOp(cls):
     """Clearing a nonexistent tab stop should do nothing."""
     # Move to 10 and clear the tab stop
     esccmd.CUP(Point(10, 1))

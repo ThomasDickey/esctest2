@@ -4,7 +4,9 @@ from escutil import AssertEQ, AssertTrue, knownBug, vtLevel
 from esctypes import Point
 
 class DECDSRTests(object):
-  def getVTLevel(self):
+
+  @classmethod
+  def getVTLevel(cls):
     esccmd.DA2()
     params = escio.ReadCSI('c', expected_prefix='>')
     myLevel = params[0]
@@ -37,9 +39,10 @@ class DECDSRTests(object):
     else:
       AssertEQ(params, [6, 5])
 
+  @classmethod
   @vtLevel(2)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
-  def test_DECDSR_DSRPrinterPort(self):
+  def test_DECDSR_DSRPrinterPort(cls):
     """Requests printer status. The allowed responses are:
         CSI ? Pn n
       Where Pn is:
@@ -55,9 +58,10 @@ class DECDSRTests(object):
     AssertEQ(len(params), 1)
     AssertTrue(params[0] in [10, 11, 13, 18, 19])
 
+  @classmethod
   @vtLevel(2)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
-  def test_DECDSR_DSRUDKLocked(self):
+  def test_DECDSR_DSRUDKLocked(cls):
     """Tests if user-defined keys are locked or unlocked. The allowed repsonses are:
       CSI ? Pn n
     Where Pn is:
@@ -115,8 +119,9 @@ class DECDSRTests(object):
     if len(params) > 3:
       AssertTrue(params[3] in [0, 1, 4, 5])
 
+  @classmethod
   @vtLevel(4)
-  def doLocatorStatusTest(self, code):
+  def doLocatorStatusTest(cls, code):
     """I couldn't find docs on these codes outside xterm. 53 and 55 seem to be
     the same. Returns 50 if no locator, 53 if available."""
     esccmd.DECDSR(code)
@@ -135,9 +140,10 @@ class DECDSRTests(object):
   def test_DECDSR_DSRXtermLocatorStatus(self):
     self.doLocatorStatusTest(esccmd.DSRXtermLocatorStatus)
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
-  def test_DECDSR_LocatorType(self):
+  def test_DECDSR_LocatorType(cls):
     """Get the type of the locator (pointing device.)
     0 - unknown (not documented)
     1 - mouse
@@ -149,9 +155,10 @@ class DECDSRTests(object):
     AssertTrue(params[1] in [0, 1, 2])
   # 1 = mouse, 2 = tablet, pretty sure 1 is the only reasonable response.
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
-  def test_DECDSR_DECMSR(self):
+  def test_DECDSR_DECMSR(cls):
     """Get space available for macros. This test assumes it's always 0."""
     esccmd.DECDSR(esccmd.DECMSR)
     params = escio.ReadCSI('*{')
@@ -161,26 +168,29 @@ class DECDSRTests(object):
     AssertEQ(len(params), 1)
     AssertEQ(params[0], 0)
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
-  def test_DECDSR_DECCKSR(self):
+  def test_DECDSR_DECCKSR(cls):
     """Get checksum of macros. This test assumes it's always 0."""
     esccmd.DECDSR(Ps=esccmd.DECCKSR, Pid=123)
     value = escio.ReadDCS()
     AssertEQ(value, "123!~0000")
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
-  def test_DECDSR_DSRDataIntegrity(self):
+  def test_DECDSR_DSRDataIntegrity(cls):
     """Check for link errors. Should always report OK."""
     esccmd.DECDSR(esccmd.DSRIntegrityReport)
     params = escio.ReadCSI('n', expected_prefix='?')
     AssertEQ(len(params), 1)
     AssertEQ(params[0], 70)
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
-  def test_DECDSR_DSRMultipleSessionStatus(self):
+  def test_DECDSR_DSRMultipleSessionStatus(cls):
     """Checks on the status of multiple sessons. SSU refers to some proprietary
     DEC technology that multilexes multiple sessions over a single link using
     the "TDSMP" protocol. Lots of detail here:

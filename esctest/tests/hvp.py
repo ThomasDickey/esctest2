@@ -8,7 +8,9 @@ from escutil import vtLevel
 from esctypes import Point, Rect
 
 class HVPTests(object):
-  def test_HVP_DefaultParams(self):
+
+  @classmethod
+  def test_HVP_DefaultParams(cls):
     """With no params, HVP moves to 1,1."""
     esccmd.HVP(Point(6, 3))
 
@@ -22,7 +24,8 @@ class HVPTests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 1)
 
-  def test_HVP_RowOnly(self):
+  @classmethod
+  def test_HVP_RowOnly(cls):
     """Default column is 1."""
     esccmd.HVP(Point(6, 3))
 
@@ -36,7 +39,8 @@ class HVPTests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 2)
 
-  def test_HVP_ColumnOnly(self):
+  @classmethod
+  def test_HVP_ColumnOnly(cls):
     """Default row is 1."""
     esccmd.HVP(Point(6, 3))
 
@@ -50,7 +54,8 @@ class HVPTests(object):
     AssertEQ(position.x(), 2)
     AssertEQ(position.y(), 1)
 
-  def test_HVP_ZeroIsTreatedAsOne(self):
+  @classmethod
+  def test_HVP_ZeroIsTreatedAsOne(cls):
     """Zero args are treated as 1."""
     esccmd.HVP(Point(6, 3))
     esccmd.HVP(col=0, row=0)
@@ -58,7 +63,8 @@ class HVPTests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 1)
 
-  def test_HVP_OutOfBoundsParams(self):
+  @classmethod
+  def test_HVP_OutOfBoundsParams(cls):
     """With overly large parameters, HVP moves as far as possible down and right."""
     size = GetScreenSize()
     esccmd.HVP(Point(size.width() + 10, size.height() + 10))
@@ -67,8 +73,9 @@ class HVPTests(object):
     AssertEQ(position.x(), size.width())
     AssertEQ(position.y(), size.height())
 
+  @classmethod
   @vtLevel(4)
-  def test_HVP_RespectsOriginMode(self):
+  def test_HVP_RespectsOriginMode(cls):
     """HVP is relative to margins in origin mode."""
     # Set a scroll region.
     esccmd.DECSTBM(6, 11)

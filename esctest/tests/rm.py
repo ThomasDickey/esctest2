@@ -6,8 +6,10 @@ from esctypes import Point, Rect
 # AM, SRM, and LNM should also be supported but are not currently testable
 # because they require user interaction.
 class RMTests(object):
+
+  @classmethod
   @vtLevel(4)
-  def test_RM_IRM(self):
+  def test_RM_IRM(cls):
     # First turn on insert mode
     esccmd.SM(esccmd.IRM)
     esccmd.CUP(Point(1, 1))

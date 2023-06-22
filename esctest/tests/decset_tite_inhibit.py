@@ -6,10 +6,12 @@ class DECSETTiteInhibitTests(SaveRestoreCursorTests):
   def __init__(self):
     SaveRestoreCursorTests.__init__(self)
 
-  def saveCursor(self):
+  @classmethod
+  def saveCursor(cls):
     esccmd.DECSET(esccmd.SaveRestoreCursor)
 
-  def restoreCursor(self):
+  @classmethod
+  def restoreCursor(cls):
     esccmd.DECRESET(esccmd.SaveRestoreCursor)
 
   @knownBug(terminal="iTerm2", reason="Not implemented")

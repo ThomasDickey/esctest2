@@ -6,7 +6,9 @@ from escutil import AssertEQ, GetCursorPosition, optionRequired
 from esctypes import Point
 
 class HTSTests(object):
-  def test_HTS_Basic(self):
+
+  @classmethod
+  def test_HTS_Basic(cls):
     # Remove tabs
     esccmd.TBC(3)
 
@@ -20,9 +22,10 @@ class HTSTests(object):
 
     AssertEQ(GetCursorPosition().x(), 20)
 
+  @classmethod
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   @optionRequired(terminal="iTerm2", option=escargs.DISABLE_WIDE_CHARS)
-  def test_HTS_8bit(self):
+  def test_HTS_8bit(cls):
     # Remove tabs
     esccmd.TBC(3)
 

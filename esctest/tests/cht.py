@@ -3,18 +3,22 @@ from esctypes import Point
 from escutil import AssertEQ, GetCursorPosition, vtLevel
 
 class CHTTests(object):
-  def test_CHT_OneTabStopByDefault(self):
+
+  @classmethod
+  def test_CHT_OneTabStopByDefault(cls):
     esccmd.CHT()
     position = GetCursorPosition()
     AssertEQ(position.x(), 9)
 
-  def test_CHT_ExplicitParameter(self):
+  @classmethod
+  def test_CHT_ExplicitParameter(cls):
     esccmd.CHT(2)
     position = GetCursorPosition()
     AssertEQ(position.x(), 17)
 
+  @classmethod
   @vtLevel(4)
-  def test_CHT_IgnoresScrollingRegion(self):
+  def test_CHT_IgnoresScrollingRegion(cls):
     """Test cursor forward tab (ECMA-48).
 
     CHT is just a parameterized tab.

@@ -4,8 +4,10 @@ from escutil import AssertEQ, GetCursorPosition, GetScreenSize, knownBug
 from esctypes import Point
 
 class XtermSaveTests(object):
+
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_XtermSave_SaveSetState(self):
+  def test_XtermSave_SaveSetState(cls):
     # Turn on auto-wrap
     esccmd.DECSET(esccmd.DECAWM)
 
@@ -24,8 +26,9 @@ class XtermSaveTests(object):
     escio.Write("xxx")
     AssertEQ(GetCursorPosition().x(), 2)
 
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_XtermSave_SaveResetState(self):
+  def test_XtermSave_SaveResetState(cls):
     # Turn off auto-wrap
     esccmd.DECRESET(esccmd.DECAWM)
 

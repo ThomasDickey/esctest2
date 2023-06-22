@@ -15,7 +15,9 @@ from escutil import vtLevel
 from esctypes import Point
 
 class CUBTests(object):
-  def test_CUB_DefaultParam(self):
+
+  @classmethod
+  def test_CUB_DefaultParam(cls):
     """CUB moves the cursor left 1 with no parameter given."""
     CUP(Point(5, 3))
     CUB()
@@ -23,20 +25,23 @@ class CUBTests(object):
     AssertEQ(position.x(), 4)
     AssertEQ(position.y(), 3)
 
-  def test_CUB_ExplicitParam(self):
+  @classmethod
+  def test_CUB_ExplicitParam(cls):
     """CUB moves the cursor left by the passed-in number of columns."""
     CUP(Point(5, 4))
     CUB(2)
     AssertEQ(GetCursorPosition().x(), 3)
 
-  def test_CUB_StopsAtLeftEdge(self):
+  @classmethod
+  def test_CUB_StopsAtLeftEdge(cls):
     """CUB moves the cursor left, stopping at the first column."""
     CUP(Point(5, 3))
     CUB(99)
     AssertEQ(GetCursorPosition().x(), 1)
 
+  @classmethod
   @vtLevel(4)
-  def test_CUB_StopsAtLeftEdgeWhenBegunLeftOfScrollRegion(self):
+  def test_CUB_StopsAtLeftEdgeWhenBegunLeftOfScrollRegion(cls):
     """When the cursor starts left of the scroll region, CUB moves it left to the
     left edge of the screen."""
     # Set a scroll region.
@@ -52,8 +57,9 @@ class CUBTests(object):
     # Ensure it stopped at the left edge of the screen
     AssertEQ(GetCursorPosition().x(), 1)
 
+  @classmethod
   @vtLevel(4)
-  def test_CUB_StopsAtLeftMarginInScrollRegion(self):
+  def test_CUB_StopsAtLeftMarginInScrollRegion(cls):
     """When the cursor starts within the scroll region, CUB moves it left to the
     left margin but no farther."""
     # Set a scroll region. This must be done first because DECSTBM moves the cursor to the origin.
@@ -69,7 +75,8 @@ class CUBTests(object):
     # Ensure it stopped at the top of the scroll region.
     AssertEQ(GetCursorPosition().x(), 5)
 
-  def test_CUB_AfterNoWrappedInlines(self):
+  @classmethod
+  def test_CUB_AfterNoWrappedInlines(cls):
     '''Backspace after lines that did not wrap will not wrap to prior lines'''
     DECSET(esccmd.DECAWM)
     DECSET(esccmd.ReverseWrapInline)
@@ -87,7 +94,8 @@ class CUBTests(object):
     else:
       AssertEQ(GetCursorPosition(), Point(5, 3))
 
-  def test_CUB_AfterOneWrappedInline(self):
+  @classmethod
+  def test_CUB_AfterOneWrappedInline(cls):
     '''Backspace after wrapped line may wrap to the beginning of the line.'''
     DECSET(esccmd.DECAWM)
     DECSET(esccmd.ReverseWrapInline)

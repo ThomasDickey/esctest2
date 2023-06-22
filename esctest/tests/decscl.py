@@ -18,10 +18,12 @@ from esctypes import InternalError, Point, Rect
 class DECSCLTests(object):
   """VT Level 1 doesn't have any distinguishing features that are testable that
   aren't also in level 2."""
+
+  @classmethod
   @vtLevel(3)
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECSCL")
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECRQM", shouldTry=False)
-  def test_DECSCL_Level2DoesntSupportDECRQM(self):
+  def test_DECSCL_Level2DoesntSupportDECRQM(cls):
     """VT level 2 does not support DECRQM."""
     escio.Write("Hello world.")
     GetScreenSize()
@@ -37,15 +39,17 @@ class DECSCLTests(object):
       # Assert something so the test infrastructure is happy.
       AssertTrue(True)
 
+  @classmethod
   @vtLevel(2)
-  def test_DSCSCL_Level2Supports7BitControls(self):
+  def test_DSCSCL_Level2Supports7BitControls(cls):
     esccmd.DECSCL(62, 1)
     esccmd.CUP(Point(2, 2))
     AssertEQ(GetCursorPosition(), Point(2, 2))
 
+  @classmethod
   @vtLevel(3)
   @knownBug(terminal="iTerm2", reason="Not implemented", shouldTry=False)
-  def test_DSCSCL_Level3_SupportsDECRQMDoesntSupportDECSLRM(self):
+  def test_DSCSCL_Level3_SupportsDECRQMDoesntSupportDECSLRM(cls):
     # Set level 3 conformance
     esccmd.DECSCL(63, 1)
 
@@ -60,10 +64,11 @@ class DECSCLTests(object):
     escio.Write("abc")
     AssertEQ(GetCursorPosition().x(), 8)
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECSCL")
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECNCSM", shouldTry=False)
-  def test_DECSCL_Level4_SupportsDECSLRMDoesntSupportDECNCSM(self):
+  def test_DECSCL_Level4_SupportsDECSLRMDoesntSupportDECNCSM(cls):
     # Set level 4 conformance
     esccmd.DECSCL(64, 1)
 
@@ -85,9 +90,10 @@ class DECSCLTests(object):
     escio.Write("abc")
     AssertEQ(GetCursorPosition().x(), 6)
 
+  @classmethod
   @vtLevel(5)
   @knownBug(terminal="iTerm2", reason="Not implemented", shouldTry=False)
-  def test_DECSCL_Level5_SupportsDECNCSM(self):
+  def test_DECSCL_Level5_SupportsDECNCSM(cls):
     # Set level 5 conformance
     esccmd.DECSCL(65, 1)
 
@@ -99,10 +105,11 @@ class DECSCLTests(object):
     esccmd.DECSET(esccmd.DECCOLM)
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["1"])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="xterm", reason="xterm always turns on 8-bit controls.", shouldTry=False)
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECSCL")
-  def test_DECSCL_RISOnChange(self):
+  def test_DECSCL_RISOnChange(cls):
     """DECSCL should do an RIS. RIS does a lot, so we'll just test a few
     things. This may not be true for VT220's, though, to quote the xterm code:
 

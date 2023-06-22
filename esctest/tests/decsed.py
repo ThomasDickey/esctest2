@@ -6,7 +6,8 @@ from esctypes import Point, Rect
 
 class DECSEDTests(object):
 
-  def prepare(self):
+  @classmethod
+  def prepare(cls):
     """Sets up the display as:
     a
 
@@ -25,7 +26,8 @@ class DECSEDTests(object):
 
     esccmd.CUP(Point(2, 3))
 
-  def prepare_wide(self):
+  @classmethod
+  def prepare_wide(cls):
     """Sets up the display as:
     abcde
     fghij
@@ -374,12 +376,13 @@ class DECSEDTests(object):
                                   "fghij",
                                   "klmno"])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="xterm",
             reason="DECSED respects ISO protection for backward compatibility,"
             + " per email from Thomas")
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
-  def test_DECSED_doesNotRespectISOProtect(self):
+  def test_DECSED_doesNotRespectISOProtect(cls):
     """DECSED does not respect ISO protection."""
     escio.Write("a")
     esccmd.SPA()

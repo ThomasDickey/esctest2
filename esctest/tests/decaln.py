@@ -8,8 +8,10 @@ from escutil import Rect
 from escutil import vtLevel
 
 class DECALNTests(object):
+
+  @classmethod
   @vtLevel(4)
-  def test_DECALN_FillsScreen(self):
+  def test_DECALN_FillsScreen(cls):
     """Makes sure DECALN fills the screen with the letter E (could be anything,
     but xterm uses E). Testing the whole screen would be slow so we just check
     the corners and center."""
@@ -26,13 +28,15 @@ class DECALNTests(object):
                                       size.height() // 2),
                                  ["E"])
 
-  def test_DECALN_MovesCursorHome(self):
+  @classmethod
+  def test_DECALN_MovesCursorHome(cls):
     esccmd.CUP(Point(5, 5))
     esccmd.DECALN()
     AssertEQ(GetCursorPosition(), Point(1, 1))
 
+  @classmethod
   @vtLevel(4)
-  def test_DECALN_ClearsMargins(self):
+  def test_DECALN_ClearsMargins(cls):
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(2, 3)
     esccmd.DECSTBM(4, 5)

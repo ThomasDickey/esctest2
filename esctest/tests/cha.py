@@ -8,7 +8,9 @@ from escutil import vtLevel
 from esctypes import Point, Rect
 
 class CHATests(object):
-  def test_CHA_DefaultParam(self):
+
+  @classmethod
+  def test_CHA_DefaultParam(cls):
     """CHA moves to first column of active line by default."""
     esccmd.CUP(Point(5, 3))
     esccmd.CHA()
@@ -16,7 +18,8 @@ class CHATests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 3)
 
-  def test_CHA_ExplicitParam(self):
+  @classmethod
+  def test_CHA_ExplicitParam(cls):
     """CHA moves to specified column of active line."""
     esccmd.CUP(Point(5, 3))
     esccmd.CHA(10)
@@ -24,7 +27,8 @@ class CHATests(object):
     AssertEQ(position.x(), 10)
     AssertEQ(position.y(), 3)
 
-  def test_CHA_OutOfBoundsLarge(self):
+  @classmethod
+  def test_CHA_OutOfBoundsLarge(cls):
     """CHA moves as far as possible when given a too-large parameter."""
     esccmd.CUP(Point(5, 3))
     esccmd.CHA(9999)
@@ -33,7 +37,8 @@ class CHATests(object):
     AssertEQ(position.x(), width)
     AssertEQ(position.y(), 3)
 
-  def test_CHA_ZeroParam(self):
+  @classmethod
+  def test_CHA_ZeroParam(cls):
     """CHA moves as far left as possible when given a zero parameter."""
     esccmd.CUP(Point(5, 3))
     esccmd.CHA(0)
@@ -41,8 +46,9 @@ class CHATests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 3)
 
+  @classmethod
   @vtLevel(4)
-  def test_CHA_IgnoresScrollRegion(self):
+  def test_CHA_IgnoresScrollRegion(cls):
     """CHA ignores scroll regions."""
     # Set a scroll region.
     esccmd.DECSET(esccmd.DECLRMM)
@@ -53,8 +59,9 @@ class CHATests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 3)
 
+  @classmethod
   @vtLevel(4)
-  def test_CHA_RespectsOriginMode(self):
+  def test_CHA_RespectsOriginMode(cls):
     """CHA is relative to left margin in origin mode."""
     # Set a scroll region.
     esccmd.DECSTBM(6, 11)

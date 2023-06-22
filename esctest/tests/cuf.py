@@ -3,7 +3,9 @@ from escutil import AssertEQ, GetCursorPosition, GetScreenSize, vtLevel
 from esctypes import Point
 
 class CUFTests(object):
-  def test_CUF_DefaultParam(self):
+
+  @classmethod
+  def test_CUF_DefaultParam(cls):
     """CUF moves the cursor right 1 with no parameter given."""
     esccmd.CUP(Point(5, 3))
     esccmd.CUF()
@@ -11,21 +13,24 @@ class CUFTests(object):
     AssertEQ(position.x(), 6)
     AssertEQ(position.y(), 3)
 
-  def test_CUF_ExplicitParam(self):
+  @classmethod
+  def test_CUF_ExplicitParam(cls):
     """CUF moves the cursor right by the passed-in number of lines."""
     esccmd.CUP(Point(1, 2))
     esccmd.CUF(2)
     AssertEQ(GetCursorPosition().x(), 3)
 
-  def test_CUF_StopsAtRightSide(self):
+  @classmethod
+  def test_CUF_StopsAtRightSide(cls):
     """CUF moves the cursor right, stopping at the last line."""
     esccmd.CUP(Point(1, 3))
     width = GetScreenSize().width()
     esccmd.CUF(width)
     AssertEQ(GetCursorPosition().x(), width)
 
+  @classmethod
   @vtLevel(4)
-  def test_CUF_StopsAtRightEdgeWhenBegunRightOfScrollRegion(self):
+  def test_CUF_StopsAtRightEdgeWhenBegunRightOfScrollRegion(cls):
     """When the cursor starts right of the scroll region, CUF moves it right to the
     edge of the screen."""
     # Set a scroll region.
@@ -43,8 +48,9 @@ class CUFTests(object):
     # Ensure it stopped at the right edge of the screen
     AssertEQ(GetCursorPosition().x(), width)
 
+  @classmethod
   @vtLevel(4)
-  def test_CUF_StopsAtRightMarginInScrollRegion(self):
+  def test_CUF_StopsAtRightMarginInScrollRegion(cls):
     """When the cursor starts within the scroll region, CUF moves it right to the
     right margin but no farther."""
     # Set a scroll region.

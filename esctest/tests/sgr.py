@@ -4,7 +4,9 @@ from escutil import AssertCharHasSGR
 from esctypes import Point
 
 class SGRTests(object):
-  def test_SGR_Bold(self):
+
+  @classmethod
+  def test_SGR_Bold(cls):
     """Tests bold."""
     escio.Write("x")
     esccmd.SGR(esccmd.SGR_BOLD)

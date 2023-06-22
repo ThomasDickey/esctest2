@@ -6,8 +6,9 @@ class ChangeColorTests(object):
   """The color numbers correspond to the ANSI colors 0-7, their bright versions
   8-15, and if supported, the remainder of the 88-color or 256-color table."""
 
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Color reporting not implemented.", shouldTry=False)
-  def test_ChangeColor_Multiple(self):
+  def test_ChangeColor_Multiple(cls):
     """OSC 4 ; c1 ; spec1 ; s2 ; spec2 ; ST"""
     esccmd.ChangeColor("0",
                        "rgb:f0f0/f0f0/f0f0",
@@ -25,7 +26,8 @@ class ChangeColorTests(object):
     AssertEQ(escio.ReadOSC("4"), ";0;rgb:8080/8080/8080")
     AssertEQ(escio.ReadOSC("4"), ";1;rgb:8080/0000/0000")
 
-  def doChangeColorTest(self, c, value, rgb):
+  @classmethod
+  def doChangeColorTest(cls, c, value, rgb):
     esccmd.ChangeColor(c, value)
     esccmd.ChangeColor(c, "?")
     s = escio.ReadOSC("4")

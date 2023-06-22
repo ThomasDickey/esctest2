@@ -18,33 +18,39 @@ from esctypes import Point, Size
 # 9;0 - Restore maximized window
 
 class XtermWinopsTests(object):
-  def DelayAfterIcon(self):
+
+  @classmethod
+  def DelayAfterIcon(cls):
     """Account for time needed by window manager to iconify/deiconify a
     window."""
     need_sleep = escargs.args.expected_terminal in ["xterm"]
     if need_sleep:
       time.sleep(1)
 
-  def DelayAfterMove(self):
+  @classmethod
+  def DelayAfterMove(cls):
     """Account for time needed by window manager to move a window."""
     need_sleep = escargs.args.expected_terminal in ["xterm"]
     if need_sleep:
       time.sleep(0.1)
 
-  def DelayAfterResize(self):
+  @classmethod
+  def DelayAfterResize(cls):
     """Account for time needed by window manager to resize a window."""
     need_sleep = escargs.args.expected_terminal in ["xterm"]
     if need_sleep:
       time.sleep(1)
 
-  def GetCharErrorLimit(self):
+  @classmethod
+  def GetCharErrorLimit(cls):
     """Returns a Size denoting the expected error limit for character-
     based resizing tests."""
     if escargs.args.expected_terminal == "xterm":
       return Size(2, 2)
     return Size(0, 0)
 
-  def GetPixelErrorLimit(self):
+  @classmethod
+  def GetPixelErrorLimit(cls):
     """Returns a Size denoting the expected error limit for pixel-based
     resizing tests.
 
@@ -73,7 +79,8 @@ class XtermWinopsTests(object):
                   frame.height() + cells * chars.height())
     return Size(20, 20)
 
-  def DebugSize(self, name, value):
+  @classmethod
+  def DebugSize(cls, name, value):
     """Log information on a given Size value and its name."""
     esclog.LogDebug(name + str(value.height()) + "x" + str(value.width()))
 
@@ -115,7 +122,8 @@ class XtermWinopsTests(object):
     AssertTrue(actual_size.width() >= original_size.width())
     AssertTrue(actual_size.height() >= original_size.height())
 
-  def AverageWidth(self, size_a, size_b):
+  @classmethod
+  def AverageWidth(cls, size_a, size_b):
     """Return the average of the widths from two sizes.
 
     Some of the xterm resizing-tests use an average of the current
@@ -124,7 +132,8 @@ class XtermWinopsTests(object):
     into account the actual screen-size."""
     return (size_a.width() + size_b.width()) // 2
 
-  def AverageHeight(self, size_a, size_b):
+  @classmethod
+  def AverageHeight(cls, size_a, size_b):
     """Return the average of the heights from two sizes."""
     return (size_a.height() + size_b.height()) // 2
 
@@ -501,17 +510,20 @@ class XtermWinopsTests(object):
 
     self.CheckForShrinkage(original_size, GetScreenSize())
 
-  def test_XtermWinops_ReportIconLabel(self):
+  @classmethod
+  def test_XtermWinops_ReportIconLabel(cls):
     string = "test " + str(time.time())
     esccmd.ChangeIconTitle(string)
     AssertEQ(GetIconTitle(), string)
 
-  def test_XtermWinops_ReportWindowLabel(self):
+  @classmethod
+  def test_XtermWinops_ReportWindowLabel(cls):
     string = "test " + str(time.time())
     esccmd.ChangeWindowTitle(string)
     AssertEQ(GetWindowTitle(), string)
 
-  def test_XtermWinops_PushIconAndWindow_PopIconAndWindow(self):
+  @classmethod
+  def test_XtermWinops_PushIconAndWindow_PopIconAndWindow(cls):
     """Basic test: Push an icon & window title and restore it."""
     # Generate a uniqueish string
     string = str(time.time())
@@ -535,10 +547,11 @@ class XtermWinopsTests(object):
     AssertEQ(GetWindowTitle(), string)
     AssertEQ(GetIconTitle(), string)
 
+  @classmethod
   @knownBug(terminal="iTerm2",
             reason="The window title incorrectly changes"
             + "when popping the icon title.")
-  def test_XtermWinops_PushIconAndWindow_PopIcon(self):
+  def test_XtermWinops_PushIconAndWindow_PopIcon(cls):
     """Push an icon & window title and pop just the icon title."""
     # Generate a uniqueish string
     string = str(time.time())
@@ -568,10 +581,11 @@ class XtermWinopsTests(object):
     AssertEQ(GetWindowTitle(), "x")
     AssertEQ(GetIconTitle(), string)
 
+  @classmethod
   @knownBug(terminal="iTerm2",
             reason="The window title incorrectly changes"
             + "when popping the icon title.")
-  def test_XtermWinops_PushIconAndWindow_PopWindow(self):
+  def test_XtermWinops_PushIconAndWindow_PopWindow(cls):
     """Push an icon & window title and pop just the window title."""
     # Generate a uniqueish string
     string = str(time.time())
@@ -601,7 +615,8 @@ class XtermWinopsTests(object):
     AssertEQ(GetWindowTitle(), string)
     AssertEQ(GetIconTitle(), "x")
 
-  def test_XtermWinops_PushIcon_PopIcon(self):
+  @classmethod
+  def test_XtermWinops_PushIcon_PopIcon(cls):
     """Push icon title and then pop it."""
     # Generate a uniqueish string
     string = str(time.time())
@@ -621,7 +636,8 @@ class XtermWinopsTests(object):
     AssertEQ(GetWindowTitle(), "x")
     AssertEQ(GetIconTitle(), string)
 
-  def test_XtermWinops_PushWindow_PopWindow(self):
+  @classmethod
+  def test_XtermWinops_PushWindow_PopWindow(cls):
     """Push window title and then pop it."""
     # Generate a uniqueish string
     string = str(time.time())
@@ -641,7 +657,8 @@ class XtermWinopsTests(object):
     AssertEQ(GetIconTitle(), "x")
     AssertEQ(GetWindowTitle(), string)
 
-  def test_XtermWinops_PushIconThenWindowThenPopBoth(self):
+  @classmethod
+  def test_XtermWinops_PushIconThenWindowThenPopBoth(cls):
     """Push icon, then push window, then pop both."""
     # Generate a uniqueish string
     string1 = "a" + str(time.time())
@@ -667,7 +684,8 @@ class XtermWinopsTests(object):
     AssertEQ(GetWindowTitle(), string1)
     AssertEQ(GetIconTitle(), string2)
 
-  def test_XtermWinops_PushMultiplePopMultiple_Icon(self):
+  @classmethod
+  def test_XtermWinops_PushMultiplePopMultiple_Icon(cls):
     """Push two titles and pop twice."""
     # Generate a uniqueish string
     string1 = "a" + str(time.time())
@@ -694,7 +712,8 @@ class XtermWinopsTests(object):
                         esccmd.WINOP_POP_TITLE_ICON)
     AssertEQ(GetIconTitle(), string1)
 
-  def test_XtermWinops_PushMultiplePopMultiple_Window(self):
+  @classmethod
+  def test_XtermWinops_PushMultiplePopMultiple_Window(cls):
     """Push two titles and pop twice."""
     # Generate a uniqueish string
     string1 = "a" + str(time.time())

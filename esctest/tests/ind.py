@@ -11,7 +11,9 @@ from escutil import vtLevel
 from esctypes import Point, Rect
 
 class INDTests(object):
-  def test_IND_Basic(self):
+
+  @classmethod
+  def test_IND_Basic(cls):
     """Index moves the cursor down one line."""
     esccmd.CUP(Point(5, 3))
     esccmd.IND()
@@ -19,8 +21,9 @@ class INDTests(object):
     AssertEQ(position.x(), 5)
     AssertEQ(position.y(), 4)
 
+  @classmethod
   @vtLevel(4)
-  def test_IND_Scrolls(self):
+  def test_IND_Scrolls(cls):
     """Index scrolls when it hits the bottom."""
     height = GetScreenSize().height()
 
@@ -43,8 +46,9 @@ class INDTests(object):
     AssertEQ(GetCursorPosition().y(), height)
     AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), ["a", "b", empty()])
 
+  @classmethod
   @vtLevel(4)
-  def test_IND_ScrollsInTopBottomRegionStartingAbove(self):
+  def test_IND_ScrollsInTopBottomRegionStartingAbove(cls):
     """Index scrolls when it hits the bottom region (starting above top)."""
     esccmd.DECSTBM(4, 5)
     esccmd.CUP(Point(2, 5))
@@ -57,8 +61,9 @@ class INDTests(object):
     AssertEQ(GetCursorPosition(), Point(2, 5))
     AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", empty()])
 
+  @classmethod
   @vtLevel(4)
-  def test_IND_ScrollsInTopBottomRegionStartingWithin(self):
+  def test_IND_ScrollsInTopBottomRegionStartingWithin(cls):
     """Index scrolls when it hits the bottom region (starting within region)."""
     esccmd.DECSTBM(4, 5)
     esccmd.CUP(Point(2, 5))
@@ -70,8 +75,9 @@ class INDTests(object):
     AssertEQ(GetCursorPosition(), Point(2, 5))
     AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", empty()])
 
+  @classmethod
   @vtLevel(4)
-  def test_IND_MovesDoesNotScrollOutsideLeftRight(self):
+  def test_IND_MovesDoesNotScrollOutsideLeftRight(cls):
     """Cursor moves down but won't scroll when outside left-right region."""
     esccmd.DECSTBM(2, 5)
     esccmd.DECSET(esccmd.DECLRMM)
@@ -106,8 +112,9 @@ class INDTests(object):
     AssertEQ(GetCursorPosition(), Point(1, height))
     AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), ["x"])
 
+  @classmethod
   @vtLevel(4)
-  def test_IND_StopsAtBottomLineWhenBegunBelowScrollRegion(self):
+  def test_IND_StopsAtBottomLineWhenBegunBelowScrollRegion(cls):
     """When the cursor starts below the scroll region, index moves it down to the
     bottom of the screen but won't scroll."""
     # Set a scroll region. This must be done first because DECSTBM moves the cursor to the origin.
@@ -128,9 +135,10 @@ class INDTests(object):
     # Ensure no scroll
     AssertScreenCharsInRectEqual(Rect(1, 6, 1, 6), ["x"])
 
+  @classmethod
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   @optionRequired(terminal="iTerm2", option=escargs.DISABLE_WIDE_CHARS)
-  def test_IND_8bit(self):
+  def test_IND_8bit(cls):
     esccmd.CUP(Point(5, 3))
 
     escio.use8BitControls = True

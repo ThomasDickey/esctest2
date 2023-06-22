@@ -5,10 +5,12 @@ class ANSIRCTests(SaveRestoreCursorTests):
   def __init__(self):
     SaveRestoreCursorTests.__init__(self)
 
-  def saveCursor(self):
+  @classmethod
+  def saveCursor(cls):
     esccmd.ANSISC()
 
-  def restoreCursor(self):
+  @classmethod
+  def restoreCursor(cls):
     esccmd.ANSIRC()
 
   def test_SaveRestoreCursor_ResetsOriginMode(self):

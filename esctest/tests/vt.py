@@ -11,7 +11,9 @@ from esctypes import Point, Rect
 class VTTests(object):
   """LNM is tested in the SM tests, and not duplicated here. These tests are
   the same as those for IND."""
-  def test_VT_Basic(self):
+
+  @classmethod
+  def test_VT_Basic(cls):
     """VT moves the cursor down one line."""
     esccmd.CUP(Point(5, 3))
     escio.Write(VT)
@@ -19,8 +21,9 @@ class VTTests(object):
     AssertEQ(position.x(), 5)
     AssertEQ(position.y(), 4)
 
+  @classmethod
   @vtLevel(4)
-  def test_VT_Scrolls(self):
+  def test_VT_Scrolls(cls):
     """VT scrolls when it hits the bottom."""
     height = GetScreenSize().height()
 
@@ -43,8 +46,9 @@ class VTTests(object):
     AssertEQ(GetCursorPosition().y(), height)
     AssertScreenCharsInRectEqual(Rect(2, height - 2, 2, height), ["a", "b", empty()])
 
+  @classmethod
   @vtLevel(4)
-  def test_VT_ScrollsInTopBottomRegionStartingAbove(self):
+  def test_VT_ScrollsInTopBottomRegionStartingAbove(cls):
     """VT scrolls when it hits the bottom region (starting above top)."""
     esccmd.DECSTBM(4, 5)
     esccmd.CUP(Point(2, 5))
@@ -57,8 +61,9 @@ class VTTests(object):
     AssertEQ(GetCursorPosition(), Point(2, 5))
     AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", empty()])
 
+  @classmethod
   @vtLevel(4)
-  def test_VT_ScrollsInTopBottomRegionStartingWithin(self):
+  def test_VT_ScrollsInTopBottomRegionStartingWithin(cls):
     """VT scrolls when it hits the bottom region (starting within region)."""
     esccmd.DECSTBM(4, 5)
     esccmd.CUP(Point(2, 5))
@@ -70,8 +75,9 @@ class VTTests(object):
     AssertEQ(GetCursorPosition(), Point(2, 5))
     AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), ["x", empty()])
 
+  @classmethod
   @vtLevel(4)
-  def test_VT_MovesDoesNotScrollOutsideLeftRight(self):
+  def test_VT_MovesDoesNotScrollOutsideLeftRight(cls):
     """Cursor moves down but won't scroll when outside left-right region."""
     esccmd.DECSTBM(2, 5)
     esccmd.DECSET(esccmd.DECLRMM)
@@ -111,8 +117,9 @@ class VTTests(object):
     AssertEQ(GetCursorPosition(), Point(1, height))
     AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), ["x"])
 
+  @classmethod
   @vtLevel(4)
-  def test_VT_StopsAtBottomLineWhenBegunBelowScrollRegion(self):
+  def test_VT_StopsAtBottomLineWhenBegunBelowScrollRegion(cls):
     """When the cursor starts below the scroll region, index moves it down to the
     bottom of the screen but won't scroll."""
     # Set a scroll region. This must be done first because DECSTBM moves the cursor to the origin.

@@ -6,7 +6,8 @@ from escutil import AssertScreenCharsInRectEqual, knownBug, vtLevel
 
 class DECSELTests(object):
 
-  def prepare(self):
+  @classmethod
+  def prepare(cls):
     """Initializes the screen to abcdefghij on the first line with the cursor
     on the 'e'."""
     esccmd.CUP(Point(1, 1))
@@ -150,12 +151,13 @@ class DECSELTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, 10, 1),
                                  [blank() + "bcdefghij"])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="xterm",
             reason="DECSEL respects ISO protection for backward compatibility,"
             + " per email from Thomas")
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
-  def test_DECSEL_doesNotRespectISOProtect(self):
+  def test_DECSEL_doesNotRespectISOProtect(cls):
     """DECSEL does not respect ISO protection."""
     escio.Write("a")
     esccmd.SPA()

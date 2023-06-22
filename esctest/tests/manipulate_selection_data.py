@@ -8,9 +8,11 @@ import escoding
 class ManipulateSelectionDataTests(object):
   """No tests for buffers besides default; they're so x-specific that they're
   not worth testing for my purposes."""
+
+  @classmethod
   @optionRequired(terminal="xterm", option=escargs.XTERM_WINOPS_ENABLED)
   @knownBug(terminal="iTerm2", reason="'OSC 52 ; ?' (query) not supported")
-  def test_ManipulateSelectionData_default(self):
+  def test_ManipulateSelectionData_default(cls):
     s = escoding.to_binary("testing 123")
     esccmd.ManipulateSelectionData(Pd=base64.b64encode(s))
     esccmd.ManipulateSelectionData(Pd="?")

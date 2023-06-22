@@ -10,8 +10,10 @@ from escutil import vtLevel
 from esctypes import Point, Rect
 
 class HPRTests(object):
+
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_HPR_DefaultParams(self):
+  def test_HPR_DefaultParams(cls):
     """With no params, HPR moves right by 1."""
     esccmd.CUP(Point(6, 1))
     esccmd.HPR()
@@ -19,8 +21,9 @@ class HPRTests(object):
     position = GetCursorPosition()
     AssertEQ(position.x(), 7)
 
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_HPR_StopsAtRightEdge(self):
+  def test_HPR_StopsAtRightEdge(cls):
     """HPR won't go past the right edge."""
     # Position on 6th row
     esccmd.CUP(Point(5, 6))
@@ -34,8 +37,9 @@ class HPRTests(object):
     AssertEQ(position.x(), size.width())
     AssertEQ(position.y(), 6)
 
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_HPR_DoesNotChangeRow(self):
+  def test_HPR_DoesNotChangeRow(cls):
     """HPR moves the specified column and does not change the row."""
     esccmd.CUP(Point(5, 6))
     esccmd.HPR(2)
@@ -44,9 +48,10 @@ class HPRTests(object):
     AssertEQ(position.x(), 7)
     AssertEQ(position.y(), 6)
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_HPR_IgnoresOriginMode(self):
+  def test_HPR_IgnoresOriginMode(cls):
     """HPR continues to work in origin mode."""
     # Set a scroll region.
     esccmd.DECSTBM(6, 11)

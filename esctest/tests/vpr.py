@@ -9,7 +9,9 @@ from escutil import vtLevel
 from esctypes import Point, Rect
 
 class VPRTests(object):
-  def test_VPR_DefaultParams(self):
+
+  @classmethod
+  def test_VPR_DefaultParams(cls):
     """With no params, VPR moves right by 1."""
     esccmd.CUP(Point(1, 6))
     esccmd.VPR()
@@ -17,7 +19,8 @@ class VPRTests(object):
     position = GetCursorPosition()
     AssertEQ(position.y(), 7)
 
-  def test_VPR_StopsAtBottomEdge(self):
+  @classmethod
+  def test_VPR_StopsAtBottomEdge(cls):
     """VPR won't go past the bottom edge."""
     # Position on 5th column
     esccmd.CUP(Point(5, 6))
@@ -31,7 +34,8 @@ class VPRTests(object):
     AssertEQ(position.x(), 5)
     AssertEQ(position.y(), size.height())
 
-  def test_VPR_DoesNotChangeColumn(self):
+  @classmethod
+  def test_VPR_DoesNotChangeColumn(cls):
     """VPR moves the specified row and does not change the column."""
     esccmd.CUP(Point(5, 6))
     esccmd.VPR(2)
@@ -40,8 +44,9 @@ class VPRTests(object):
     AssertEQ(position.x(), 5)
     AssertEQ(position.y(), 8)
 
+  @classmethod
   @vtLevel(4)
-  def test_VPR_IgnoresOriginMode(self):
+  def test_VPR_IgnoresOriginMode(cls):
     """VPR continues to work in origin mode."""
     # Set a scroll region.
     esccmd.DECSTBM(6, 11)

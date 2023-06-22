@@ -11,7 +11,9 @@ from escutil import vtLevel
 from esctypes import Point
 
 class FillRectangleTests(object):
-  def data(self):
+
+  @classmethod
+  def data(cls):
     return ["abcdefgh",
             "ijklmnop",
             "qrstuvwx",
@@ -30,7 +32,8 @@ class FillRectangleTests(object):
     """Subclasses should override this to do the appropriate fill action."""
     pass
 
-  def characters(self, point, count):
+  @classmethod
+  def characters(cls, point, count):
     """Returns the filled characters starting at point, and count of them."""
     return "!" * count
 

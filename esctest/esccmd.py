@@ -378,6 +378,15 @@ def DECDSR(Ps, Pid=None, suppressSideChannel=False):
       params = [Ps, Pid]
   escio.WriteCSI(params=params, prefix='?', requestsReport=suppressSideChannel, final='n')
 
+def DECELF(Pn=None):
+  """Enable local functions."""
+  AssertVTLevel(4, "DECELF")
+  if Pn is not None:
+    params = [Pn]
+  else:
+    params = []
+  escio.WriteCSI(params=params, intermediate="+", final="q")
+
 def DECERA(Pt, Pl, Pb, Pr):
   """Erase rectangle."""
   escio.WriteCSI(params=[Pt, Pl, Pb, Pr], intermediate="$", final="z")
@@ -404,6 +413,15 @@ def DECID():
     escio.Write(chr(0x9a))
   else:
     escio.Write(ESC + "Z")
+
+def DECLFKC(Pn=None):
+  """Enable local function function key control."""
+  AssertVTLevel(4, "DECLFKC")
+  if Pn is not None:
+    params = [Pn]
+  else:
+    params = []
+  escio.WriteCSI(params=params, intermediate="*", final="}")
 
 def DECRC():
   """Restore the cursor and resets various attributes."""
@@ -434,15 +452,25 @@ def DECRQM(mode, DEC):
     escio.WriteCSI(params=[mode], intermediate='$', final='p')
 
 def DECRQSS(Pt):
-  AssertVTLevel(4, "DECRQSS")
+  AssertVTLevel(3, "DECRQSS")
   escio.WriteDCS("$q", Pt)
 
 def DECRESET(Pm):
   """Reset the parameter |Pm|."""
   escio.WriteCSI(params=[Pm], prefix='?', final='l')
 
+def DECSACE(Ps=None):
+  """Set attribute change extent"""
+  AssertVTLevel(4, "DECSACE")
+  if Ps is None:
+    params = []
+  else:
+    params = [Ps]
+  escio.WriteCSI(params=params, intermediate="*", final="x")
+
 def DECSASD(Ps=None):
   """Direct output to status line if Ps is 1, to main display if 0."""
+  AssertVTLevel(3, "DECSASD")
   if Ps is None:
     params = []
   else:
@@ -455,6 +483,7 @@ def DECSC():
 
 def DECSCA(Ps=None):
   """Turn on character protection if Ps is 1, off if 0."""
+  AssertVTLevel(2, "DECSCA")
   if Ps is None:
     params = []
   else:
@@ -507,6 +536,32 @@ def DECSLRM(Pl, Pr):
   """Set the left and right margins."""
   AssertVTLevel(4, "DECSLRM")
   escio.WriteCSI(params=[Pl, Pr], final='s')
+
+def DECSMKR(Pn=None):
+  """Set modifier key reporting."""
+  AssertVTLevel(4, "DECSMKR")
+  if Pn is not None:
+    params = [Pn]
+  else:
+    params = []
+  escio.WriteCSI(params=params, intermediate="+", final="r")
+
+def DECSNLS(Pn=None):
+  """Set number of lines per screen."""
+  if Pn is not None:
+    params = [Pn]
+  else:
+    params = []
+  escio.WriteCSI(params=params, intermediate="*", final="|")
+
+def DECSSDT(Pn=None):
+  """Select status display type."""
+  AssertVTLevel(3, "DECSSDT")
+  if Pn is None:
+    params = []
+  else:
+    params = [Pn]
+  escio.WriteCSI(params=params, intermediate='$', final='~')
 
 def DECSTBM(top=None, bottom=None):
   """Set Scrolling Region [top;bottom] (default = full size of window)."""

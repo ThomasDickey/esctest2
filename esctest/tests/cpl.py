@@ -3,7 +3,9 @@ from escutil import AssertEQ, GetCursorPosition, GetScreenSize, vtLevel
 from esctypes import Point
 
 class CPLTests(object):
-  def test_CPL_DefaultParam(self):
+
+  @classmethod
+  def test_CPL_DefaultParam(cls):
     """CPL moves the cursor up 1 with no parameter given."""
     esccmd.CUP(Point(5, 3))
     esccmd.CPL()
@@ -11,7 +13,8 @@ class CPLTests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 2)
 
-  def test_CPL_ExplicitParam(self):
+  @classmethod
+  def test_CPL_ExplicitParam(cls):
     """CPL moves the cursor up by the passed-in number of lines."""
     esccmd.CUP(Point(6, 5))
     esccmd.CPL(2)
@@ -19,7 +22,8 @@ class CPLTests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 3)
 
-  def test_CPL_StopsAtTopLine(self):
+  @classmethod
+  def test_CPL_StopsAtTopLine(cls):
     """CPL moves the cursor up, stopping at the last line."""
     esccmd.CUP(Point(6, 3))
     height = GetScreenSize().height()
@@ -28,8 +32,9 @@ class CPLTests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 1)
 
+  @classmethod
   @vtLevel(4)
-  def test_CPL_StopsAtTopLineWhenBegunAboveScrollRegion(self):
+  def test_CPL_StopsAtTopLineWhenBegunAboveScrollRegion(cls):
     """When the cursor starts above the scroll region, CPL moves it up to the
     top of the screen."""
     # Set a scroll region. This must be done first because DECSTBM moves the cursor to the origin.
@@ -49,8 +54,9 @@ class CPLTests(object):
     AssertEQ(position.y(), 1)
     AssertEQ(position.x(), 5)
 
+  @classmethod
   @vtLevel(4)
-  def test_CPL_StopsAtTopMarginInScrollRegion(self):
+  def test_CPL_StopsAtTopMarginInScrollRegion(cls):
     """When the cursor starts within the scroll region, CPL moves it up to the
     top margin but no farther."""
     # Set a scroll region. This must be done first because DECSTBM moves the cursor to the origin.

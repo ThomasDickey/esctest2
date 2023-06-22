@@ -12,8 +12,10 @@ from esctypes import Point, Rect
 # AM, SRM, and LNM should also be supported but are not currently testable
 # because they require user interaction.
 class SMTests(object):
+
+  @classmethod
   @vtLevel(4)
-  def test_SM_IRM(self):
+  def test_SM_IRM(cls):
     """Turn on insert mode."""
     escio.Write("abc")
     esccmd.CUP(Point(1, 1))
@@ -21,8 +23,9 @@ class SMTests(object):
     escio.Write("X")
     AssertScreenCharsInRectEqual(Rect(1, 1, 4, 1), ["Xabc"])
 
+  @classmethod
   @vtLevel(4)
-  def test_SM_IRM_DoesNotWrapUnlessCursorAtMargin(self):
+  def test_SM_IRM_DoesNotWrapUnlessCursorAtMargin(cls):
     """Insert mode does not cause wrapping."""
     size = GetScreenSize()
     escio.Write("a" * (size.width() - 1))
@@ -36,8 +39,9 @@ class SMTests(object):
     escio.Write("YZ")
     AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), ["Z"])
 
+  @classmethod
   @vtLevel(4)
-  def test_SM_IRM_TruncatesAtRightMargin(self):
+  def test_SM_IRM_TruncatesAtRightMargin(cls):
     """When a left-right margin is set, insert truncates the line at the right margin."""
     esccmd.CUP(Point(5, 1))
 
@@ -53,7 +57,8 @@ class SMTests(object):
 
     AssertScreenCharsInRectEqual(Rect(5, 1, 11, 1), ["abXcde" + empty()])
 
-  def doLinefeedModeTest(self, code):
+  @classmethod
+  def doLinefeedModeTest(cls, code):
     esccmd.RM(esccmd.LNM)
     esccmd.CUP(Point(5, 1))
     escio.Write(code)

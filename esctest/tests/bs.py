@@ -19,17 +19,21 @@ from escutil import vtLevel
 from esctypes import Point, Rect
 
 class BSTests(object):
-  def test_BS_Basic(self):
+
+  @classmethod
+  def test_BS_Basic(cls):
     CUP(Point(3, 3))
     escio.Write(esc.BS)
     AssertEQ(GetCursorPosition(), Point(2, 3))
 
-  def test_BS_NoWrapByDefault(self):
+  @classmethod
+  def test_BS_NoWrapByDefault(cls):
     CUP(Point(1, 3))
     escio.Write(esc.BS)
     AssertEQ(GetCursorPosition(), Point(1, 3))
 
-  def test_BS_WrapsInWraparoundMode(self):
+  @classmethod
+  def test_BS_WrapsInWraparoundMode(cls):
     DECSET(esccmd.DECAWM)
     DECSET(esccmd.ReverseWraparound())
     CUP(Point(1, 3))
@@ -37,7 +41,8 @@ class BSTests(object):
     size = GetScreenSize()
     AssertEQ(GetCursorPosition(), Point(size.width(), 2))
 
-  def test_BS_ReverseWrapRequiresDECAWM(self):
+  @classmethod
+  def test_BS_ReverseWrapRequiresDECAWM(cls):
     DECRESET(esccmd.DECAWM)
     DECSET(esccmd.ReverseWraparound())
     CUP(Point(1, 3))
@@ -50,8 +55,9 @@ class BSTests(object):
     escio.Write(esc.BS)
     AssertEQ(GetCursorPosition(), Point(1, 3))
 
+  @classmethod
   @vtLevel(4)
-  def test_BS_ReverseWrapWithLeftRight(self):
+  def test_BS_ReverseWrapWithLeftRight(cls):
     DECSET(esccmd.DECAWM)
     DECSET(esccmd.ReverseWraparound())
     DECSET(esccmd.DECLRMM)
@@ -60,8 +66,9 @@ class BSTests(object):
     escio.Write(esc.BS)
     AssertEQ(GetCursorPosition(), Point(10, 2))
 
+  @classmethod
   @vtLevel(4)
-  def test_BS_ReversewrapFromLeftEdgeToRightMargin(self):
+  def test_BS_ReversewrapFromLeftEdgeToRightMargin(cls):
     """If cursor starts at left edge of screen, left of left margin, backspace
     takes it to the right margin."""
     DECSET(esccmd.DECAWM)
@@ -72,8 +79,9 @@ class BSTests(object):
     escio.Write(esc.BS)
     AssertEQ(GetCursorPosition(), Point(10, 2))
 
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Does not wrap around properly")
-  def test_BS_ReverseWrapGoesToBottom(self):
+  def test_BS_ReverseWrapGoesToBottom(cls):
     """If the cursor starts within the top/bottom margins, after doing a
     reverse wrap, the cursor remains within those margins.
 
@@ -99,8 +107,9 @@ class BSTests(object):
     escio.Write(esc.BS)
     AssertEQ(GetCursorPosition(), Point(80, 5))
 
+  @classmethod
   @vtLevel(4)
-  def test_BS_StopsAtLeftMargin(self):
+  def test_BS_StopsAtLeftMargin(cls):
     DECSET(esccmd.DECLRMM)
     DECSLRM(5, 10)
     CUP(Point(5, 1))
@@ -108,8 +117,9 @@ class BSTests(object):
     DECRESET(esccmd.DECLRMM)
     AssertEQ(GetCursorPosition(), Point(5, 1))
 
+  @classmethod
   @vtLevel(4)
-  def test_BS_MovesLeftWhenLeftOfLeftMargin(self):
+  def test_BS_MovesLeftWhenLeftOfLeftMargin(cls):
     DECSET(esccmd.DECLRMM)
     DECSLRM(5, 10)
     CUP(Point(4, 1))
@@ -117,13 +127,15 @@ class BSTests(object):
     DECRESET(esccmd.DECLRMM)
     AssertEQ(GetCursorPosition(), Point(3, 1))
 
-  def test_BS_StopsAtOrigin(self):
+  @classmethod
+  def test_BS_StopsAtOrigin(cls):
     CUP(Point(1, 1))
     escio.Write(esc.BS)
     AssertEQ(GetCursorPosition(), Point(1, 1))
 
+  @classmethod
   @vtLevel(4)
-  def test_BS_CursorStartsInDoWrapPosition(self):
+  def test_BS_CursorStartsInDoWrapPosition(cls):
     """Cursor is right of right edge of screen."""
     size = GetScreenSize()
     CUP(Point(size.width() - 1, 1))
@@ -133,7 +145,8 @@ class BSTests(object):
     AssertScreenCharsInRectEqual(Rect(size.width() - 1, 1, size.width(), 1),
                                  ["Xb"])
 
-  def test_BS_AfterNoWrappedInlines(self):
+  @classmethod
+  def test_BS_AfterNoWrappedInlines(cls):
     '''Backspace after lines that did not wrap will not wrap to prior lines'''
     DECSET(esccmd.DECAWM)
     DECSET(esccmd.ReverseWrapInline)
@@ -151,7 +164,8 @@ class BSTests(object):
     else:
       AssertEQ(GetCursorPosition(), Point(5, 3))
 
-  def test_BS_AfterOneWrappedInline(self):
+  @classmethod
+  def test_BS_AfterOneWrappedInline(cls):
     '''Backspace after wrapped line may wrap to the beginning of the line.'''
     DECSET(esccmd.DECAWM)
     DECSET(esccmd.ReverseWrapInline)

@@ -12,7 +12,8 @@ class SDTests(object):
   does not move along with the data.
   """
 
-  def prepare(self):
+  @classmethod
+  def prepare(cls):
     """Sets the screen up as
     abcde
     fghij
@@ -57,8 +58,9 @@ class SDTests(object):
                       "klmno"]
     AssertScreenCharsInRectEqual(Rect(1, 1, 5, 5), expected_lines)
 
+  @classmethod
   @vtLevel(4)
-  def test_SD_CanClearScreen(self):
+  def test_SD_CanClearScreen(cls):
     """An SD equal to the height of the screen clears it.
 
     Some older versions of xterm failed this test, due to an incorrect fix

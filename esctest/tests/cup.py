@@ -8,7 +8,9 @@ from escutil import vtLevel
 from esctypes import Point, Rect
 
 class CUPTests(object):
-  def test_CUP_DefaultParams(self):
+
+  @classmethod
+  def test_CUP_DefaultParams(cls):
     """With no params, CUP moves to 1,1."""
     esccmd.CUP(Point(6, 3))
 
@@ -22,7 +24,8 @@ class CUPTests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 1)
 
-  def test_CUP_RowOnly(self):
+  @classmethod
+  def test_CUP_RowOnly(cls):
     """Default column is 1."""
     esccmd.CUP(Point(6, 3))
 
@@ -36,7 +39,8 @@ class CUPTests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 2)
 
-  def test_CUP_ColumnOnly(self):
+  @classmethod
+  def test_CUP_ColumnOnly(cls):
     """Default row is 1."""
     esccmd.CUP(Point(6, 3))
 
@@ -50,7 +54,8 @@ class CUPTests(object):
     AssertEQ(position.x(), 2)
     AssertEQ(position.y(), 1)
 
-  def test_CUP_ZeroIsTreatedAsOne(self):
+  @classmethod
+  def test_CUP_ZeroIsTreatedAsOne(cls):
     """Zero args are treated as 1."""
     esccmd.CUP(Point(6, 3))
     esccmd.CUP(col=0, row=0)
@@ -58,7 +63,8 @@ class CUPTests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 1)
 
-  def test_CUP_OutOfBoundsParams(self):
+  @classmethod
+  def test_CUP_OutOfBoundsParams(cls):
     """With overly large parameters, CUP moves as far as possible down and right."""
     size = GetScreenSize()
     esccmd.CUP(Point(size.width() + 10, size.height() + 10))
@@ -67,8 +73,9 @@ class CUPTests(object):
     AssertEQ(position.x(), size.width())
     AssertEQ(position.y(), size.height())
 
+  @classmethod
   @vtLevel(4)
-  def test_CUP_RespectsOriginMode(self):
+  def test_CUP_RespectsOriginMode(cls):
     """CUP is relative to margins in origin mode."""
     # Set a scroll region.
     esccmd.DECSTBM(6, 11)

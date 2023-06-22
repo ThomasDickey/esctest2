@@ -3,8 +3,10 @@ from escutil import AssertEQ, GetCursorPosition, GetScreenSize, knownBug, vtLeve
 from esctypes import Point
 
 class HPATests(object):
+
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_HPA_DefaultParams(self):
+  def test_HPA_DefaultParams(cls):
     """With no params, HPA moves to 1st column."""
     esccmd.HPA(6)
 
@@ -16,8 +18,9 @@ class HPATests(object):
     position = GetCursorPosition()
     AssertEQ(position.x(), 1)
 
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_HPA_StopsAtRightEdge(self):
+  def test_HPA_StopsAtRightEdge(cls):
     """HPA won't go past the right edge."""
     # Position on 6th row
     esccmd.CUP(Point(5, 6))
@@ -31,8 +34,9 @@ class HPATests(object):
     AssertEQ(position.x(), size.width())
     AssertEQ(position.y(), 6)
 
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_HPA_DoesNotChangeRow(self):
+  def test_HPA_DoesNotChangeRow(cls):
     """HPA moves the specified column and does not change the row."""
     esccmd.CUP(Point(5, 6))
     esccmd.HPA(2)
@@ -41,9 +45,10 @@ class HPATests(object):
     AssertEQ(position.x(), 2)
     AssertEQ(position.y(), 6)
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_HPA_IgnoresOriginMode(self):
+  def test_HPA_IgnoresOriginMode(cls):
     """HPA does not respect origin mode."""
     # Set a scroll region.
     esccmd.DECSTBM(6, 11)

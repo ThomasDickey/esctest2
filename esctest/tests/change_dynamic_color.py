@@ -3,8 +3,10 @@ import escio
 from escutil import AssertEQ, knownBug
 
 class ChangeDynamicColorTests(object):
+
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Color reporting not implemented.", shouldTry=False)
-  def test_ChangeDynamicColor_Multiple(self):
+  def test_ChangeDynamicColor_Multiple(cls):
     """OSC 4 ; c1 ; spec1 ; s2 ; spec2 ; ST"""
     esccmd.ChangeDynamicColor("10",
                               "rgb:f0f0/f0f0/f0f0",
@@ -20,7 +22,8 @@ class ChangeDynamicColorTests(object):
     AssertEQ(escio.ReadOSC("10"), ";rgb:8080/8080/8080")
     AssertEQ(escio.ReadOSC("11"), ";rgb:8080/0000/0000")
 
-  def doChangeDynamicColorTest(self, c, value, rgb):
+  @classmethod
+  def doChangeDynamicColorTest(cls, c, value, rgb):
     esccmd.ChangeDynamicColor(c, value)
     esccmd.ChangeDynamicColor(c, "?")
     s = escio.ReadOSC(c)

@@ -5,7 +5,9 @@ from esctypes import Point, Rect
 from escutil import AssertScreenCharsInRectEqual, GetScreenSize, vtLevel
 
 class ILTests(object):
-  def prepare_wide(self):
+
+  @classmethod
+  def prepare_wide(cls):
     """Sets up the display as:
     abcde
     fghij
@@ -22,7 +24,8 @@ class ILTests(object):
 
     esccmd.CUP(Point(2, 3))
 
-  def prepare_region(self):
+  @classmethod
+  def prepare_region(cls):
     # The capital letters are in the scroll region
     lines = ["abcde",
              "fGHIj",
@@ -63,8 +66,9 @@ class ILTests(object):
                                   empty() * 5,
                                   "klmno"])
 
+  @classmethod
   @vtLevel(4)
-  def test_IL_ScrollsOffBottom(self):
+  def test_IL_ScrollsOffBottom(cls):
     """Lines should be scrolled off the bottom of the screen."""
     height = GetScreenSize().height()
     for i in range(height):

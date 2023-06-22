@@ -3,7 +3,9 @@ from escutil import AssertEQ, GetCursorPosition, GetScreenSize, vtLevel
 from esctypes import Point
 
 class CNLTests(object):
-  def test_CNL_DefaultParam(self):
+
+  @classmethod
+  def test_CNL_DefaultParam(cls):
     """CNL moves the cursor down 1 with no parameter given."""
     esccmd.CUP(Point(5, 3))
     esccmd.CNL()
@@ -11,7 +13,8 @@ class CNLTests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 4)
 
-  def test_CNL_ExplicitParam(self):
+  @classmethod
+  def test_CNL_ExplicitParam(cls):
     """CNL moves the cursor down by the passed-in number of lines."""
     esccmd.CUP(Point(6, 3))
     esccmd.CNL(2)
@@ -19,7 +22,8 @@ class CNLTests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), 5)
 
-  def test_CNL_StopsAtBottomLine(self):
+  @classmethod
+  def test_CNL_StopsAtBottomLine(cls):
     """CNL moves the cursor down, stopping at the last line."""
     esccmd.CUP(Point(6, 3))
     height = GetScreenSize().height()
@@ -28,8 +32,9 @@ class CNLTests(object):
     AssertEQ(position.x(), 1)
     AssertEQ(position.y(), height)
 
+  @classmethod
   @vtLevel(4)
-  def test_CNL_StopsAtBottomLineWhenBegunBelowScrollRegion(self):
+  def test_CNL_StopsAtBottomLineWhenBegunBelowScrollRegion(cls):
     """When the cursor starts below the scroll region, CNL moves it down to the
     bottom of the screen."""
     # Set a scroll region. This must be done first because DECSTBM moves the cursor to the origin.
@@ -49,8 +54,9 @@ class CNLTests(object):
     AssertEQ(position.y(), height)
     AssertEQ(position.x(), 5)
 
+  @classmethod
   @vtLevel(4)
-  def test_CNL_StopsAtBottomMarginInScrollRegion(self):
+  def test_CNL_StopsAtBottomMarginInScrollRegion(cls):
     """When the cursor starts within the scroll region, CNL moves it down to the
     bottom margin but no farther."""
     # Set a scroll region. This must be done first because DECSTBM moves the cursor to the origin.

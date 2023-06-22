@@ -11,7 +11,9 @@ from escutil import vtLevel
 from esctypes import Point, Rect
 
 class RITests(object):
-  def test_RI_Basic(self):
+
+  @classmethod
+  def test_RI_Basic(cls):
     """Reverse index moves the cursor up one line."""
     esccmd.CUP(Point(5, 3))
     esccmd.RI()
@@ -19,8 +21,9 @@ class RITests(object):
     AssertEQ(position.x(), 5)
     AssertEQ(position.y(), 2)
 
+  @classmethod
   @vtLevel(4)
-  def test_RI_Scrolls(self):
+  def test_RI_Scrolls(cls):
     """Reverse index scrolls when it hits the top."""
     # Put a and b on the last two lines.
     esccmd.CUP(Point(2, 1))
@@ -41,8 +44,9 @@ class RITests(object):
     AssertEQ(GetCursorPosition().y(), 1)
     AssertScreenCharsInRectEqual(Rect(2, 1, 2, 3), [empty(), "a", "b"])
 
+  @classmethod
   @vtLevel(4)
-  def test_RI_ScrollsInTopBottomRegionStartingBelow(self):
+  def test_RI_ScrollsInTopBottomRegionStartingBelow(cls):
     """Reverse index scrolls when it hits the top region (starting below bottom)."""
     esccmd.DECSTBM(4, 5)
     esccmd.CUP(Point(2, 4))
@@ -55,8 +59,9 @@ class RITests(object):
     AssertEQ(GetCursorPosition(), Point(2, 4))
     AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), [empty(), "x"])
 
+  @classmethod
   @vtLevel(4)
-  def test_RI_ScrollsInTopBottomRegionStartingWithin(self):
+  def test_RI_ScrollsInTopBottomRegionStartingWithin(cls):
     """Reverse index scrolls when it hits the top (starting within region)."""
     esccmd.DECSTBM(4, 5)
     esccmd.CUP(Point(2, 4))
@@ -68,8 +73,9 @@ class RITests(object):
     AssertEQ(GetCursorPosition(), Point(2, 4))
     AssertScreenCharsInRectEqual(Rect(2, 4, 2, 5), [empty(), "x"])
 
+  @classmethod
   @vtLevel(4)
-  def test_RI_MovesDoesNotScrollOutsideLeftRight(self):
+  def test_RI_MovesDoesNotScrollOutsideLeftRight(cls):
     """Cursor moves down but won't scroll when outside left-right region."""
     esccmd.DECSTBM(2, 5)
     esccmd.DECSET(esccmd.DECLRMM)
@@ -102,8 +108,9 @@ class RITests(object):
     AssertEQ(GetCursorPosition(), Point(1, 1))
     AssertScreenCharsInRectEqual(Rect(3, 5, 3, 5), ["x"])
 
+  @classmethod
   @vtLevel(4)
-  def test_RI_StopsAtTopLineWhenBegunAboveScrollRegion(self):
+  def test_RI_StopsAtTopLineWhenBegunAboveScrollRegion(cls):
     """When the cursor starts above the scroll region, reverse index moves it
     up to the top of the screen but won't scroll."""
     # Set a scroll region. This must be done first because DECSTBM moves the
@@ -125,9 +132,10 @@ class RITests(object):
     # Ensure no scroll
     AssertScreenCharsInRectEqual(Rect(1, 3, 1, 3), ["x"])
 
+  @classmethod
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   @optionRequired(terminal="iTerm2", option=escargs.DISABLE_WIDE_CHARS)
-  def test_RI_8bit(self):
+  def test_RI_8bit(cls):
     esccmd.CUP(Point(5, 3))
 
     escio.use8BitControls = True

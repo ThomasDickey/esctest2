@@ -32,8 +32,9 @@ class DECSTRTests(object):
   DECRLM                    Reset (Left-to-right), regardless of NVR setting.
   DECPCTERM                 Always reset."""
 
+  @classmethod
   @vtLevel(2)
-  def test_DECSTR_DECSC(self):
+  def test_DECSTR_DECSC(cls):
     # Save cursor position
     esccmd.CUP(Point(5, 6))
     esccmd.DECSC()
@@ -45,8 +46,9 @@ class DECSTRTests(object):
     esccmd.DECRC()
     AssertEQ(GetCursorPosition(), Point(1, 1))
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSTR_IRM(self):
+  def test_DECSTR_IRM(cls):
     # Turn on insert mode
     esccmd.SM(esccmd.IRM)
 
@@ -60,8 +62,9 @@ class DECSTRTests(object):
     escio.Write("b")
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["b"])
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSTR_DECOM(self):
+  def test_DECSTR_DECOM(cls):
     # Define a scroll region
     esccmd.DECSTBM(3, 4)
 
@@ -91,6 +94,7 @@ class DECSTRTests(object):
                                                     empty() * 3,
                                                     empty() * 3])
 
+  @classmethod
   @intentionalDeviationFromSpec(terminal="iTerm2",
                                 reason="For compatibility purposes,"
                                 + " iTerm2 mimics xterm's behavior of turning"
@@ -99,7 +103,7 @@ class DECSTRTests(object):
                                 reason="For compatibility purposes,"
                                 + " xterm turns on DECAWM by default.")
   @vtLevel(2)
-  def test_DECSTR_DECAWM(self):
+  def test_DECSTR_DECAWM(cls):
     # Turn on autowrap
     esccmd.DECSET(esccmd.DECAWM)
 
@@ -112,8 +116,9 @@ class DECSTRTests(object):
     position = GetCursorPosition()
     AssertEQ(position.x(), 2)
 
+  @classmethod
   @vtLevel(2)
-  def test_DECSTR_ReverseWraparound(self):
+  def test_DECSTR_ReverseWraparound(cls):
     # Turn on reverse wraparound
     esccmd.DECSET(esccmd.ReverseWraparound())
 
@@ -125,8 +130,9 @@ class DECSTRTests(object):
     escio.Write(BS)
     AssertEQ(GetCursorPosition().x(), 1)
 
+  @classmethod
   @vtLevel(2)
-  def test_DECSTR_STBM(self):
+  def test_DECSTR_STBM(cls):
     # Set top and bottom margins
     esccmd.DECSTBM(3, 4)
 
@@ -138,9 +144,10 @@ class DECSTRTests(object):
     escio.Write(CR + LF)
     AssertEQ(GetCursorPosition().y(), 5)
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSCA not implemented")
-  def test_DECSTR_DECSCA(self):
+  def test_DECSTR_DECSCA(cls):
     # Turn on character protection
     esccmd.DECSCA(1)
 
@@ -153,8 +160,9 @@ class DECSTRTests(object):
     esccmd.DECSED(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [empty()])
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSTR_DECSASD(self):
+  def test_DECSTR_DECSASD(cls):
     # Direct output to status line
     esccmd.DECSASD(1)
 
@@ -170,8 +178,9 @@ class DECSTRTests(object):
     escio.Write("X")
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["X"])
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSTR_DECRLM(self):
+  def test_DECSTR_DECRLM(cls):
     # Set right-to-left mode
     esccmd.DECSET(esccmd.DECRLM)
 
@@ -185,8 +194,9 @@ class DECSTRTests(object):
     AssertScreenCharsInRectEqual(Rect(2, 1, 2, 1), ["a"])
     AssertScreenCharsInRectEqual(Rect(3, 1, 3, 1), ["b"])
 
+  @classmethod
   @vtLevel(4)
-  def test_DECSTR_DECLRMM(self):
+  def test_DECSTR_DECLRMM(cls):
     # This isn't in the vt 510 docs but xterm does it and it makes sense to do.
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(5, 6)
@@ -199,8 +209,9 @@ class DECSTRTests(object):
     escio.Write("ab")
     AssertEQ(GetCursorPosition().x(), 7)
 
+  @classmethod
   @vtLevel(2)
-  def test_DECSTR_CursorStaysPut(self):
+  def test_DECSTR_CursorStaysPut(cls):
     esccmd.CUP(Point(5, 6))
     esccmd.DECSTR()
     position = GetCursorPosition()

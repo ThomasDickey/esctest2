@@ -5,18 +5,21 @@ from escutil import AssertScreenCharsInRectEqual, optionRequired, vtLevel
 from esctypes import Rect
 
 class APCTests(object):
+
+  @classmethod
   @vtLevel(4)
-  def test_APC_Basic(self):
+  def test_APC_Basic(cls):
     escio.WriteAPC("xyz")
     escio.Write("A")
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
                                  ["A" + empty() * 2])
 
+  @classmethod
   @vtLevel(4)
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   @optionRequired(terminal="iTerm2", option=escargs.DISABLE_WIDE_CHARS)
-  def test_APC_8bit(self):
+  def test_APC_8bit(cls):
     escio.use8BitControls = True
     escio.Write(S8C1T)
 

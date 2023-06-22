@@ -13,23 +13,27 @@ from escutil import AssertScreenCharsInRectEqual, GetScreenSize, knownBug, vtLev
 from esctypes import Point, Rect
 
 class REPTests(object):
+
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_REP_DefaultParam(self):
+  def test_REP_DefaultParam(cls):
     escio.Write("a")
     esccmd.REP()
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1), ["aa" + empty()])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_REP_ExplicitParam(self):
+  def test_REP_ExplicitParam(cls):
     escio.Write("a")
     esccmd.REP(2)
     AssertScreenCharsInRectEqual(Rect(1, 1, 4, 1), ["aaa" + empty()])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_REP_RespectsLeftRightMargins(self):
+  def test_REP_RespectsLeftRightMargins(cls):
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(2, 4)
     esccmd.CUP(Point(2, 1))
@@ -41,9 +45,10 @@ class REPTests(object):
                                  [empty() + "aaa" + empty(),
                                   empty() + "a" + empty() * 3])
 
+  @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
-  def test_REP_RespectsTopBottomMargins(self):
+  def test_REP_RespectsTopBottomMargins(cls):
     width = GetScreenSize().width()
     esccmd.DECSTBM(2, 4)
     esccmd.CUP(Point(width - 2, 4))

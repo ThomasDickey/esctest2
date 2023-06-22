@@ -6,11 +6,14 @@ from escutil import AssertEQ, knownBug, optionRequired, vtLevel
 class DECRQMTests(object):
   """DECANM is not tested because there doesn't seem to be any way to
   exit VT52 mode and subsequent tests are broken."""
-  def requestAnsiMode(self, mode):
+
+  @classmethod
+  def requestAnsiMode(cls, mode):
     esccmd.DECRQM(mode, DEC=False)
     return escio.ReadCSI('$y')
 
-  def requestDECMode(self, mode):
+  @classmethod
+  def requestDECMode(cls, mode):
     esccmd.DECRQM(mode, DEC=True)
     return escio.ReadCSI('$y', '?')
 

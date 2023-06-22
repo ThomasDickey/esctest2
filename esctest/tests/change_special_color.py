@@ -11,8 +11,9 @@ class ChangeSpecialColorTests(object):
   the test to know the maximum number of colors.  In either case, the response
   will be of the same form as the query, i.e., same mode and color numbers."""
 
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Color reporting not implemented.", shouldTry=False)
-  def test_ChangeSpecialColor_Multiple(self):
+  def test_ChangeSpecialColor_Multiple(cls):
     """OSC 4 ; c1 ; spec1 ; s2 ; spec2 ; ST"""
     offset = GetIndexedColors()
     esccmd.ChangeSpecialColor("0",
@@ -33,8 +34,9 @@ class ChangeSpecialColorTests(object):
     LogInfo("Read: " + s)
     AssertEQ(s, ";" + str(offset + 1) + ";rgb:8080/0000/0000")
 
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Color reporting not implemented.", shouldTry=False)
-  def test_ChangeSpecialColor_Multiple2(self):
+  def test_ChangeSpecialColor_Multiple2(cls):
     """OSC 5 ; c1 ; spec1 ; s2 ; spec2 ; ST"""
     esccmd.ChangeSpecialColor2("0",
                                "rgb:f0f0/f0f0/f0f0",
@@ -54,14 +56,16 @@ class ChangeSpecialColorTests(object):
     LogInfo("Read: " + s)
     AssertTrue(s in [";1;rgb:8080/0000/0000"])
 
-  def doChangeSpecialColorTest(self, c, value, rgb):
+  @classmethod
+  def doChangeSpecialColorTest(cls, c, value, rgb):
     offset = GetIndexedColors()
     esccmd.ChangeSpecialColor(c, value)
     esccmd.ChangeSpecialColor(c, "?")
     s = escio.ReadOSC("4")
     AssertEQ(s, ";" + str(int(c) + offset) + ";rgb:" + rgb)
 
-  def doChangeSpecialColorTest2(self, c, value, rgb):
+  @classmethod
+  def doChangeSpecialColorTest2(cls, c, value, rgb):
     esccmd.ChangeSpecialColor2(c, value)
     esccmd.ChangeSpecialColor2(c, "?")
     s = escio.ReadOSC("5")

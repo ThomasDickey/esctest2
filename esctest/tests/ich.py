@@ -9,8 +9,10 @@ from escutil import vtLevel
 from esctypes import Point, Rect
 
 class ICHTests(object):
+
+  @classmethod
   @vtLevel(4)
-  def test_ICH_DefaultParam(self):
+  def test_ICH_DefaultParam(cls):
     """ Test ICH with default parameter """
     esccmd.CUP(Point(1, 1))
     AssertEQ(GetCursorPosition().x(), 1)
@@ -22,8 +24,9 @@ class ICHTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, 8, 1),
                                  ["a" + blank() + "bcdefg"])
 
+  @classmethod
   @vtLevel(4)
-  def test_ICH_ExplicitParam(self):
+  def test_ICH_ExplicitParam(cls):
     """Test ICH with explicit parameter. """
     esccmd.CUP(Point(1, 1))
     AssertEQ(GetCursorPosition().x(), 1)
@@ -35,8 +38,9 @@ class ICHTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, 9, 1),
                                  ["a" + blank() + blank() + "bcdefg"])
 
+  @classmethod
   @vtLevel(4)
-  def test_ICH_IsNoOpWhenCursorBeginsOutsideScrollRegion(self):
+  def test_ICH_IsNoOpWhenCursorBeginsOutsideScrollRegion(cls):
     """Ensure ICH does nothing when the cursor starts out outside the scroll region."""
     esccmd.CUP(Point(1, 1))
     s = "abcdefg"
@@ -57,8 +61,9 @@ class ICHTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 1, len(s), 1),
                                  [s])
 
+  @classmethod
   @vtLevel(4)
-  def test_ICH_ScrollOffRightEdge(self):
+  def test_ICH_ScrollOffRightEdge(cls):
     """Test ICH behavior when pushing text off the right edge. """
     width = GetScreenSize().width()
     s = "abcdefg"
@@ -73,8 +78,9 @@ class ICHTests(object):
     # Ensure there is no wrap-around.
     AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [empty()])
 
+  @classmethod
   @vtLevel(4)
-  def test_ICH_ScrollEntirelyOffRightEdge(self):
+  def test_ICH_ScrollEntirelyOffRightEdge(cls):
     """Test ICH behavior when pushing text off the right edge. """
     width = GetScreenSize().width()
     esccmd.CUP(Point(1, 1))
@@ -89,8 +95,9 @@ class ICHTests(object):
     # Ensure there is no wrap-around.
     AssertScreenCharsInRectEqual(Rect(1, 2, 1, 2), [empty()])
 
+  @classmethod
   @vtLevel(4)
-  def test_ICH_ScrollOffRightMarginInScrollRegion(self):
+  def test_ICH_ScrollOffRightMarginInScrollRegion(cls):
     """Test ICH when cursor is within the scroll region."""
     esccmd.CUP(Point(1, 1))
     s = "abcdefg"

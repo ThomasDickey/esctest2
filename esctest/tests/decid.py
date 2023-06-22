@@ -5,15 +5,18 @@ import escio
 from escutil import AssertTrue, knownBug, optionRequired
 
 class DECIDTests(object):
+
+  @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented.", shouldTry=False)
-  def test_DECID_Basic(self):
+  def test_DECID_Basic(cls):
     esccmd.DECID()
     params = escio.ReadCSI("c", expected_prefix="?")
     AssertTrue(len(params) > 0)
 
+  @classmethod
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   @knownBug(terminal="iTerm2", reason="DECID not implemented.")
-  def test_DECID_8bit(self):
+  def test_DECID_8bit(cls):
     escio.use8BitControls = True
     escio.Write(S8C1T)
 

@@ -5,7 +5,9 @@ from esctypes import Point, Rect
 from escutil import AssertScreenCharsInRectEqual, GetScreenSize, vtLevel
 
 class DLTests(object):
-  def prepare(self):
+
+  @classmethod
+  def prepare(cls):
     """Fills the screen with 4-char line numbers (0001, 0002, ...) down to the
     last line and puts the cursor on the start of the second line."""
     height = GetScreenSize().height()
@@ -16,7 +18,8 @@ class DLTests(object):
 
     esccmd.CUP(Point(1, 2))
 
-  def prepareForRegion(self):
+  @classmethod
+  def prepareForRegion(cls):
     """Sets the screen up as
     abcde
     fghij
