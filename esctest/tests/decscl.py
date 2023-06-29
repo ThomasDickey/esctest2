@@ -23,6 +23,8 @@ class DECSCLTests(object):
   @vtLevel(3)
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECSCL")
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECRQM", shouldTry=False)
+  @knownBug(terminal="iTerm2beta", reason="iTerm2 doesn't implement DECSCL")
+  @knownBug(terminal="iTerm2beta", reason="iTerm2 doesn't implement DECRQM", shouldTry=False)
   def test_DECSCL_Level2DoesntSupportDECRQM(cls):
     """VT level 2 does not support DECRQM."""
     escio.Write("Hello world.")
@@ -49,6 +51,7 @@ class DECSCLTests(object):
   @classmethod
   @vtLevel(3)
   @knownBug(terminal="iTerm2", reason="Not implemented", shouldTry=False)
+  @knownBug(terminal="iTerm2beta", reason="Not implemented", shouldTry=False)
   def test_DSCSCL_Level3_SupportsDECRQMDoesntSupportDECSLRM(cls):
     # Set level 3 conformance
     esccmd.DECSCL(63, 1)
@@ -68,6 +71,8 @@ class DECSCLTests(object):
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECSCL")
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECNCSM", shouldTry=False)
+  @knownBug(terminal="iTerm2beta", reason="iTerm2 doesn't implement DECSCL")
+  @knownBug(terminal="iTerm2beta", reason="iTerm2 doesn't implement DECNCSM", shouldTry=False)
   def test_DECSCL_Level4_SupportsDECSLRMDoesntSupportDECNCSM(cls):
     # Set level 4 conformance
     esccmd.DECSCL(64, 1)
@@ -93,6 +98,7 @@ class DECSCLTests(object):
   @classmethod
   @vtLevel(5)
   @knownBug(terminal="iTerm2", reason="Not implemented", shouldTry=False)
+  @knownBug(terminal="iTerm2beta", reason="Not implemented", shouldTry=False)
   def test_DECSCL_Level5_SupportsDECNCSM(cls):
     # Set level 5 conformance
     esccmd.DECSCL(65, 1)
@@ -109,6 +115,7 @@ class DECSCLTests(object):
   @vtLevel(4)
   @knownBug(terminal="xterm", reason="xterm always turns on 8-bit controls.", shouldTry=False)
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't implement DECSCL")
+  @knownBug(terminal="iTerm2beta", reason="iTerm2 doesn't implement DECSCL")
   def test_DECSCL_RISOnChange(cls):
     """DECSCL should do an RIS. RIS does a lot, so we'll just test a few
     things. This may not be true for VT220's, though, to quote the xterm code:

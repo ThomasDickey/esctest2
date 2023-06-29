@@ -68,6 +68,8 @@ class ECHTests(object):
   @vtLevel(4)
   @knownBug(terminal="iTerm2",
             reason="Protection not implemented.")
+  @knownBug(terminal="iTerm2beta",
+            reason="Protection not implemented.")
   def test_ECH_respectsISOProtection(cls):
     """ECH respects SPA/EPA."""
     escio.Write("a")

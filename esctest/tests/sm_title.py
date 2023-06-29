@@ -10,6 +10,7 @@ class SMTitleTests(object):
   @optionRequired(terminal="xterm", option=escargs.XTERM_WINOPS_ENABLED,
                   allowPassWithoutOption=True)
   @knownBug(terminal="iTerm2", reason="SM_Title not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="SM_Title not implemented.")
   def test_SMTitle_SetHexQueryUTF8(cls):
     esccmd.RM_Title(SET_UTF8, QUERY_HEX)
     esccmd.SM_Title(SET_HEX, QUERY_UTF8)
@@ -47,6 +48,7 @@ class SMTitleTests(object):
   @optionRequired(terminal="xterm", option=escargs.XTERM_WINOPS_ENABLED,
                   allowPassWithoutOption=True)
   @knownBug(terminal="iTerm2", reason="SM_Title not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="SM_Title not implemented.")
   def test_SMTitle_SetUTF8QueryHex(cls):
     esccmd.RM_Title(SET_HEX, QUERY_UTF8)
     esccmd.SM_Title(SET_UTF8, QUERY_HEX)

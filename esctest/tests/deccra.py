@@ -71,6 +71,7 @@ class DECCRATests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_DECCRA_destinationPartiallyOffscreen(self):
     self.prepare()
     size = GetScreenSize()
@@ -152,6 +153,7 @@ class DECCRATests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_DECCRA_respectsOriginMode(self):
     self.prepare()
 
@@ -226,6 +228,7 @@ class DECCRATests(object):
   @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_DECCRA_overlyLargeSourceClippedToScreenSize(cls):
     size = GetScreenSize()
 
@@ -252,6 +255,7 @@ class DECCRATests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented", noop=True)
+  @knownBug(terminal="iTerm2beta", reason="Not implemented", noop=True)
   def test_DECCRA_cursorDoesNotMove(self):
     # Make sure something is on screen (so the test is more deterministic)
     self.prepare()

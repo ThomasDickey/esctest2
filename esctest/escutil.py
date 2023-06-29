@@ -1,5 +1,6 @@
 import functools
 import traceback
+import re
 
 import esc
 import escargs
@@ -312,7 +313,11 @@ def GetChecksumOfRect(rect):
 
   str_pid = str(Pid)
   if not params.startswith(str_pid):
-    Raise(esctypes.BadResponse(params, "Prefix of " + str_pid))
+    if escargs.args.expected_terminal == "iTerm2":
+      # workaround for known bug to let screen-scraping tests work...
+      str_pid = re.sub(r'[^0-9].*$', "", params)
+    else:
+      Raise(esctypes.BadResponse(params, "Prefix of " + str_pid))
 
   i = len(str_pid)
 

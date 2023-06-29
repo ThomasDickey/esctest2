@@ -16,6 +16,7 @@ class DECSELTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_DECSEL_Default(self):
     """Should erase to right of cursor."""
     self.prepare()
@@ -25,6 +26,7 @@ class DECSELTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_DECSEL_0(self):
     """Should erase to right of cursor."""
     self.prepare()
@@ -34,6 +36,7 @@ class DECSELTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_DECSEL_1(self):
     """Should erase to left of cursor."""
     self.prepare()
@@ -43,6 +46,7 @@ class DECSELTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_DECSEL_2(self):
     """Should erase whole line."""
     self.prepare()
@@ -52,6 +56,7 @@ class DECSELTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_DECSEL_IgnoresScrollRegion(self):
     """Should erase whole line."""
     self.prepare()
@@ -65,6 +70,7 @@ class DECSELTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_DECSEL_Default_Protection(self):
     """Should erase to right of cursor."""
     esccmd.DECSCA(1)
@@ -82,6 +88,7 @@ class DECSELTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_DECSEL_0_Protection(self):
     """All letters are protected so nothing should happen."""
     esccmd.DECSCA(1)
@@ -100,6 +107,7 @@ class DECSELTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_DECSEL_1_Protection(self):
     """All letters are protected so nothing should happen."""
     esccmd.DECSCA(1)
@@ -117,6 +125,7 @@ class DECSELTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_DECSEL_2_Protection(self):
     """All letters are protected so nothing should happen."""
     esccmd.DECSCA(1)
@@ -133,6 +142,7 @@ class DECSELTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_DECSEL_IgnoresScrollRegion_Protection(self):
     """All letters are protected so nothing should happen."""
     esccmd.DECSCA(1)
@@ -157,6 +167,7 @@ class DECSELTests(object):
             reason="DECSEL respects ISO protection for backward compatibility,"
             + " per email from Thomas")
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
+  @knownBug(terminal="iTerm2beta", reason="DECSED not implemented")
   def test_DECSEL_doesNotRespectISOProtect(cls):
     """DECSEL does not respect ISO protection."""
     escio.Write("a")

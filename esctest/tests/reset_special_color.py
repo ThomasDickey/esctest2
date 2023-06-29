@@ -7,6 +7,7 @@ class ResetSpecialColorTests(object):
 
   @classmethod
   @knownBug(terminal="iTerm2", reason="Query not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Query not implemented.")
   def test_ResetSpecialColor_Single(cls):
     offset = GetIndexedColors()
     n = "0"
@@ -22,6 +23,8 @@ class ResetSpecialColorTests(object):
     AssertEQ(escio.ReadOSC("4"), original)
 
   @classmethod
+  @knownBug(terminal="iTerm2", reason="Query not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Query not implemented.")
   def test_ResetSpecialColor_Single2(cls):
     n = "0"
     esccmd.ChangeSpecialColor2(n, "?")
@@ -37,6 +40,7 @@ class ResetSpecialColorTests(object):
 
   @classmethod
   @knownBug(terminal="iTerm2", reason="Query not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Query not implemented.")
   def test_ResetSpecialColor_Multiple(cls):
     offset = GetIndexedColors()
     n1 = "0"
@@ -61,6 +65,7 @@ class ResetSpecialColorTests(object):
 
   @classmethod
   @knownBug(terminal="iTerm2", reason="Query not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Query not implemented.")
   def test_ResetSpecialColor_Multiple2(cls):
     n1 = "0"
     n2 = "1"
@@ -84,6 +89,7 @@ class ResetSpecialColorTests(object):
 
   @classmethod
   @knownBug(terminal="iTerm2", reason="Query not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Query not implemented.")
   def test_ResetSpecialColor_Dynamic(cls):
     esccmd.ChangeSpecialColor("10", "?")
     original = escio.ReadOSC("10")

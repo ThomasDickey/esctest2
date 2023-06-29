@@ -25,6 +25,7 @@ class HTSTests(object):
   @classmethod
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   @optionRequired(terminal="iTerm2", option=escargs.DISABLE_WIDE_CHARS)
+  @optionRequired(terminal="iTerm2beta", option=escargs.DISABLE_WIDE_CHARS)
   def test_HTS_8bit(cls):
     # Remove tabs
     esccmd.TBC(3)

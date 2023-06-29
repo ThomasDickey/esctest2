@@ -17,6 +17,7 @@ class S8C1TTests(object):
   @classmethod
   @vtLevel(2)
   @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="8-bit controls not implemented.")
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   def test_S8C1T_CSI(cls):
     escio.use8BitControls = True
@@ -29,6 +30,7 @@ class S8C1TTests(object):
   @classmethod
   @vtLevel(3)
   @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="8-bit controls not implemented.")
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   def test_S8C1T_DCS(cls):
     esccmd.DECSTBM(5, 6)
@@ -43,6 +45,8 @@ class S8C1TTests(object):
   @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2",
+            reason="Protection not implemented.")
+  @knownBug(terminal="iTerm2beta",
             reason="Protection not implemented.")
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   def test_S8C1T_SPA_EPA(cls):

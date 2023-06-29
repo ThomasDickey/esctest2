@@ -143,6 +143,7 @@ class NELTests(object):
   @classmethod
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   @optionRequired(terminal="iTerm2", option=escargs.DISABLE_WIDE_CHARS)
+  @optionRequired(terminal="iTerm2beta", option=escargs.DISABLE_WIDE_CHARS)
   def test_NEL_8bit(cls):
     esccmd.CUP(Point(5, 3))
 

@@ -70,6 +70,7 @@ class DECSERATests(tests.fill_rectangle.FillRectangleTests):
   @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSED not implemented")
+  @knownBug(terminal="iTerm2beta", reason="DECSED not implemented")
   def test_DECSERA_doesNotRespectISOProtect(cls):
     """DECSERA does not respect ISO protection."""
     escio.Write("a")

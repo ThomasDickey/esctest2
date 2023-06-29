@@ -124,6 +124,7 @@ class SaveRestoreCursorTests(object):
 
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="DECSCA and DECSERA not implemented", noop=True)
+  @knownBug(terminal="iTerm2beta", reason="DECSCA and DECSERA not implemented", noop=True)
   def test_SaveRestoreCursor_Protection(self):
     # Turn on protection and save
     esccmd.DECSCA(1)

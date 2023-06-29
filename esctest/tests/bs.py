@@ -81,6 +81,7 @@ class BSTests(object):
 
   @classmethod
   @knownBug(terminal="iTerm2", reason="Does not wrap around properly")
+  @knownBug(terminal="iTerm2beta", reason="Does not wrap around properly")
   def test_BS_ReverseWrapGoesToBottom(cls):
     """If the cursor starts within the top/bottom margins, after doing a
     reverse wrap, the cursor remains within those margins.

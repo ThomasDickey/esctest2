@@ -10,6 +10,7 @@ from esccmd import DECSLRM
 from escutil import AssertEQ
 from escutil import GetCursorPosition
 from escutil import GetScreenSize
+from escutil import knownBug
 from escutil import vtLevel
 
 from esctypes import Point
@@ -76,6 +77,8 @@ class CUBTests(object):
     AssertEQ(GetCursorPosition().x(), 5)
 
   @classmethod
+  @knownBug(terminal="iTerm2", reason="Differs from xterm.")
+  @knownBug(terminal="iTerm2beta", reason="Differs from xterm.")
   def test_CUB_AfterNoWrappedInlines(cls):
     '''Backspace after lines that did not wrap will not wrap to prior lines'''
     DECSET(esccmd.DECAWM)
@@ -95,6 +98,8 @@ class CUBTests(object):
       AssertEQ(GetCursorPosition(), Point(5, 3))
 
   @classmethod
+  @knownBug(terminal="iTerm2", reason="Differs from xterm.")
+  @knownBug(terminal="iTerm2beta", reason="Differs from xterm.")
   def test_CUB_AfterOneWrappedInline(cls):
     '''Backspace after wrapped line may wrap to the beginning of the line.'''
     DECSET(esccmd.DECAWM)

@@ -1,6 +1,7 @@
 esctest
 Automatic unit tests for terminal emulation
 George Nachman
+Thomas E. Dickey
 
 esctest is a suite of unit tests that test a terminal emulator's similarity to a
 theoretical ideal. That ideal is defined as "xterm, but without bugs in George's
@@ -68,8 +69,9 @@ defaults delete com.googlecode.iterm2
 Next, launch iTerm2 and perform the following steps:
 * Enable Prefs>Profiles>Terminal>Terminal may report window title
 * Disable Prefs>Profiles>Terminal>Disable session-initiated window resizing
-* Disable Prefs>Appearance>Show current job name
-* Disable Prefs>Advanced>Enable support for REP
+* Enable Prefs>General>Selection>Applications in terminal may access clipboard
+* Enable Prefs>Advanced>General>Disable DECRQCRA?>No
+* Enable Prefs>Advanced>General>Disable potentially insecure sequences>No
 
 All tests should pass with these settings.
 
@@ -104,7 +106,7 @@ character used for "blanks", such as when a character is erased). The assertions
 and expectations of tests are changed to be appropriate for the current terminal
 to avoid false or uninformative failures.
 
-The legal values of "terminal" are "xterm" and "iTerm2".
+The legal values of "terminal" are "xterm", "iTerm2", and "iTerm2beta".
 
 --no-print-logs
 Normally, the test logs are printed when the test finishes. Use this argument to

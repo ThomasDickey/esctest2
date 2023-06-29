@@ -7,6 +7,7 @@ class DATests(object):
 
   @classmethod
   @knownBug(terminal="iTerm2", reason="iTerm2 doesn't report 18 or 22.")
+  @knownBug(terminal="iTerm2beta", reason="iTerm2 doesn't report 18 or 22.")
   def handleDAResponse(cls):
     params = escio.ReadCSI('c', expected_prefix='?')
     if escargs.args.expected_terminal == "xterm":
@@ -26,7 +27,8 @@ class DATests(object):
         expected = [1, 2] # xterm extension (VT100)
       else:
         expected = [0] # xterm extension
-    elif escargs.args.expected_terminal == "iTerm2":
+    elif (escargs.args.expected_terminal == "iTerm2" or
+          escargs.args.expected_terminal == "iTerm2beta"):
       # TODO:  Determine which VT levels are completely supported and add 6,
       # 62, 63, or 64.
       # I believe 18 means we support DECSTB and DECSLRM but I can't find any

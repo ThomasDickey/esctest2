@@ -16,7 +16,6 @@ class REPTests(object):
 
   @classmethod
   @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_REP_DefaultParam(cls):
     escio.Write("a")
     esccmd.REP()
@@ -24,7 +23,6 @@ class REPTests(object):
 
   @classmethod
   @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_REP_ExplicitParam(cls):
     escio.Write("a")
     esccmd.REP(2)
@@ -32,7 +30,6 @@ class REPTests(object):
 
   @classmethod
   @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_REP_RespectsLeftRightMargins(cls):
     esccmd.DECSET(esccmd.DECLRMM)
     esccmd.DECSLRM(2, 4)
@@ -47,7 +44,6 @@ class REPTests(object):
 
   @classmethod
   @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_REP_RespectsTopBottomMargins(cls):
     width = GetScreenSize().width()
     esccmd.DECSTBM(2, 4)

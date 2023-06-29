@@ -137,6 +137,8 @@ class XtermWinopsTests(object):
     """Return the average of the heights from two sizes."""
     return (size_a.height() + size_b.height()) // 2
 
+  @knownBug(terminal="iTerm2", reason="Not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_XtermWinops_IconifyDeiconfiy(self):
     esccmd.XTERM_WINOPS(esccmd.WINOP_ICONIFY)
     self.DelayAfterIcon()
@@ -146,6 +148,7 @@ class XtermWinopsTests(object):
     self.DelayAfterIcon()
     AssertEQ(GetIsIconified(), False)
 
+  @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_XtermWinops_MoveToXY(self):
     esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, 0, 0)
     self.DelayAfterMove()
@@ -168,6 +171,7 @@ class XtermWinopsTests(object):
     self.DelayAfterMove()
     AssertEQ(GetWindowPosition(), Point(0, 1))
 
+  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_XtermWinops_ResizePixels_BothParameters(self):
     """Resize the window to a pixel size, giving both parameters."""
     maximum_size = GetScreenSizePixels()
@@ -189,6 +193,7 @@ class XtermWinopsTests(object):
                         original_size.width())
     self.DelayAfterResize()
 
+  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_XtermWinops_ResizePixels_OmittedHeight(self):
     """Resize the window to a pixel size, omitting one parameter. The size
     should not change in the direction of the omitted parameter."""
@@ -233,6 +238,7 @@ class XtermWinopsTests(object):
                         original_size.width())
     self.DelayAfterResize()
 
+  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_XtermWinops_ResizePixels_ZeroWidth(self):
     """Resize the window to a pixel size, setting one parameter to 0. The
     window should maximize in the direction of the 0 parameter."""
@@ -287,6 +293,7 @@ class XtermWinopsTests(object):
                           original_size.height(),
                           original_size.width())
 
+  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_XtermWinops_ResizePixels_ZeroHeight(self):
     """Resize the window to a pixel size, setting one parameter to 0. The
     window should maximize in the direction of the 0 parameter."""
@@ -377,6 +384,7 @@ class XtermWinopsTests(object):
     limit = Size(limit.width(), 0)
     self.CheckActualSizeChars(desired_size, limit)
 
+  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_XtermWinops_ResizeChars_ZeroHeight(self):
     """Resize the window to a character size, setting one param to 0 (max size
     in that direction)."""
@@ -396,6 +404,7 @@ class XtermWinopsTests(object):
     limit = Size(0, limit.height())
     self.CheckActualSizeChars(desired_size, limit)
 
+  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_XtermWinops_ResizeChars_DefaultWidth(self):
     original_size = GetScreenSize()
     display_size = GetDisplaySize()
@@ -428,6 +437,7 @@ class XtermWinopsTests(object):
     self.CheckActualSizeChars(desired_size, Size(0, 0))
 
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_XtermWinops_MaximizeWindow_HorizontallyAndVertically(self):
     esccmd.XTERM_WINOPS(esccmd.WINOP_MAXIMIZE, esccmd.WINOP_MAXIMIZE_HV)
     self.DelayAfterResize()
@@ -443,6 +453,7 @@ class XtermWinopsTests(object):
     self.CheckAnySize(desired_size, actual_size, error_limit)
 
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_XtermWinops_MaximizeWindow_Horizontally(self):
     desired_size = Size(GetDisplaySize().width(),
                         GetScreenSize().height())
@@ -460,6 +471,7 @@ class XtermWinopsTests(object):
     self.CheckAnySize(desired_size, actual_size, error_limit)
 
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_XtermWinops_MaximizeWindow_Vertically(self):
     desired_size = Size(GetScreenSize().width(),
                         GetDisplaySize().height())
@@ -476,6 +488,7 @@ class XtermWinopsTests(object):
     self.CheckAnySize(desired_size, actual_size, error_limit)
 
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_XtermWinops_Fullscreen(self):
     original_size = GetScreenSize()
     display_size = GetDisplaySize()
@@ -511,12 +524,14 @@ class XtermWinopsTests(object):
     self.CheckForShrinkage(original_size, GetScreenSize())
 
   @classmethod
+  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_XtermWinops_ReportIconLabel(cls):
     string = "test " + str(time.time())
     esccmd.ChangeIconTitle(string)
     AssertEQ(GetIconTitle(), string)
 
   @classmethod
+  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_XtermWinops_ReportWindowLabel(cls):
     string = "test " + str(time.time())
     esccmd.ChangeWindowTitle(string)
@@ -550,7 +565,10 @@ class XtermWinopsTests(object):
   @classmethod
   @knownBug(terminal="iTerm2",
             reason="The window title incorrectly changes"
-            + "when popping the icon title.")
+            + " when popping the icon title.")
+  @knownBug(terminal="iTerm2beta",
+            reason="The window title incorrectly changes"
+            + " when popping the icon title.")
   def test_XtermWinops_PushIconAndWindow_PopIcon(cls):
     """Push an icon & window title and pop just the icon title."""
     # Generate a uniqueish string
@@ -584,7 +602,10 @@ class XtermWinopsTests(object):
   @classmethod
   @knownBug(terminal="iTerm2",
             reason="The window title incorrectly changes"
-            + "when popping the icon title.")
+            + " when popping the icon title.")
+  @knownBug(terminal="iTerm2beta",
+            reason="The window title incorrectly changes"
+            + " when popping the icon title.")
   def test_XtermWinops_PushIconAndWindow_PopWindow(cls):
     """Push an icon & window title and pop just the window title."""
     # Generate a uniqueish string

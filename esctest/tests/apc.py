@@ -19,6 +19,7 @@ class APCTests(object):
   @vtLevel(4)
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   @optionRequired(terminal="iTerm2", option=escargs.DISABLE_WIDE_CHARS)
+  @optionRequired(terminal="iTerm2beta", option=escargs.DISABLE_WIDE_CHARS)
   def test_APC_8bit(cls):
     escio.use8BitControls = True
     escio.Write(S8C1T)

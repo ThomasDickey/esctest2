@@ -502,6 +502,7 @@ class DECSETTests(object):
 
   @classmethod
   @vtLevel(4)
+  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_DECSET_DECLRMM_ModeResetByDECSTR(cls):
     """ DEC STD 070 says DECSTR resets left/right mode."""
     esccmd.DECSET(esccmd.DECLRMM)

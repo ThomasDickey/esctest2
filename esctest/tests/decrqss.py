@@ -9,6 +9,7 @@ class DECRQSSTests(object):
   @vtLevel(4)
   @knownBug(terminal="xterm", reason="Not implemented.")
   @knownBug(terminal="iTerm2", reason="Not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_DECRQSS_DECELF(cls):
     '''Report: Enable local functions'''
     esccmd.DECELF(0)
@@ -20,6 +21,7 @@ class DECRQSSTests(object):
   @vtLevel(4)
   @knownBug(terminal="xterm", reason="Not implemented.")
   @knownBug(terminal="iTerm2", reason="Not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_DECRQSS_DECLFKC(cls):
     '''Report: Enable local function key control'''
     esccmd.DECLFKC(0)
@@ -30,6 +32,7 @@ class DECRQSSTests(object):
   @classmethod
   @vtLevel(3)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_DECRQSS_DECSASD(cls):
     '''Report: Select active status display'''
     esccmd.DECSASD(0)
@@ -40,6 +43,7 @@ class DECRQSSTests(object):
   @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_DECRQSS_DECSACE(cls):
     '''Report: Select attribute change extent'''
     esccmd.DECSACE(0)
@@ -49,6 +53,7 @@ class DECRQSSTests(object):
 
   @classmethod
   @vtLevel(2)
+  @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECRQSS_DECSCA(cls):
     '''Report: Set character attribute'''
     esccmd.DECSCA(1)
@@ -87,7 +92,6 @@ class DECRQSSTests(object):
 
   @classmethod
   @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECRQSS_DECSCUSR(cls):
     """Report: Set cursor style"""
     esccmd.DECSCUSR(4)
@@ -120,6 +124,7 @@ class DECRQSSTests(object):
   @vtLevel(4)
   @knownBug(terminal="xterm", reason="Not implemented.")
   @knownBug(terminal="iTerm2", reason="Not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_DECRQSS_DECSMKR(cls):
     """Report: Set modifier key reporting"""
     esccmd.DECSMKR(0)

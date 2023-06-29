@@ -8,6 +8,7 @@ class DECIDTests(object):
 
   @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented.", shouldTry=False)
+  @knownBug(terminal="iTerm2beta", reason="Not implemented.", shouldTry=False)
   def test_DECID_Basic(cls):
     esccmd.DECID()
     params = escio.ReadCSI("c", expected_prefix="?")
@@ -16,6 +17,7 @@ class DECIDTests(object):
   @classmethod
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   @knownBug(terminal="iTerm2", reason="DECID not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="DECID not implemented.")
   def test_DECID_8bit(cls):
     escio.use8BitControls = True
     escio.Write(S8C1T)

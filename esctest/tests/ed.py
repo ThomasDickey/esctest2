@@ -172,6 +172,8 @@ class EDTests(object):
   @vtLevel(4)
   @knownBug(terminal="iTerm2",
             reason="Protection not implemented.")
+  @knownBug(terminal="iTerm2beta",
+            reason="Protection not implemented.")
   def test_ED_respectsISOProtection(cls):
     """ED respects SPA/EPA."""
     escio.Write("a")

@@ -76,6 +76,7 @@ class DECICTests(object):
   @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented", noop=True)
+  @knownBug(terminal="iTerm2beta", reason="Not implemented", noop=True)
   def test_DECIC_IsNoOpWhenCursorBeginsOutsideScrollRegion(cls):
     """Ensure DECIC does nothing when the cursor starts out outside the scroll
     region."""

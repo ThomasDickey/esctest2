@@ -71,7 +71,7 @@ class RISTests(object):
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [empty()])
     esccmd.DECSET(esccmd.ALTBUF)
-    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), ["a"])
+    AssertScreenCharsInRectEqual(Rect(1, 1, 1, 1), [empty()])
 
   @classmethod
   def test_RIS_ResetDECCOLM(cls):

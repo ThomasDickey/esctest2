@@ -70,6 +70,7 @@ class SMTests(object):
     AssertEQ(GetCursorPosition(), Point(1, 2))
 
   @knownBug(terminal="iTerm2", reason="LNN not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="LNN not implemented.")
   def test_SM_LNM(self):
     """In linefeed mode LF, VT, and FF perform a carriage return after doing
     an index. Also any report with a CR gets a CR LF instead, but I'm not sure

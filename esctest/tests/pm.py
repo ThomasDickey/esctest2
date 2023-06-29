@@ -10,6 +10,7 @@ class PMTests(object):
   @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_PM_Basic(cls):
     esccmd.PM()
     escio.Write("xyz")
@@ -23,6 +24,7 @@ class PMTests(object):
   @vtLevel(4)
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   @knownBug(terminal="iTerm2", reason="PM not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="PM not implemented.")
   def test_PM_8bit(cls):
     escio.use8BitControls = True
     escio.Write(S8C1T)

@@ -163,20 +163,25 @@ def ReadCSI(expected_final, expected_prefix=None):
         params.append(int(current_param))
       break
     c = read(1)
+  LogDebug("ReadCSI parameters: " + ";".join(map(str,params)))
   return params
 
 def ReadDCS():
   """ Read a DCS code. Returns the characters between DCS and ST. """
-  c = read(1)
-  if c == ESC:
+  p = read(1)
+  if p == ESC:
     ReadOrDie("P")
-  elif ord(c) != 0x90:
-    raise esctypes.InternalError("Read %c (0x%02x), expected DCS" % (c, ord(c)))
+    p += "P"
+  elif ord(p) == 0x90:
+    p = "<DCS>"
+  else:
+    raise esctypes.InternalError("Read %c (0x%02x), expected DCS" % (p, ord(p)))
 
   result = ""
   while not result.endswith(ST) and not result.endswith(chr(0x9c)):
     c = read(1)
     result += c
+  LogDebug("Read response: " + (p + result).replace(ESC, "<ESC>"))
   if result.endswith(ST):
     return result[:-2]
   return result[:-1]

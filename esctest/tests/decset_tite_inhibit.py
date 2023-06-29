@@ -34,7 +34,6 @@ class DECSETTiteInhibitTests(SaveRestoreCursorTests):
   def test_SaveRestoreCursor_AltVsMain(self):
     SaveRestoreCursorTests.test_SaveRestoreCursor_AltVsMain(self)
 
-  @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_SaveRestoreCursor_Protection(self):
     SaveRestoreCursorTests.test_SaveRestoreCursor_Protection(self)
 
@@ -43,9 +42,11 @@ class DECSETTiteInhibitTests(SaveRestoreCursorTests):
     SaveRestoreCursorTests.test_SaveRestoreCursor_Wrap(self)
 
   @knownBug(terminal="iTerm2", reason="Not implemented", noop=True)
+  @knownBug(terminal="iTerm2beta", reason="Not implemented", noop=True)
   def test_SaveRestoreCursor_ReverseWrapNotAffected(self):
     SaveRestoreCursorTests.test_SaveRestoreCursor_ReverseWrapNotAffected(self)
 
   @knownBug(terminal="iTerm2", reason="Not implemented", noop=True)
+  @knownBug(terminal="iTerm2beta", reason="Not implemented", noop=True)
   def test_SaveRestoreCursor_InsertNotAffected(self):
     SaveRestoreCursorTests.test_SaveRestoreCursor_InsertNotAffected(self)

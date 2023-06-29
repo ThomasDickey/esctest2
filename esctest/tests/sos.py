@@ -10,6 +10,7 @@ class SOSTests(object):
   @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_SOS_Basic(cls):
     esccmd.SOS()
     escio.Write("xyz")
@@ -23,6 +24,7 @@ class SOSTests(object):
   @vtLevel(4)
   @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
   @knownBug(terminal="iTerm2", reason="SOS not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="SOS not implemented.")
   def test_SOS_8bit(cls):
     escio.use8BitControls = True
     escio.Write(S8C1T)

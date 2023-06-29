@@ -15,8 +15,8 @@ parser.add_argument("--include",
                     default=".*")
 parser.add_argument("--expected-terminal",
                     help="Terminal in use. Modifies tests for known differences.",
-                    choices=("iTerm2", "xterm"),
-                    default="iTerm2")
+                    choices=("iTerm2beta", "iTerm2", "xterm"),
+                    default="xterm")
 parser.add_argument("--no-print-logs",
                     help="Print logs after finishing?",
                     action="store_true")

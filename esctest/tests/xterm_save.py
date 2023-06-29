@@ -7,6 +7,7 @@ class XtermSaveTests(object):
 
   @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_XtermSave_SaveSetState(cls):
     # Turn on auto-wrap
     esccmd.DECSET(esccmd.DECAWM)
@@ -28,6 +29,7 @@ class XtermSaveTests(object):
 
   @classmethod
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented")
   def test_XtermSave_SaveResetState(cls):
     # Turn off auto-wrap
     esccmd.DECRESET(esccmd.DECAWM)
