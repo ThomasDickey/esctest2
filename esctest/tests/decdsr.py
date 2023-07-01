@@ -17,6 +17,7 @@ class DECDSRTests(object):
     return 4
 
   @vtLevel(3)
+  @knownBug(terminal="iTerm2beta", reason="Page is omitted")
   def test_DECDSR_DECXCPR(self):
     """DECXCPR reports the cursor position. Response is:
     CSI ? Pl ; Pc ; Pr R
@@ -77,6 +78,7 @@ class DECDSRTests(object):
 
   @vtLevel(2)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_DECDSR_DSRKeyboard(self):
     """Gets info about the keyboard. The response is:
       CSI ? 27; Pn; Pst; Ptyp n

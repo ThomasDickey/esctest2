@@ -145,6 +145,7 @@ class DECRQSSTests(object):
   @classmethod
   @vtLevel(3)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_DECRQSS_DECSSDT(cls):
     """Report: Set status line type"""
     esccmd.DECSSDT(0)

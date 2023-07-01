@@ -57,6 +57,7 @@ class EDTests(object):
                                   empty() * 3])
 
   @vtLevel(4)
+  @knownBug(terminal="iTerm2beta", reason="Erase fills rather than clears.")
   def test_ED_0(self):
     """Erase after cursor."""
     self.prepare()
@@ -69,6 +70,7 @@ class EDTests(object):
                                   empty() * 3])
 
   @vtLevel(4)
+  @knownBug(terminal="iTerm2beta", reason="Erase fills rather than clears.")
   def test_ED_1(self):
     """Erase before cursor."""
     self.prepare()
@@ -107,6 +109,7 @@ class EDTests(object):
                                   "e" + empty() * 2])
 
   @vtLevel(4)
+  @knownBug(terminal="iTerm2beta", reason="Erase fills rather than clears.")
   def test_ED_0_WithScrollRegion(self):
     """Erase after cursor with a scroll region present. The scroll region is ignored."""
     self.prepare_wide()

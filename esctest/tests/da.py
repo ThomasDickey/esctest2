@@ -6,15 +6,28 @@ from escutil import AssertEQ, AssertGE, AssertTrue, knownBug
 class DATests(object):
 
   @classmethod
-  @knownBug(terminal="iTerm2", reason="iTerm2 doesn't report 18 or 22.")
-  @knownBug(terminal="iTerm2beta", reason="iTerm2 doesn't report 18 or 22.")
   def handleDAResponse(cls):
     params = escio.ReadCSI('c', expected_prefix='?')
+    # From vttest:
+    # 1 = 132 columns
+    # 2 = printer port
+    # 4 = sixel graphics
+    # 6 = selective erase
+    # 9 = national replacement character-sets
+    # 15 = DEC technical set
+    # 16 = locator device port (ReGIS)
+    # 17 = terminal state reports
+    # 18 = user windows
+    # 21 = horizontal scrolling
+    # 22 = color
+    # 28 = rectangular editing
+    # 29 = ANSI text locator
     if escargs.args.expected_terminal == "xterm":
       # This is for a default build. There are various options that could
       # change this, both compile-time and run-time.  XTerm's control sequences
       # document lists the ones it may return.  For a more comprehensive list,
-      # see DEC STD 070, page 4.
+      # see the example for VT420 page 4 of EL-00070-04 Terminal Management
+      # (DEC STD 070).
       if escargs.args.max_vt_level == 5:
         expected = [65, 1, 2, 6, 9, 15, 16, 17, 18, 21, 22, 28, 29]
       elif escargs.args.max_vt_level == 4:
@@ -27,13 +40,12 @@ class DATests(object):
         expected = [1, 2] # xterm extension (VT100)
       else:
         expected = [0] # xterm extension
-    elif (escargs.args.expected_terminal == "iTerm2" or
-          escargs.args.expected_terminal == "iTerm2beta"):
-      # TODO:  Determine which VT levels are completely supported and add 6,
-      # 62, 63, or 64.
-      # I believe 18 means we support DECSTB and DECSLRM but I can't find any
-      # evidence to substantiate this belief.
-      expected = [1, 2, 18, 22]
+    elif escargs.args.expected_terminal == "iTerm2":
+      # 3.4.19
+      expected = [62, 4]
+    elif escargs.args.expected_terminal == "iTerm2beta":
+      # 3.5.0beta10
+      expected = [1, 2, 4, 6, 17, 18, 21, 22]
     # Our interest in the primary device attributes is to ensure that the
     # terminal asserts that it supports the features we need.  It may support
     # other features; without a detailed analysis we cannot determine which
@@ -43,10 +55,12 @@ class DATests(object):
     for param in expected:
       AssertTrue(param in params)
 
+  @knownBug(terminal="iTerm2beta", reason="Bug: misinterprets DA as DA2")
   def test_DA_NoParameter(self):
     esccmd.DA()
     self.handleDAResponse()
 
+  @knownBug(terminal="iTerm2beta", reason="Bug: misinterprets DA as DA2")
   def test_DA_0(self):
     esccmd.DA(0)
     self.handleDAResponse()

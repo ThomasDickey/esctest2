@@ -61,6 +61,7 @@ class DECSETTests(object):
 
   @classmethod
   @vtLevel(4)
+  @knownBug(terminal="iTerm2beta", reason="Erase fills rather than clears.")
   def test_DECSET_DECCOLM(cls):
     """DECNCSM - No Clearing Screen On Column Change"""
     # Ensure this is reset from other tests.  Otherwise DECCOLM will not
@@ -503,6 +504,7 @@ class DECSETTests(object):
   @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Erase fills rather than clears.")
   def test_DECSET_DECLRMM_ModeResetByDECSTR(cls):
     """ DEC STD 070 says DECSTR resets left/right mode."""
     esccmd.DECSET(esccmd.DECLRMM)

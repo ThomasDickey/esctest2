@@ -51,6 +51,7 @@ class HPRTests(object):
   @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented")
+  @knownBug(terminal="iTerm2beta", reason="Erase fills rather than clears.")
   def test_HPR_IgnoresOriginMode(cls):
     """HPR continues to work in origin mode."""
     # Set a scroll region.

@@ -28,8 +28,8 @@ class DA2Tests(object):
       AssertEQ(params[1], 95)
       AssertEQ(len(params), 3)
     elif escargs.args.expected_terminal == "iTerm2beta":
-      AssertEQ(params[0], 1)
-      AssertEQ(params[1], 341)
+      AssertEQ(params[0], 41)
+      AssertEQ(params[1], 2500)
       AssertEQ(len(params), 3)
 
   def test_DA2_NoParameter(self):

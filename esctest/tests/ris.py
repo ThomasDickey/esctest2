@@ -1,13 +1,17 @@
 from esc import empty, TAB
+
 import esccmd
 import escio
+
 from escutil import AssertEQ
 from escutil import AssertScreenCharsInRectEqual
 from escutil import GetCursorPosition
 from escutil import GetScreenSize
 from escutil import GetIconTitle
 from escutil import GetWindowTitle
+from escutil import knownBug
 from escutil import vtLevel
+
 from esctypes import Point, Rect
 
 class RISTests(object):
@@ -61,6 +65,8 @@ class RISTests(object):
 
   @classmethod
   @vtLevel(4)
+  @knownBug(terminal="iTerm2", reason="Matches older xterm behavior.")
+  @knownBug(terminal="iTerm2beta", reason="Matches older xterm behavior.")
   def test_RIS_ExitAltScreen(cls):
     escio.Write("m")
     esccmd.DECSET(esccmd.ALTBUF)

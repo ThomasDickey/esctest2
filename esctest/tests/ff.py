@@ -1,10 +1,13 @@
 from esc import FF, empty
+
 import esccmd
 import escio
+
 from escutil import AssertEQ
 from escutil import AssertScreenCharsInRectEqual
 from escutil import GetCursorPosition
 from escutil import GetScreenSize
+from escutil import knownBug
 from escutil import vtLevel
 from esctypes import Point, Rect
 
@@ -23,6 +26,7 @@ class FFTests(object):
 
   @classmethod
   @vtLevel(4)
+  @knownBug(terminal="iTerm2beta", reason="Erase fills rather than clears.")
   def test_FF_Scrolls(cls):
     """FF scrolls when it hits the bottom."""
     height = GetScreenSize().height()

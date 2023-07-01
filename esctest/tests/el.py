@@ -23,6 +23,7 @@ class ELTests(object):
                                  ["abcd" + 6 * empty()])
 
   @vtLevel(4)
+  @knownBug(terminal="iTerm2beta", reason="Erase fills rather than clears.")
   def test_EL_0(self):
     """Should erase to right of cursor."""
     self.prepare()

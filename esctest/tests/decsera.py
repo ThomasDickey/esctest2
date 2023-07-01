@@ -42,12 +42,14 @@ class DECSERATests(tests.fill_rectangle.FillRectangleTests):
         s += esc.blank()
     return s
 
+  @knownBug(terminal="iTerm2beta", reason="Erase fills rather than clears.")
   def test_DECSERA_basic(self):
     self.fillRectangle_basic()
 
   def test_DECSERA_invalidRectDoesNothing(self):
     self.fillRectangle_invalidRectDoesNothing()
 
+  @knownBug(terminal="iTerm2beta", reason="Erase fills rather than clears.")
   def test_DECSERA_defaultArgs(self):
     try:
       self._always_return_blank = True
@@ -55,15 +57,18 @@ class DECSERATests(tests.fill_rectangle.FillRectangleTests):
     finally:
       self._always_return_blank = False
 
+  @knownBug(terminal="iTerm2beta", reason="Erase fills rather than clears.")
   def test_DECSERA_respectsOriginMode(self):
     self.fillRectangle_respectsOriginMode()
 
+  @knownBug(terminal="iTerm2beta", reason="Erase fills rather than clears.")
   def test_DECSERA_overlyLargeSourceClippedToScreenSize(self):
     self.fillRectangle_overlyLargeSourceClippedToScreenSize()
 
   def test_DECSERA_cursorDoesNotMove(self):
     self.fillRectangle_cursorDoesNotMove()
 
+  @knownBug(terminal="iTerm2beta", reason="Erase fills rather than clears.")
   def test_DECSERA_ignoresMargins(self):
     self.fillRectangle_ignoresMargins()
 
