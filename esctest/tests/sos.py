@@ -22,7 +22,7 @@ class SOSTests(object):
 
   @classmethod
   @vtLevel(4)
-  @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
+  @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS, allowPassWithoutOption=escargs.ALLOW_C1_PRINTABLE)
   @knownBug(terminal="iTerm2", reason="SOS not implemented.")
   @knownBug(terminal="iTerm2beta", reason="SOS not implemented.")
   def test_SOS_8bit(cls):

@@ -9,7 +9,7 @@ introduced with the VT420.
 from esc import empty
 import esccmd
 import escio
-from escutil import AssertScreenCharsInRectEqual, GetScreenSize, knownBug, vtLevel
+from escutil import AssertScreenCharsInRectEqual, GetScreenSize, vtLevel
 from esctypes import Point, Rect
 
 class REPTests(object):

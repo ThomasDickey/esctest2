@@ -5,6 +5,7 @@ import argparse
 # Then run "xrdb -merge ~/.Xresources" and restart xterm.
 XTERM_WINOPS_ENABLED = "xtermWinopsEnabled"
 DISABLE_WIDE_CHARS = "disableWideChars"
+ALLOW_C1_PRINTABLE = "allowC1Printable"
 
 ACTION_RUN = "run"
 ACTION_LIST_KNOWN_BUGS = "list-known-bugs"
@@ -32,7 +33,7 @@ parser.add_argument("--force",
 parser.add_argument("--options",
                     help="Space-separated options that are enabled.",
                     nargs="+",
-                    choices=[XTERM_WINOPS_ENABLED, DISABLE_WIDE_CHARS])
+                    choices=[XTERM_WINOPS_ENABLED, DISABLE_WIDE_CHARS, ALLOW_C1_PRINTABLE])
 parser.add_argument("--max-vt-level",
                     help="Do not run tests requiring a higher VT level than this.",
                     type=int,

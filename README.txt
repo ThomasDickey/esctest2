@@ -127,6 +127,10 @@ way. Failing tests will appear to pass. This can be useful for debugging.
 Defines which optional features are enabled in the terminal being tested.
 
 The following options are supported:
+* allowC1Printable
+  This option overrides disableWideChars, to indicate that C1 controls work with
+  UTF-8 mode.
+
 * xtermWinopsEnabled
   This option indicates that xterm is configured to allow all window operations,
   some of which are off by default. The following X resources must be set before
@@ -135,8 +139,8 @@ The following options are supported:
     xterm*allowWindowOps: true
 
 * disableWideChars
-  This option indicates that wide character (that is, UTF-8) support is disabled.
-  8-bit controls are tested when this option is enabled.
+  This option indicates that wide character (that is, UTF-8) support is disabled
+  to note that 8-bit controls are expected to succeed.
 
 --max-vt-level=level
 Tests are tagged with the VT level required for their execution. No test needing

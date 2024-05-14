@@ -15,7 +15,7 @@ class DECIDTests(object):
     AssertTrue(len(params) > 0)
 
   @classmethod
-  @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS)
+  @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS, allowPassWithoutOption=escargs.ALLOW_C1_PRINTABLE)
   @knownBug(terminal="iTerm2", reason="DECID not implemented.")
   @knownBug(terminal="iTerm2beta", reason="DECID not implemented.")
   def test_DECID_8bit(cls):
