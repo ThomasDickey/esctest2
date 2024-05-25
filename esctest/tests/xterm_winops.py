@@ -157,6 +157,7 @@ class XtermWinopsTests(object):
     self.DelayAfterMove()
     AssertEQ(GetWindowPosition(), Point(1, 1))
 
+  @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_XtermWinops_MoveToXY_Defaults(self):
     """Default args are interpreted as 0s."""
     esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, 1, 1)

@@ -64,6 +64,7 @@ class DECRQSSTests(object):
   @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="VT400 not implemented yet (will report a lower value).")
+  @knownBug(terminal="iTerm2beta", reason="VT400 not implemented yet (will report a lower value).")
   def test_DECRQSS_DECSCL(cls):
     '''Report: Set conformance level'''
     esccmd.DECSCL(65, 1)
@@ -135,6 +136,7 @@ class DECRQSSTests(object):
   @classmethod
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
+  @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_DECRQSS_DECSNLS(cls):
     """Report: Set number of lines per screen"""
     esccmd.DECSNLS(24)

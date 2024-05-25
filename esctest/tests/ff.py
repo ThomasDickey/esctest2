@@ -26,7 +26,6 @@ class FFTests(object):
 
   @classmethod
   @vtLevel(4)
-  @knownBug(terminal="iTerm2beta", reason="Erase fills rather than clears.")
   def test_FF_Scrolls(cls):
     """FF scrolls when it hits the bottom."""
     height = GetScreenSize().height()
