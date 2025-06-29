@@ -121,8 +121,8 @@ def GetScreenSizePixels():
       # iTerm2 doesn't support esccmd.WINOP_REPORT_SCREEN_SIZE_PIXELS so just fake it.
       gScreenSizePixels = Size(1024, 768)
     LogDebug("size of SCREEN "
-             + str(gScreenSizePixels.height()) + "x"
-             + str(gScreenSizePixels.width()))
+             + str(gScreenSizePixels.width()) + "x"
+             + str(gScreenSizePixels.height()))
   return gScreenSizePixels
 
 def GetFrameSizePixels():
@@ -136,11 +136,13 @@ def GetFrameSizePixels():
     GetCharSizePixels()
     outer = GetWindowSizePixels()
     inner = GetScreenSize()
-    gFrameSizePixels = Size(outer.height() - (inner.height() * gCharSizePixels.height()),
-                            outer.width() - (inner.width() * gCharSizePixels.width()))
+    check = Size(inner.width() * gCharSizePixels.width(),
+                 inner.height() * gCharSizePixels.height())
+    gFrameSizePixels = Size(outer.width() - check.width(),
+                            outer.height() - check.height())
     LogDebug("size of FRAME "
-             + str(gFrameSizePixels.height()) + "x"
-             + str(gFrameSizePixels.width()))
+             + str(gFrameSizePixels.width()) + "x"
+             + str(gFrameSizePixels.height()))
   return gFrameSizePixels
 
 def GetCharSizePixels():

@@ -401,7 +401,6 @@ class DECRQMTests(object):
   # Permanently Reset DEC Modes -----------------------------------------------
 
   @vtLevel(3)
-  @knownBug(terminal="xterm", reason="Not supported")
   @knownBug(terminal="iTerm2", reason="DECRQM not supported.", shouldTry=False)
   @knownBug(terminal="iTerm2beta", reason="DECRQM not supported.", shouldTry=False)
   def test_DECRQM_DEC_DECHCCM(self):

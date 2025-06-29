@@ -49,6 +49,10 @@ parser.add_argument("--xterm-reverse-wrap",
                     help="Specify version-specific xterm reverse-wrap movement.",
                     type=int,
                     default=0)
+parser.add_argument("--window-id",
+                    help="X Window identifier",
+                    default=0,
+                    type=int)
 parser.add_argument("--v",
                     help="Verbosity level. 1=errors, 2=errors and info, 3=debug, errors, and info",
                     default=2,

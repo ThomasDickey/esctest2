@@ -13,6 +13,7 @@ import esclog
 import esctypes
 import escutil
 import tests
+import xwininfo
 
 def init():
   '''Initialize ESC-tester'''
@@ -27,6 +28,8 @@ def init():
 
   logfile = open(escargs.args.logfile, "w")
   log = ""
+
+  xwininfo.read_info(escargs.args.window_id)
 
   esc.vtLevel = escargs.args.max_vt_level
 

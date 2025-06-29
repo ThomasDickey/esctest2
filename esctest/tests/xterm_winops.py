@@ -150,27 +150,52 @@ class XtermWinopsTests(object):
 
   @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_XtermWinops_MoveToXY(self):
+    '''
+    Test window movement to a given position.   The test is indirect, using
+    the report after attempting to move to the screen's origins -- which may
+    be limited by the window manager if it happens to "own" a panel or bar
+    at the top of the screen.  The same can be true of any of the screen's
+    boundaries.
+    '''
     esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, 0, 0)
     self.DelayAfterMove()
-    AssertEQ(GetWindowPosition(), Point(0, 0))
-    esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, 1, 1)
-    self.DelayAfterMove()
-    AssertEQ(GetWindowPosition(), Point(1, 1))
+    origin = GetWindowPosition()
+    limit = 10
+    # test a diagonal
+    for n in range(1, limit):
+      esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, origin.x() + n, origin.y() + n)
+      self.DelayAfterMove()
+      AssertEQ(GetWindowPosition(), Point(origin.x() + n, origin.y() + n))
+    # test a horizontal
+    for n in range(limit, 1, -1):
+      esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, origin.x() + n, origin.y() + limit)
+      self.DelayAfterMove()
+      AssertEQ(GetWindowPosition(), Point(origin.x() + n, origin.y() + limit))
+    # test a vertical
+    for n in range(limit, 1, -1):
+      esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, origin.x() + limit, origin.y() + n)
+      self.DelayAfterMove()
+      AssertEQ(GetWindowPosition(), Point(origin.x() + limit, origin.y() + n))
 
   @knownBug(terminal="iTerm2beta", reason="Not implemented.")
   def test_XtermWinops_MoveToXY_Defaults(self):
-    """Default args are interpreted as 0s."""
-    esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, 1, 1)
+    """Default args are interpreted as 0s (see note about window manager)."""
+    esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, 0, 0)
     self.DelayAfterMove()
-    AssertEQ(GetWindowPosition(), Point(1, 1))
+    origin = GetWindowPosition()
+    limit = 10
 
-    esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, 1)
+    esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, origin.x() + limit, origin.y() + limit)
     self.DelayAfterMove()
-    AssertEQ(GetWindowPosition(), Point(1, 0))
+    AssertEQ(GetWindowPosition(), Point(origin.x() + limit, origin.y() + limit))
 
-    esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, None, 1)
+    esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, origin.x() + limit)
     self.DelayAfterMove()
-    AssertEQ(GetWindowPosition(), Point(0, 1))
+    AssertEQ(GetWindowPosition(), Point(origin.x() + limit, origin.y()))
+
+    esccmd.XTERM_WINOPS(esccmd.WINOP_MOVE, None, origin.y() + limit)
+    self.DelayAfterMove()
+    AssertEQ(GetWindowPosition(), Point(origin.x(), origin.y() + limit))
 
   @knownBug(terminal="iTerm2", reason="Not implemented")
   def test_XtermWinops_ResizePixels_BothParameters(self):

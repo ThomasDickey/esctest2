@@ -154,6 +154,11 @@ The logs are written to "file", which defaults to "/tmp/esctest.log".
 --timeout=timeout
 The number of seconds to wait for a response from the terminal. Defaults to 1.
 
+--window-id=WINDOWID
+At startup, use  xwininfo to search  for the given window-id and print the sizes
+and position  for that window,  and (if that  is not a  direct child of the root
+window) print the same information for the parent window.
+
 --xterm-checksum[=patchnumber]
 The patch numbers are part of $XTERM_VERSION, allowing them to be scripted.
  * Xterm #279 implemented DECRQCRA; DEC's documentation omits details.
