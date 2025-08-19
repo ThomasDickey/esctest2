@@ -18,7 +18,7 @@ class S8C1TTests(object):
   @vtLevel(2)
   @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")
   @knownBug(terminal="iTerm2beta", reason="8-bit controls not implemented.")
-  @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS, allowPassWithoutOption=escargs.ALLOW_C1_PRINTABLE)
+  @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS, allowPassWithoutOption=escargs.ALLOW_C2_CONTROLS)
   def test_S8C1T_CSI(cls):
     escio.use8BitControls = True
     escio.Write(S8C1T)
@@ -31,7 +31,7 @@ class S8C1TTests(object):
   @vtLevel(3)
   @knownBug(terminal="iTerm2", reason="8-bit controls not implemented.")
   @knownBug(terminal="iTerm2beta", reason="8-bit controls not implemented.")
-  @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS, allowPassWithoutOption=escargs.ALLOW_C1_PRINTABLE)
+  @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS, allowPassWithoutOption=escargs.ALLOW_C2_CONTROLS)
   def test_S8C1T_DCS(cls):
     esccmd.DECSTBM(5, 6)
     escio.use8BitControls = True
@@ -48,7 +48,7 @@ class S8C1TTests(object):
             reason="Protection not implemented.")
   @knownBug(terminal="iTerm2beta",
             reason="Protection not implemented.")
-  @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS, allowPassWithoutOption=escargs.ALLOW_C1_PRINTABLE)
+  @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS, allowPassWithoutOption=escargs.ALLOW_C2_CONTROLS)
   def test_S8C1T_SPA_EPA(cls):
     """There is no test for SPA and EPA (it's in the erasure tests, like
     DECSED) so the test for 8 bit controls goes here."""

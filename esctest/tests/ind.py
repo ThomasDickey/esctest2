@@ -136,7 +136,7 @@ class INDTests(object):
     AssertScreenCharsInRectEqual(Rect(1, 6, 1, 6), ["x"])
 
   @classmethod
-  @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS, allowPassWithoutOption=escargs.ALLOW_C1_PRINTABLE)
+  @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS, allowPassWithoutOption=escargs.ALLOW_C2_CONTROLS)
   @optionRequired(terminal="iTerm2", option=escargs.DISABLE_WIDE_CHARS)
   @optionRequired(terminal="iTerm2beta", option=escargs.DISABLE_WIDE_CHARS)
   def test_IND_8bit(cls):

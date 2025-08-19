@@ -402,9 +402,20 @@ def optionRequired(terminal, option, allowPassWithoutOption=False):
           lines = list(map(lambda x: "EXPECTED FAILURE (MISSING OPTION): " + x, lines))
           raise esctypes.KnownBug(reason + "\n\n" + "\n".join(lines))
 
+        # This parameter can refer to the command-line options rather than
+        # just true/false.
+        if isinstance(allowPassWithoutOption, bool):
+          ignorePass = allowPassWithoutOption
+        else:
+          if (escargs.args.options is not None and
+            allowPassWithoutOption in escargs.args.options):
+            ignorePass = True
+          else:
+            ignorePass = False
+
         # Got here because test passed. If the option isn't set, that's
         # unexpected so we raise an error.
-        if not escargs.args.force and not hasOption and not allowPassWithoutOption:
+        if not escargs.args.force and not hasOption and not ignorePass:
           raise esctypes.InternalError("Should have failed: " + reason)
       else:
         func(self, *args, **kwargs)

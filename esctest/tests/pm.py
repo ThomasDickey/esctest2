@@ -22,7 +22,7 @@ class PMTests(object):
 
   @classmethod
   @vtLevel(4)
-  @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS, allowPassWithoutOption=escargs.ALLOW_C1_PRINTABLE)
+  @optionRequired(terminal="xterm", option=escargs.DISABLE_WIDE_CHARS, allowPassWithoutOption=escargs.ALLOW_C2_CONTROLS)
   @knownBug(terminal="iTerm2", reason="PM not implemented.")
   @knownBug(terminal="iTerm2beta", reason="PM not implemented.")
   def test_PM_8bit(cls):
