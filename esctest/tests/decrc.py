@@ -1,7 +1,7 @@
-import tests.save_restore_cursor
 import esccmd
+from tests.save_restore_cursor import SaveRestoreCursorTests
 
-class DECRCTests(tests.save_restore_cursor.SaveRestoreCursorTests):
+class DECRCTests(SaveRestoreCursorTests):
 
   @classmethod
   def saveCursor(cls):

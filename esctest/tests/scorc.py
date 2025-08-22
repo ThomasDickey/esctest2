@@ -1,17 +1,17 @@
 import esccmd
 from tests.save_restore_cursor import SaveRestoreCursorTests
 
-class ANSIRCTests(SaveRestoreCursorTests):
+class SCORCTests(SaveRestoreCursorTests):
   def __init__(self):
     SaveRestoreCursorTests.__init__(self)
 
   @classmethod
   def saveCursor(cls):
-    esccmd.ANSISC()
+    esccmd.SCOSC()
 
   @classmethod
   def restoreCursor(cls):
-    esccmd.ANSIRC()
+    esccmd.SCORC()
 
   def test_SaveRestoreCursor_ResetsOriginMode(self):
     SaveRestoreCursorTests.test_SaveRestoreCursor_ResetsOriginMode(self)

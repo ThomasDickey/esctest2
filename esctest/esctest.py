@@ -15,18 +15,16 @@ import escutil
 import tests
 import xwininfo
 
+log = None
+
 def init():
   '''Initialize ESC-tester'''
-  global newline
-  global logfile
-  global log
-
-  newline = "\r\n"
 
   parser = escargs.parser
   escargs.args = parser.parse_args()
 
-  logfile = open(escargs.args.logfile, "w")
+  open(escargs.args.logfile, "wb")
+  global log
   log = ""
 
   xwininfo.read_info(escargs.args.window_id)

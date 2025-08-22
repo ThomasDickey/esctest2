@@ -3,7 +3,7 @@ import select
 import sys
 import tty
 
-from esc import ESC, BEL, ST
+from esc import ESC, BEL
 import escargs
 from esclog import LogDebug
 import esctypes
@@ -26,7 +26,6 @@ def Shutdown():
   tty.setcbreak(stdin_fd)
 
 def Write(s, sideChannelOk=True):
-  global gSideChannel
   if sideChannelOk and gSideChannel is not None:
     gSideChannel.write(escoding.to_binary(s))
   stdout_fd.write(escoding.to_binary(s))
@@ -40,32 +39,81 @@ def SetSideChannel(filename):
   else:
     gSideChannel = open(filename, "wb")
 
-def APC():
-  if use8BitControls:
-    return chr(0x9f)
-  return ESC + "_"
+# Tests/conversion of C1 (8-Bit) Control Characters
 
-def OSC():
-  if use8BitControls:
-    return chr(0x9d)
-  return ESC + "]"
+def Is7BitControl(c):
+  if len(c) == 2 and c.startswith(ESC):
+    return 1
+  return 0
 
-def CSI():
+def Is8BitControl(c):
+  if len(c) == 1 and ord(c) >= 0x80 and ord(c) <= 0x9f:
+    return 1
+  return 0
+
+def CmdChar(c):
   if use8BitControls:
-    return chr(0x9b)
-  return ESC + "["
+    return chr(c)
+  return ESC + chr(c - 0x40)
+
+# C1 (8-Bit) Control Characters
+
+def IND():
+  return CmdChar(0x84)
+
+def NEL():
+  return CmdChar(0x85)
+
+def HTS():
+  return CmdChar(0x88)
+
+def RI():
+  return CmdChar(0x8d)
+
+def SS2():
+  return CmdChar(0x8e)
+
+def SS3():
+  return CmdChar(0x8f)
 
 def DCS():
-  if use8BitControls:
-    return chr(0x90)
-  return ESC + "P"
+  return CmdChar(0x90)
+
+def SPA():
+  return CmdChar(0x96)
+
+def EPA():
+  return CmdChar(0x97)
+
+def SOS():
+  return CmdChar(0x98)
+
+def DECID():
+  return CmdChar(0x9a)
+
+def CSI():
+  return CmdChar(0x9b)
+
+def ST():
+  return CmdChar(0x9c)
+
+def OSC():
+  return CmdChar(0x9d)
+
+def PM():
+  return CmdChar(0x9e)
+
+def APC():
+  return CmdChar(0x9f)
+
+# I/O functions for C1 (8-Bit) Control Characters
 
 def WriteAPC(params, bel=False, requestsReport=False):
   str_params = list(map(str, params))
   if bel:
     terminator = BEL
   else:
-    terminator = ST
+    terminator = ST()
   sequence = APC() + "".join(str_params) + terminator
   LogDebug("Send sequence: " + sequence.replace(ESC, "<ESC>"))
   Write(sequence, sideChannelOk=not requestsReport)
@@ -76,13 +124,13 @@ def WriteOSC(params, bel=False, requestsReport=False):
   if bel:
     terminator = BEL
   else:
-    terminator = ST
+    terminator = ST()
   sequence = OSC() + joined_params + terminator
   LogDebug("Send sequence: " + sequence.replace(ESC, "<ESC>"))
   Write(sequence, sideChannelOk=not requestsReport)
 
 def WriteDCS(introducer, params):
-  Write(DCS() + introducer + params + ST)
+  Write(DCS() + introducer + params + ST())
 
 def WriteCSI(prefix="", params=[], intermediate="", final="", requestsReport=False):
   if len(final) == 0:
@@ -117,7 +165,7 @@ def ReadOSC(expected_prefix):
   for c in expected_prefix:
     ReadOrDie(c)
   s = ""
-  while not s.endswith(ST):
+  while not s.endswith(ST()):
     c = read(1)
     s += c
   return s[:-2]
@@ -178,13 +226,13 @@ def ReadDCS():
     raise esctypes.InternalError("Read %c (0x%02x), expected DCS" % (p, ord(p)))
 
   result = ""
-  while not result.endswith(ST) and not result.endswith(chr(0x9c)):
+  while not result.endswith(ST()):
     c = read(1)
     result += c
   LogDebug("Read response: " + (p + result).replace(ESC, "<ESC>"))
-  if result.endswith(ST):
-    return result[:-2]
-  return result[:-1]
+  if result.endswith(chr(0x9c)):
+    return result[:-1]
+  return result[:-2]
 
 def read(n):
   """Try to read n bytes. Times out if it takes more than 1

@@ -121,8 +121,8 @@ def GetScreenSizePixels():
       # iTerm2 doesn't support esccmd.WINOP_REPORT_SCREEN_SIZE_PIXELS so just fake it.
       gScreenSizePixels = Size(1024, 768)
     LogDebug("size of SCREEN "
-             + str(gScreenSizePixels.width()) + "x"
-             + str(gScreenSizePixels.height()))
+             + str(gScreenSizePixels.height()) + "x"
+             + str(gScreenSizePixels.width()))
   return gScreenSizePixels
 
 def GetFrameSizePixels():
@@ -141,8 +141,8 @@ def GetFrameSizePixels():
     gFrameSizePixels = Size(outer.width() - check.width(),
                             outer.height() - check.height())
     LogDebug("size of FRAME "
-             + str(gFrameSizePixels.width()) + "x"
-             + str(gFrameSizePixels.height()))
+             + str(gFrameSizePixels.height()) + "x"
+             + str(gFrameSizePixels.width()))
   return gFrameSizePixels
 
 def GetCharSizePixels():
@@ -214,7 +214,7 @@ def GetIndexedColors():
         gNumIndexedColors = int(strvalue)
       if gNumIndexedColors < 8:
         gNumIndexedColors = 8
-      if gNumIndexedColors > 256:
+      elif gNumIndexedColors > 256:
         gNumIndexedColors = 256
     except Exception:
       gNumIndexedColors = 16

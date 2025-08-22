@@ -133,20 +133,17 @@ QUERY_HEX = 1
 SET_UTF8 = 2
 QUERY_UTF8 = 3
 
-def ANSIRC():
+def SCORC():
   """Restore cursor."""
   escio.WriteCSI(final="u")
 
-def ANSISC():
+def SCOSC():
   """Save cursor."""
   escio.WriteCSI(final="s")
 
 def APC():
   """Application Program Command."""
-  if escio.use8BitControls:
-    escio.Write(chr(0x9f))
-  else:
-    escio.Write(ESC + "_")
+  escio.Write(escio.APC())
 
 def CBT(Pn=None):
   """Move cursor back by Pn tab stops or to left margin. Default is 1."""
@@ -326,10 +323,7 @@ def DCH(Ps=None):
 
 def DCS():
   """Device control string. Prefixes various commands."""
-  if escio.use8BitControls:
-    escio.Write(chr(0x90))
-  else:
-    escio.Write(ESC + "P")
+  escio.Write(escio.DCS())
 
 def DECALN():
   """Write test pattern."""
@@ -409,10 +403,7 @@ def DECIC(Pn=None):
 
 def DECID():
   """Obsolete form of DA."""
-  if escio.use8BitControls:
-    escio.Write(chr(0x9a))
-  else:
-    escio.Write(ESC + "Z")
+  escio.Write(escio.DECID())
 
 def DECLFKC(Pn=None):
   """Enable local function function key control."""
@@ -629,10 +620,7 @@ def EL(Ps=None):
 
 def EPA():
   """End protected area."""
-  if escio.use8BitControls:
-    escio.Write(chr(0x97))
-  else:
-    escio.Write(ESC + "W")
+  escio.Write(escio.EPA())
 
 def HPA(Pn=None):
   """Position the cursor at the Pn'th column. Default value is 1."""
@@ -653,10 +641,7 @@ def HPR(Pn=None):
 
 def HTS():
   """Set a horizontal tab stop."""
-  if escio.use8BitControls:
-    escio.Write(chr(0x88))
-  else:
-    escio.Write(ESC + "H")
+  escio.Write(escio.HTS())
 
 def HVP(point=None, row=None, col=None):
   """ Move cursor to |point| """
@@ -690,10 +675,7 @@ def IL(Pn=None):
 
 def IND():
   """Move cursor down one line."""
-  if escio.use8BitControls:
-    escio.Write(chr(0x84))
-  else:
-    escio.Write(ESC + "D")
+  escio.Write(escio.IND())
 
 def ManipulateSelectionData(Pc="", Pd=None):
   params = ["52", Pc]
@@ -703,17 +685,11 @@ def ManipulateSelectionData(Pc="", Pd=None):
 
 def NEL():
   """Index plus carriage return."""
-  if escio.use8BitControls:
-    escio.Write(chr(0x85))
-  else:
-    escio.Write(ESC + "E")
+  escio.Write(escio.NEL())
 
 def PM():
   """Privacy message."""
-  if escio.use8BitControls:
-    escio.Write(chr(0x9e))
-  else:
-    escio.Write(ESC + "^")
+  escio.Write(escio.PM())
 
 def REP(Ps=None):
   """Repeat the preceding character |Ps| times. Undocumented default is 1."""
@@ -736,10 +712,7 @@ def ResetDynamicColor(c):
 
 def RI():
   """Move cursor up one line."""
-  if escio.use8BitControls:
-    escio.Write(chr(0x8d))
-  else:
-    escio.Write(ESC + "M")
+  escio.Write(escio.RI())
 
 def RIS():
   """Reset."""
@@ -785,21 +758,19 @@ def SM_Title(Ps1, Ps2=None):
 
 def SOS():
   """Start of string."""
-  if escio.use8BitControls:
-    escio.Write(chr(0x98))
-  else:
-    escio.Write(ESC + "X")
+  escio.Write(escio.SOS())
 
 def SPA():
   """Start protected area."""
-  if escio.use8BitControls:
-    escio.Write(chr(0x96))
-  else:
-    escio.Write(ESC + "V")
+  escio.Write(escio.SPA())
 
 def SGR(*args):
   """Select graphic rendition. Params is an array of numbers."""
   escio.WriteCSI(params=args, final="m")
+
+def ST():
+  """String terminator."""
+  escio.Write(escio.ST())
 
 def SU(Ps=None):
   """Scroll up by |Ps| lines. Default value is 1."""

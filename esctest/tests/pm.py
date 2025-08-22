@@ -1,4 +1,4 @@
-from esc import empty, ST, S7C1T, S8C1T
+from esc import empty, S7C1T, S8C1T
 import escargs
 import esccmd
 import escio
@@ -14,7 +14,7 @@ class PMTests(object):
   def test_PM_Basic(cls):
     esccmd.PM()
     escio.Write("xyz")
-    escio.Write(ST)
+    esccmd.ST()
     escio.Write("A")
 
     AssertScreenCharsInRectEqual(Rect(1, 1, 3, 1),
@@ -30,7 +30,7 @@ class PMTests(object):
     escio.Write(S8C1T)
     esccmd.PM()
     escio.Write("xyz")
-    escio.Write(ST)
+    esccmd.ST()
     escio.Write("A")
     escio.Write(S7C1T)
     escio.use8BitControls = False

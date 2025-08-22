@@ -1,9 +1,10 @@
-import tests.fill_rectangle
 import esccmd
+
+from tests.decrectops import FillRectangleTests
 
 CHARACTER = "%"
 
-class DECFRATests(tests.fill_rectangle.FillRectangleTests):
+class DECFRATests(FillRectangleTests):
   def fill(self, top=None, left=None, bottom=None, right=None):
     esccmd.DECFRA(str(ord(CHARACTER)), top, left, bottom, right)
 

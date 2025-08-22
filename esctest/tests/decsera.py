@@ -1,12 +1,13 @@
-import tests.fill_rectangle
+import tests.decrectops
 import esc
 import esccmd
 import escio
 from escutil import AssertScreenCharsInRectEqual, Point, Rect, knownBug, vtLevel
+from tests.decrectops import FillRectangleTests
 
-class DECSERATests(tests.fill_rectangle.FillRectangleTests):
+class DECSERATests(FillRectangleTests):
   def __init__(self):
-    tests.fill_rectangle.FillRectangleTests.__init__(self)
+    tests.decrectops.FillRectangleTests.__init__(self)
     self._always_return_blank = False
 
   def prepare(self):

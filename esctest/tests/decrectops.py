@@ -32,8 +32,7 @@ class FillRectangleTests(object):
     """Subclasses should override this to do the appropriate fill action."""
     pass
 
-  @classmethod
-  def characters(cls, point, count):
+  def characters(self, point, count):
     """Returns the filled characters starting at point, and count of them."""
     return "!" * count
 

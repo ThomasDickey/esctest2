@@ -127,9 +127,10 @@ way. Failing tests will appear to pass. This can be useful for debugging.
 Defines which optional features are enabled in the terminal being tested.
 
 The following options are supported:
-* allowC1Printable
-  This option overrides disableWideChars, to indicate that C1 controls work with
-  UTF-8 mode.
+* allowC2Controls
+  This option overrides disableWideChars, to indicate that C2 controls work with
+  UTF-8 mode, as documented in vttest:
+  https://invisible-island.net/vttest/manpage/vttest.html#h2-ENVIRONMENT
 
 * xtermWinopsEnabled
   This option indicates that xterm is configured to allow all window operations,

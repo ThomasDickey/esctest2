@@ -79,7 +79,6 @@
 #           Ps = 5 1  -> reserved for Emacs shell.
 
 
-from tests.ansirc import ANSIRCTests
 from tests.apc import APCTests
 from tests.bs import BSTests
 from tests.cbt import CBTTests
@@ -144,6 +143,7 @@ from tests.ri import RITests
 from tests.ris import RISTests
 from tests.rm import RMTests
 from tests.s8c1t import S8C1TTests
+from tests.scorc import SCORCTests
 from tests.sd import SDTests
 from tests.sm import SMTests
 from tests.sm_title import SMTitleTests
@@ -157,7 +157,6 @@ from tests.xterm_save import XtermSaveTests
 from tests.xterm_winops import XtermWinopsTests
 
 tests = [
-    ANSIRCTests,
     APCTests,
     BSTests,
     CBTTests,
@@ -222,6 +221,7 @@ tests = [
     ResetColorTests,
     ResetSpecialColorTests,
     S8C1TTests,
+    SCORCTests,
     SDTests,
     SMTests,
     SMTitleTests,

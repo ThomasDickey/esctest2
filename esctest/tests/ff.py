@@ -7,7 +7,6 @@ from escutil import AssertEQ
 from escutil import AssertScreenCharsInRectEqual
 from escutil import GetCursorPosition
 from escutil import GetScreenSize
-from escutil import knownBug
 from escutil import vtLevel
 from esctypes import Point, Rect
 
