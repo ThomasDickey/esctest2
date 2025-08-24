@@ -59,6 +59,16 @@ class SaveRestoreCursorTests(object):
     AssertEQ(GetCursorPosition(), Point(1, 1))
 
   @vtLevel(4)
+  def test_SaveRestoreCursor_Reset(self):
+    escio.Write("a")        # cursor is now at 2,1
+    self.saveCursor()       # remember that...
+    esccmd.DECSTR()         # resets saved-location to 1,1, not moving cursor
+    escio.Write("b")        # writes text at 2,1
+    self.restoreCursor()    # restores cursor to 1,1
+    escio.Write("c")        # writes text at 1,1
+    AssertScreenCharsInRectEqual(Rect(1, 1, 2, 1), ["cb"])
+
+  @vtLevel(4)
   def test_SaveRestoreCursor_ResetsOriginMode(self):
     esccmd.CUP(Point(5, 6))
     self.saveCursor()
@@ -195,7 +205,7 @@ class SaveRestoreCursorTests(object):
     esccmd.SM(esccmd.IRM)
     self.saveCursor()
 
-    # Turn off insert and restore. Restore should turn insert on.
+    # Turn off insert and restore. Restore should not turn insert on.
     esccmd.RM(esccmd.IRM)
     self.restoreCursor()
 

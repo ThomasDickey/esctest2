@@ -13,8 +13,5 @@ class SCORCTests(SaveRestoreCursorTests):
   def restoreCursor(cls):
     esccmd.SCORC()
 
-  def test_SaveRestoreCursor_ResetsOriginMode(self):
-    SaveRestoreCursorTests.test_SaveRestoreCursor_ResetsOriginMode(self)
-
   def test_SaveRestoreCursor_WorksInLRM(self, shouldWork=True):
     SaveRestoreCursorTests.test_SaveRestoreCursor_WorksInLRM(self, False)

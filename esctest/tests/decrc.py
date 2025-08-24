@@ -10,3 +10,6 @@ class DECRCTests(SaveRestoreCursorTests):
   @classmethod
   def restoreCursor(cls):
     esccmd.DECRC()
+
+  def test_SaveRestoreCursor_WorksInLRM(self, shouldWork=True):
+    SaveRestoreCursorTests.test_SaveRestoreCursor_WorksInLRM(self, True)

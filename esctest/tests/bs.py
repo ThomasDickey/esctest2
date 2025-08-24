@@ -42,6 +42,15 @@ class BSTests(object):
     AssertEQ(GetCursorPosition(), Point(size.width(), 2))
 
   @classmethod
+  def test_BS_InitialReverseWraparound(cls):
+    DECSET(esccmd.DECAWM)
+    DECSET(esccmd.ReverseWrapInline)
+    CUP(Point(1, 1))
+    esccmd.NEL() # moves to next line without setting wrap flag
+    escio.Write(esc.BS) # does not move to previous (non-wrapped) line
+    AssertEQ(GetCursorPosition(), Point(1, 2))
+
+  @classmethod
   def test_BS_ReverseWrapRequiresDECAWM(cls):
     DECRESET(esccmd.DECAWM)
     DECSET(esccmd.ReverseWraparound())
@@ -145,6 +154,20 @@ class BSTests(object):
     escio.Write("X")
     AssertScreenCharsInRectEqual(Rect(size.width() - 1, 1, size.width(), 1),
                                  ["Xb"])
+
+  @classmethod
+  @vtLevel(4)
+  def test_BS_ReverseWrapStartingInDoWrapPosition(cls):
+    """Cursor is right of right edge of screen."""
+    esccmd.DECSET(esccmd.DECAWM)
+    esccmd.DECSET(esccmd.ReverseWraparound())
+    size = GetScreenSize()
+    esccmd.CUP(Point(size.width() - 1, 1))
+    escio.Write("ab")
+    escio.Write(esc.BS)
+    escio.Write("X")
+    AssertScreenCharsInRectEqual(Rect(size.width() - 1, 1, size.width(), 1),
+                                 ["aX"])
 
   @classmethod
   def test_BS_AfterNoWrappedInlines(cls):
