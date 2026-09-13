@@ -46,6 +46,8 @@ class DATests(object):
     elif escargs.args.expected_terminal == "iTerm2beta":
       # 3.5.0beta10
       expected = [1, 2, 4, 6, 17, 18, 21, 22]
+    else:
+      expected = [62]
     # Our interest in the primary device attributes is to ensure that the
     # terminal asserts that it supports the features we need.  It may support
     # other features; without a detailed analysis we cannot determine which

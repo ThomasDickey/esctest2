@@ -7,131 +7,156 @@ import escargs
 import escio
 import escoding
 
-# DECSET/DECRESET
-Allow80To132 = 40  # Allow 80->132 Mode
-ALTBUF = 47  # Switch to alt buf
-DECAAM = 100
-DECANM = 2
-DECARM = 8
-DECARSM = 98
-DECAWM = 7  # Autowrap
-DECBKM = 67
-DECCANSM = 101
-DECCKM = 1
-DECCOLM = 3  # 132-column mode
-DECCRTSM = 97
-DECESKM = 104
-DECHCCM = 60
-DECHDPXM = 103
-DECHEBM = 35
-DECHEM = 36
-DECKBUM = 68
-DECKPM = 81
-DECLRMM = 69  # Left/right margin enabled
-DECMCM = 99
-DECNAKB = 57
-DECNCSM = 95
-DECNCSM = 95  # Clear screen on enabling column mode
-DECNKM = 66
-DECNRCM = 42
-DECNULM = 102
-DECOM = 6  # Origin mode
-DECOSCNM = 106
-DECPCCM = 64
-DECPEX = 19
-DECPFF = 18
-DECRLCM = 96
-DECRLM = 34  # Right-to-left mode
-DECSCLM = 4
-DECSCNM = 5
-DECTCEM = 25
-DECVCCM = 61
-DECXRLM = 73
-MoreFix = 41  # Work around bug in more(1) (see details in test_DECSET_MoreFix)
-OPT_ALTBUF = 1047  # Switch to alt buf. DECRESET first clears the alt buf.
-OPT_ALTBUF_CURSOR = 1049  # Like 1047 but saves/restores main screen's cursor position.
-ReverseWrapExtend = 1045  # Extended Reverse-wraparound mode (only works on conjunction with DECAWM)
-ReverseWrapInline = 45    # Reverse-wraparound mode (only works on conjunction with DECAWM)
-SaveRestoreCursor = 1048  # Save cursor as in DECSC.
+# DECSET/DECRESET (mixture of DEC and XTerm modes)
+DECCKM                              = 1
+DECANM                              = 2
+DECCOLM                             = 3     # 132-column mode
+DECSCLM                             = 4
+DECSCNM                             = 5
+DECOM                               = 6     # Origin mode
+DECAWM                              = 7     # Autowrap
+DECARM                              = 8
+DECPFF                              = 18
+DECPEX                              = 19
+DECTCEM                             = 25
+DECRLM                              = 34    # Right-to-left mode
+DECHEBM                             = 35
+DECHEM                              = 36
+Allow80To132                        = 40    # Allow 80->132 Mode
+MoreFix                             = 41    # Work around bug in more(1) (see details in test_DECSET_MoreFix)
+DECNRCM                             = 42
+XTREVWRAP                           = 45    # Reverse-wraparound mode (only works on conjunction with DECAWM)
+ALTBUF                              = 47    # Switch to alt buf
+DECNAKB                             = 57
+DECHCCM                             = 60
+DECVCCM                             = 61
+DECPCCM                             = 64
+DECNKM                              = 66
+DECBKM                              = 67
+DECKBUM                             = 68
+DECLRMM                             = 69    # Left/right margin enabled
+DECXRLM                             = 73
+DECKPM                              = 81
+DECNCSM                             = 95    # Clear screen on enabling column mode
+DECRLCM                             = 96
+DECCRTSM                            = 97
+DECARSM                             = 98
+DECMCM                              = 99
+DECAAM                              = 100
+DECCANSM                            = 101
+DECNULM                             = 102
+DECHDPXM                            = 103
+DECESKM                             = 104
+DECOSCNM                            = 106
+XTREVWRAP2                          = 1045  # Extended Reverse-wraparound mode (only works on conjunction with DECAWM)
+OPT_ALTBUF                          = 1047  # Switch to alt buf. DECRESET first clears the alt buf.
+SaveRestoreCursor                   = 1048  # Save cursor as in DECSC.
+OPT_ALTBUF_CURSOR                   = 1049  # Like 1047 but saves/restores main screen's cursor position.
 
 # Xterm Winops (CSI Ps t)
-WINOP_DEICONIFY = 1
-WINOP_ICONIFY = 2
-WINOP_MOVE = 3
-WINOP_RESIZE_PIXELS = 4
-WINOP_RESIZE_CHARS = 8
-WINOP_MAXIMIZE = 9
-WINOP_FULLSCREEN = 10
-WINOP_REPORT_WINDOW_STATE = 11
-WINOP_REPORT_WINDOW_POSITION = 13
-WINOP_REPORT_WINDOW_SIZE_PIXELS = 14
-WINOP_REPORT_SCREEN_SIZE_PIXELS = 15
-WINOP_REPORT_CHAR_SIZE_PIXELS = 16
-WINOP_REPORT_TEXT_AREA_CHARS = 18
-WINOP_REPORT_SCREEN_SIZE_CHARS = 19
-WINOP_REPORT_ICON_LABEL = 20
-WINOP_REPORT_WINDOW_TITLE = 21
-WINOP_PUSH_TITLE = 22
-WINOP_POP_TITLE = 23
+WINOP_DEICONIFY                     = 1
+WINOP_ICONIFY                       = 2
+WINOP_MOVE                          = 3
+WINOP_RESIZE_PIXELS                 = 4
+WINOP_RESIZE_CHARS                  = 8
+WINOP_MAXIMIZE                      = 9
+WINOP_FULLSCREEN                    = 10
+WINOP_REPORT_WINDOW_STATE           = 11
+WINOP_REPORT_WINDOW_POSITION        = 13
+WINOP_REPORT_WINDOW_SIZE_PIXELS     = 14
+WINOP_REPORT_SCREEN_SIZE_PIXELS     = 15
+WINOP_REPORT_CHAR_SIZE_PIXELS       = 16
+WINOP_REPORT_TEXT_AREA_CHARS        = 18
+WINOP_REPORT_SCREEN_SIZE_CHARS      = 19
+WINOP_REPORT_ICON_LABEL             = 20
+WINOP_REPORT_WINDOW_TITLE           = 21
+WINOP_PUSH_TITLE                    = 22
+WINOP_POP_TITLE                     = 23
 
 # WINOP_MAXIMIZE sub-commands
-WINOP_MAXIMIZE_EXIT = 0
-WINOP_MAXIMIZE_HV = 1
-WINOP_MAXIMIZE_V = 2
-WINOP_MAXIMIZE_H = 3
+WINOP_MAXIMIZE_EXIT                 = 0
+WINOP_MAXIMIZE_HV                   = 1
+WINOP_MAXIMIZE_V                    = 2
+WINOP_MAXIMIZE_H                    = 3
 
 # WINOP_FULLSCREEN sub-commands
-WINOP_FULLSCREEN_EXIT = 0
-WINOP_FULLSCREEN_ENTER = 1
-WINOP_FULLSCREEN_TOGGLE = 2
+WINOP_FULLSCREEN_EXIT               = 0
+WINOP_FULLSCREEN_ENTER              = 1
+WINOP_FULLSCREEN_TOGGLE             = 2
 
 # WINOP_PUSH_TITLE sub-commands
-WINOP_PUSH_TITLE_ICON_AND_WINDOW = 0
-WINOP_PUSH_TITLE_ICON = 1
-WINOP_PUSH_TITLE_WINDOW = 2
+WINOP_PUSH_TITLE_ICON_AND_WINDOW    = 0
+WINOP_PUSH_TITLE_ICON               = 1
+WINOP_PUSH_TITLE_WINDOW             = 2
 
 # WINOP_POP_TITLE sub-commands
-WINOP_POP_TITLE_ICON_AND_WINDOW = 0
-WINOP_POP_TITLE_ICON = 1
-WINOP_POP_TITLE_WINDOW = 2
+WINOP_POP_TITLE_ICON_AND_WINDOW     = 0
+WINOP_POP_TITLE_ICON                = 1
+WINOP_POP_TITLE_WINDOW              = 2
 
-# DECDSR
-DECCKSR = 63
-DECMSR = 62
-DECXCPR = 6
-DSRCPR = 6
-DSRDECLocatorStatus = 55
-DSRIntegrityReport = 75
-DSRKeyboard = 26
-DSRLocatorId = 56
-DSRMultipleSessionStatus = 85
-DSRPrinterPort = 15
-DSRUDKLocked = 25
-DSRXtermLocatorStatus = 55
+# DECDSR (mostly DEC and XTerm except DSRCPR which is ECMA-48)
+DSR_CURSOR_POSITION                 = 6   # DSRCPR and DECXCPR
+DSR_PRINTER_PORT                    = 15
+DSR_UDK_STATUS                      = 25
+DSR_KEYBOARD_STATUS                 = 26
+DSR_LOCATOR_STATUS                  = 55
+DSR_LOCATOR_TYPE                    = 56
+DSR_MACRO_SPACE                     = 62  # DECMSR
+DSR_MEMORY_CHECKSUM                 = 63  # DECCKSR
+DSR_DATA_INTEGRITY                  = 75
+DSR_MULTIPLE_SESSIONS               = 85
 
-# SM/RM
-EBM = 19
-FEAM = 13
-FETM = 14
-GATM = 1
-HEM = 10
-IRM = 4
-KAM = 2
-LNM = 20
-MATM = 15
-PUM = 11
-SATM = 17
-SRM = 12
-SRTM = 5
-TSM = 18
-TTM = 16
-VEM = 7
+# SM/RM (ECMA-48 8.3.125)
+GATM                                = 1
+KAM                                 = 2
+IRM                                 = 4
+SRTM                                = 5
+VEM                                 = 7
+HEM                                 = 10
+PUM                                 = 11
+SRM                                 = 12
+FEAM                                = 13
+FETM                                = 14
+MATM                                = 15
+TTM                                 = 16
+SATM                                = 17
+TSM                                 = 18
+EBM                                 = 19
+LNM                                 = 20
 
-# SMTitle
-SET_HEX = 0
-QUERY_HEX = 1
-SET_UTF8 = 2
-QUERY_UTF8 = 3
+# XTSMTITLE (XTerm)
+SET_HEX                             = 0
+QUERY_HEX                           = 1
+SET_UTF8                            = 2
+QUERY_UTF8                          = 3
+
+# SGR (ECMA-48 8.3.117)
+SGR_RESET                           = 0
+SGR_BOLD                            = 1
+SGR_DIM                             = 2
+SGR_ITALICS                         = 3
+SGR_UNDERLINE                       = 4
+SGR_BLINK                           = 5
+SGR_BLINK_FAST                      = 6
+SGR_INVERSE                         = 7
+SGR_CONCEALED                       = 8
+SGR_CROSSED_OUT                     = 9
+SGR_UNDERLINE_DOUBLE                = 21
+SGR_RESET_BOLD                      = 22
+SGR_RESET_ITALICS                   = 23
+SGR_RESET_UNDERLINE                 = 24
+SGR_RESET_BLINK                     = 25
+SGR_RESET_INVERSE                   = 27
+SGR_RESET_CONCEALED                 = 28
+SGR_RESET_CROSSED_OUT               = 29
+SGR_FG_EXTEND                       = 38
+SGR_FG_DEFAULT                      = 39
+SGR_BG_EXTEND                       = 48
+SGR_BG_DEFAULT                      = 49
+
+# parameters for SGR_FG_EXTEND and SGR_BG_EXTEND
+SGR_EXTEND_DIRECT                   = 2
+SGR_EXTEND_INDEXED                  = 5
 
 def SCORC():
   """Restore cursor."""
@@ -846,5 +871,5 @@ def ReverseWraparound():
   test_BS_ReverseWrapGoesToBottom.
   '''
   if escargs.args.xterm_reverse_wrap >= 383:
-    return ReverseWrapExtend	# since xterm 383
-  return ReverseWrapInline	# since xterm 380
+    return XTREVWRAP2	# since xterm 383
+  return XTREVWRAP	# since xterm 380

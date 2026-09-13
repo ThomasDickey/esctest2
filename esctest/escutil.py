@@ -180,7 +180,7 @@ def GetIsIconified():
   return params[0] == 2
 
 def GetCursorPosition():
-  esccmd.DSR(esccmd.DSRCPR, suppressSideChannel=True)
+  esccmd.DSR(esccmd.DSR_CURSOR_POSITION, suppressSideChannel=True)
   params = escio.ReadCSI("R")
   return Point(int(params[1]), int(params[0]))
 

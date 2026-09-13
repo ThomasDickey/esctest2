@@ -28,7 +28,7 @@ class DECDSRTests(object):
     myLevel = self.getVTLevel()
 
     esccmd.CUP(Point(5, 6))
-    esccmd.DECDSR(esccmd.DECXCPR)
+    esccmd.DECDSR(esccmd.DSR_CURSOR_POSITION)
     params = escio.ReadCSI('R', expected_prefix='?')
 
     if myLevel >= 4:
@@ -54,7 +54,7 @@ class DECDSRTests(object):
         19 - Assigned to other session.
       There's no way for the test to know what the actual printer status is,
       but the response should be legal."""
-    esccmd.DECDSR(esccmd.DSRPrinterPort)
+    esccmd.DECDSR(esccmd.DSR_PRINTER_PORT)
     params = escio.ReadCSI('n', expected_prefix='?')
     AssertEQ(len(params), 1)
     AssertTrue(params[0] in [10, 11, 13, 18, 19])
@@ -71,7 +71,7 @@ class DECDSRTests(object):
     This test simply ensures the value is legal. It should be extended to
     ensure that when locked UDKs are not settable, and when unlocked that UDKs
     are settable."""
-    esccmd.DECDSR(esccmd.DSRUDKLocked)
+    esccmd.DECDSR(esccmd.DSR_UDK_STATUS)
     params = escio.ReadCSI('n', expected_prefix='?')
     AssertEQ(len(params), 1)
     AssertTrue(params[0] in [20, 21])
@@ -100,7 +100,7 @@ class DECDSRTests(object):
         5 - PCXAL  # DEC 510"""
     # First get the VT level with a DA2
     myLevel = self.getVTLevel()
-    esccmd.DECDSR(esccmd.DSRKeyboard)
+    esccmd.DECDSR(esccmd.DSR_KEYBOARD_STATUS)
     params = escio.ReadCSI('n', expected_prefix='?')
     if myLevel <= 2:
       # VT240 or earlier
@@ -135,12 +135,7 @@ class DECDSRTests(object):
   @vtLevel(4)
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECDSR_DSRDECLocatorStatus(self):
-    self.doLocatorStatusTest(esccmd.DSRDECLocatorStatus)
-
-  @vtLevel(4)
-  @knownBug(terminal="iTerm2", reason="Not implemented.")
-  def test_DECDSR_DSRXtermLocatorStatus(self):
-    self.doLocatorStatusTest(esccmd.DSRXtermLocatorStatus)
+    self.doLocatorStatusTest(esccmd.DSR_LOCATOR_STATUS)
 
   @classmethod
   @vtLevel(4)
@@ -150,7 +145,7 @@ class DECDSRTests(object):
     0 - unknown (not documented)
     1 - mouse
     2 - tablet"""
-    esccmd.DECDSR(esccmd.DSRLocatorId)
+    esccmd.DECDSR(esccmd.DSR_LOCATOR_TYPE)
     params = escio.ReadCSI('n', expected_prefix='?')
 
     AssertEQ(params[0], 57)
@@ -162,7 +157,7 @@ class DECDSRTests(object):
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECDSR_DECMSR(cls):
     """Get space available for macros. This test assumes it's always 0."""
-    esccmd.DECDSR(esccmd.DECMSR)
+    esccmd.DECDSR(esccmd.DSR_MACRO_SPACE)
     params = escio.ReadCSI('*{')
 
     # Assume the terminal being tested doesn't support macros. May need to add
@@ -175,7 +170,7 @@ class DECDSRTests(object):
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECDSR_DECCKSR(cls):
     """Get checksum of macros. This test assumes it's always 0."""
-    esccmd.DECDSR(Ps=esccmd.DECCKSR, Pid=123)
+    esccmd.DECDSR(Ps=esccmd.DSR_MEMORY_CHECKSUM, Pid=123)
     value = escio.ReadDCS()
     AssertEQ(value, "123!~0000")
 
@@ -184,7 +179,7 @@ class DECDSRTests(object):
   @knownBug(terminal="iTerm2", reason="Not implemented.")
   def test_DECDSR_DSRDataIntegrity(cls):
     """Check for link errors. Should always report OK."""
-    esccmd.DECDSR(esccmd.DSRIntegrityReport)
+    esccmd.DECDSR(esccmd.DSR_DATA_INTEGRITY)
     params = escio.ReadCSI('n', expected_prefix='?')
     AssertEQ(len(params), 1)
     AssertEQ(params[0], 70)
@@ -213,7 +208,7 @@ class DECDSRTests(object):
     CSI ? 87 n
       Multiple sessions are operating using a separate physical line for each
       session, not SSU."""
-    esccmd.DECDSR(esccmd.DSRMultipleSessionStatus)
+    esccmd.DECDSR(esccmd.DSR_MULTIPLE_SESSIONS)
     params = escio.ReadCSI('n', expected_prefix='?')
     AssertEQ(len(params), 1)
     # 83 and 87 both seem like reasonable responses for a terminal that

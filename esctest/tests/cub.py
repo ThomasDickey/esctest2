@@ -82,7 +82,7 @@ class CUBTests(object):
   def test_CUB_AfterNoWrappedInlines(cls):
     '''Backspace after lines that did not wrap will not wrap to prior lines'''
     DECSET(esccmd.DECAWM)
-    DECSET(esccmd.ReverseWrapInline)
+    DECSET(esccmd.XTREVWRAP)
     size = GetScreenSize()
     fill = "*" * (size.width() - 2) + "\n"
     CUP(Point(1, 3))
@@ -103,7 +103,7 @@ class CUBTests(object):
   def test_CUB_AfterOneWrappedInline(cls):
     '''Backspace after wrapped line may wrap to the beginning of the line.'''
     DECSET(esccmd.DECAWM)
-    DECSET(esccmd.ReverseWrapInline)
+    DECSET(esccmd.XTREVWRAP)
     size = GetScreenSize()
     fill = "*" * (size.width() + 2) * 2
     # write two copies of filler, each a little longer than the line size.
